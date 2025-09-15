@@ -7,25 +7,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <meta name="description" content="Professional revenue estimation report for Port Chambly vacation rental properties by Islander Holiday Retreats">
     <meta name="author" content="Islander Holiday Retreats">
-    <!-- Optimized for sharing -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
             background-color: #F7F3E9;
             margin: 0;
-            padding: 0;
+            padding: 1rem;
+            line-height: 1.6;
         }
+        
         .container {
             max-width: 800px;
-            margin: 2rem auto;
-            padding: 2rem;
+            margin: 0 auto;
+            padding: 1.5rem;
             background-color: white;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+        
         h1 {
             font-size: 2.25rem;
             font-weight: 700;
@@ -33,6 +42,7 @@
             line-height: 1.2;
             margin-bottom: 0.5rem;
         }
+        
         h2 {
             font-size: 1.5rem;
             font-weight: 600;
@@ -40,6 +50,7 @@
             margin-top: 1.5rem;
             margin-bottom: 1rem;
         }
+        
         h3 {
             font-size: 1.25rem;
             font-weight: 600;
@@ -47,61 +58,174 @@
             margin-top: 1.5rem;
             margin-bottom: 1rem;
         }
+        
         p {
             color: #333333;
             line-height: 1.6;
             margin-bottom: 1rem;
         }
-        table {
+        
+        /* Mobile-first responsive tables */
+        .responsive-table {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
+            margin: 1rem 0;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        th, td {
+        
+        .responsive-table table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        .responsive-table th,
+        .responsive-table td {
             padding: 0.75rem;
             text-align: left;
             border-bottom: 1px solid #e2e8f0;
         }
-        th {
+        
+        .responsive-table th {
             background-color: #F0F4F8;
             font-weight: 600;
             color: #333333;
         }
+        
+        /* Mobile styles - transform tables into cards */
+        @media screen and (max-width: 640px) {
+            body {
+                padding: 0.5rem;
+            }
+            
+            .container {
+                padding: 1rem;
+                margin: 0;
+                border-radius: 8px;
+            }
+            
+            h1 {
+                font-size: 1.75rem;
+            }
+            
+            h2 {
+                font-size: 1.25rem;
+            }
+            
+            h3 {
+                font-size: 1.1rem;
+            }
+            
+            /* Hide table headers on mobile */
+            .responsive-table table,
+            .responsive-table thead,
+            .responsive-table tbody,
+            .responsive-table th,
+            .responsive-table td,
+            .responsive-table tr {
+                display: block;
+            }
+            
+            .responsive-table thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            
+            /* Style each table row as a card */
+            .responsive-table tr {
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                padding: 1rem;
+                margin-bottom: 1rem;
+                background: #fafafa;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+            
+            /* Style each table cell */
+            .responsive-table td {
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding: 0.5rem 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+            
+            .responsive-table td:last-child {
+                border-bottom: none;
+            }
+            
+            /* Add labels before each data value */
+            .responsive-table td:before {
+                content: attr(data-label) ": ";
+                font-weight: 600;
+                color: #01458A;
+                flex: 0 0 45%;
+                margin-right: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            /* Style the data values */
+            .responsive-table td .value {
+                flex: 1;
+                text-align: right;
+                font-size: 0.9rem;
+            }
+            
+            /* Preserve highlight colors on mobile */
+            .highlight-cell {
+                background-color: #dcfce7 !important;
+                border-radius: 4px;
+                padding: 0.25rem !important;
+                font-weight: bold !important;
+            }
+        }
+        
         .highlight-text {
             font-weight: bold;
             font-size: 1.125rem;
             color: #00A79E;
         }
+        
         ul {
             margin-bottom: 1rem;
+            padding-left: 1.5rem;
         }
+        
         li {
             margin-bottom: 0.5rem;
         }
+        
         .chart-container {
             margin: 2rem 0;
             height: 400px;
         }
+        
         hr {
             border: none;
             height: 1px;
             background-color: #e2e8f0;
             margin: 2rem 0;
         }
+        
         .text-center {
             text-align: center;
         }
-        .bg-teal-100 {
-            background-color: #ccfbf1;
+        
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #888;
+            font-size: 0.9rem;
         }
-        .bg-blue-100 {
-            background-color: #dbeafe;
-        }
-        .bg-green-100 {
-            background-color: #dcfce7;
+        
+        @media (max-width: 480px) {
+            .chart-container {
+                height: 300px;
+            }
         }
     </style>
 </head>
@@ -123,42 +247,46 @@
         <section>
             <h3>Neighbourhood Market Comparisons</h3>
             <p style="color: #666;">Port Chambly outperforms nearby areas with its premium lifestyle perks, but we benchmark against true competitors for accurate positioning. Data from recent market research shows:</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Area</th>
-                        <th>ADR (€/night)</th>
-                        <th>Occupancy</th>
-                        <th>Notes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="font-weight: 600;">Port Louis</td>
-                        <td>€55–70</td>
-                        <td>35–40%</td>
-                        <td>Lower tourism demand, city-centric, budget travellers.</td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: 600;">Balaclava</td>
-                        <td>€100–140</td>
-                        <td>55–65%</td>
-                        <td>Good amenities, mid-to-high demand.</td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: 600;">Trou aux Biches</td>
-                        <td>€110–150</td>
-                        <td>60–70%</td>
-                        <td>Popular beach area, strong holiday rental demand.</td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: 600;">Port Chambly (est.)</td>
-                        <td>€110–180</td>
-                        <td>60–75%</td>
-                        <td>Exclusive gated community, waterfront & lifestyle appeal.</td>
-                    </tr>
-                </tbody>
-            </table>
+            
+            <div class="responsive-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Area</th>
+                            <th>ADR (€/night)</th>
+                            <th>Occupancy</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="Area"><span class="value" style="font-weight: 600;">Port Louis</span></td>
+                            <td data-label="ADR (€/night)"><span class="value">€55–70</span></td>
+                            <td data-label="Occupancy"><span class="value">35–40%</span></td>
+                            <td data-label="Notes"><span class="value">Lower tourism demand, city-centric, budget travellers.</span></td>
+                        </tr>
+                        <tr>
+                            <td data-label="Area"><span class="value" style="font-weight: 600;">Balaclava</span></td>
+                            <td data-label="ADR (€/night)"><span class="value">€100–140</span></td>
+                            <td data-label="Occupancy"><span class="value">55–65%</span></td>
+                            <td data-label="Notes"><span class="value">Good amenities, mid-to-high demand.</span></td>
+                        </tr>
+                        <tr>
+                            <td data-label="Area"><span class="value" style="font-weight: 600;">Trou aux Biches</span></td>
+                            <td data-label="ADR (€/night)"><span class="value">€110–150</span></td>
+                            <td data-label="Occupancy"><span class="value">60–70%</span></td>
+                            <td data-label="Notes"><span class="value">Popular beach area, strong holiday rental demand.</span></td>
+                        </tr>
+                        <tr>
+                            <td data-label="Area"><span class="value" style="font-weight: 600;">Port Chambly (est.)</span></td>
+                            <td data-label="ADR (€/night)"><span class="value">€110–180</span></td>
+                            <td data-label="Occupancy"><span class="value">60–75%</span></td>
+                            <td data-label="Notes"><span class="value">Exclusive gated community, waterfront & lifestyle appeal.</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
             <p style="font-size: 0.875rem; color: #666; margin-top: 1rem;">Key Insight: Your apartments align with the upper end (€130+ ADR) if river views and amenities shine. Recent comps confirm potential—professional photos can add 20–30% to bookings.</p>
         </section>
 
@@ -167,143 +295,97 @@
         <section>
             <h3>Gross Revenue Projections</h3>
             <p style="color: #666;">Based on conservative, mid, and premium scenarios for two 2-bedroom apartments. Assumptions: 365 nights/year, dynamic pricing (+25% peak Nov–Apr), and 60% average occupancy achievable with optimization.</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Scenario</th>
-                        <th>ADR (€/night)</th>
-                        <th>Occupancy</th>
-                        <th>Annual Gross Revenue (2 Props)</th>
-                        <th>Monthly Equivalent</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="font-weight: 600;">Low</td>
-                        <td>€80–90</td>
-                        <td>50–55%</td>
-                        <td>€30,000–35,000</td>
-                        <td>€2,500–2,900</td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: 600;">Mid</td>
-                        <td>€110–130</td>
-                        <td>60–65%</td>
-                        <td>€53,000–65,000</td>
-                        <td>€4,400–5,400</td>
-                    </tr>
-                    <tr>
-                        <td style="font-weight: 600;">High</td>
-                        <td>€150–180</td>
-                        <td>70–75%</td>
-                        <td>€80,000–95,000</td>
-                        <td>€6,600–7,900</td>
-                    </tr>
-                </tbody>
-            </table>
+            
+            <div class="responsive-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>ADR (€/night)</th>
+                            <th>Occupancy</th>
+                            <th>Annual Gross Revenue (2 Props)</th>
+                            <th>Monthly Equivalent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="Scenario"><span class="value" style="font-weight: 600;">Low</span></td>
+                            <td data-label="ADR (€/night)"><span class="value">€80–90</span></td>
+                            <td data-label="Occupancy"><span class="value">50–55%</span></td>
+                            <td data-label="Annual Gross Revenue"><span class="value">€30,000–35,000</span></td>
+                            <td data-label="Monthly Equivalent"><span class="value">€2,500–2,900</span></td>
+                        </tr>
+                        <tr>
+                            <td data-label="Scenario"><span class="value" style="font-weight: 600;">Mid</span></td>
+                            <td data-label="ADR (€/night)"><span class="value">€110–130</span></td>
+                            <td data-label="Occupancy"><span class="value">60–65%</span></td>
+                            <td data-label="Annual Gross Revenue"><span class="value">€53,000–65,000</span></td>
+                            <td data-label="Monthly Equivalent"><span class="value">€4,400–5,400</span></td>
+                        </tr>
+                        <tr>
+                            <td data-label="Scenario"><span class="value" style="font-weight: 600;">High</span></td>
+                            <td data-label="ADR (€/night)"><span class="value">€150–180</span></td>
+                            <td data-label="Occupancy"><span class="value">70–75%</span></td>
+                            <td data-label="Annual Gross Revenue"><span class="value">€80,000–95,000</span></td>
+                            <td data-label="Monthly Equivalent"><span class="value">€6,600–7,900</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
 
         <hr>
 
         <section>
             <h3>Scenario Variability Table (ADR vs. Occupancy Impact)</h3>
-            <p style="color: #666;">This table highlights how pricing interacts with demand, showing how our strategies (in bold) outperform a long-term rental income of €12,000 per year.</p>
-            <div class="table-container mobile-responsive">
+            <p style="color: #666;">This table highlights how pricing interacts with demand, showing how our strategies outperform a long-term rental income of €12,000 per year.</p>
+            
+            <div class="responsive-table">
                 <table>
                     <thead>
                         <tr>
                             <th>ADR (€/night)</th>
                             <th>50% Occupancy</th>
-                            <th style="font-weight: bold;">60% Occupancy</th>
+                            <th>60% Occupancy</th>
                             <th>70% Occupancy</th>
                             <th>75% Occupancy</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td data-label="ADR">
-                                <span class="value" style="font-weight: 600;">€80</span>
-                            </td>
-                            <td data-label="50% Occupancy">
-                                <span class="value">€29,200</span>
-                            </td>
-                            <td data-label="60% Occupancy" class="bg-teal-100">
-                                <span class="value" style="font-weight: bold;">€35,040</span>
-                            </td>
-                            <td data-label="70% Occupancy">
-                                <span class="value">€40,880</span>
-                            </td>
-                            <td data-label="75% Occupancy">
-                                <span class="value">€43,800</span>
-                            </td>
+                            <td data-label="ADR (€/night)"><span class="value" style="font-weight: 600;">€80</span></td>
+                            <td data-label="50% Occupancy"><span class="value">€29,200</span></td>
+                            <td data-label="60% Occupancy"><span class="value highlight-cell">€35,040</span></td>
+                            <td data-label="70% Occupancy"><span class="value">€40,880</span></td>
+                            <td data-label="75% Occupancy"><span class="value">€43,800</span></td>
                         </tr>
                         <tr>
-                            <td data-label="ADR">
-                                <span class="value" style="font-weight: 600;">€100</span>
-                            </td>
-                            <td data-label="50% Occupancy">
-                                <span class="value">€36,500</span>
-                            </td>
-                            <td data-label="60% Occupancy" class="bg-teal-100">
-                                <span class="value" style="font-weight: bold;">€43,800</span>
-                            </td>
-                            <td data-label="70% Occupancy">
-                                <span class="value">€51,100</span>
-                            </td>
-                            <td data-label="75% Occupancy">
-                                <span class="value">€54,750</span>
-                            </td>
+                            <td data-label="ADR (€/night)"><span class="value" style="font-weight: 600;">€100</span></td>
+                            <td data-label="50% Occupancy"><span class="value">€36,500</span></td>
+                            <td data-label="60% Occupancy"><span class="value highlight-cell">€43,800</span></td>
+                            <td data-label="70% Occupancy"><span class="value">€51,100</span></td>
+                            <td data-label="75% Occupancy"><span class="value">€54,750</span></td>
                         </tr>
                         <tr>
-                            <td data-label="ADR">
-                                <span class="value" style="font-weight: 600;">€110</span>
-                            </td>
-                            <td data-label="50% Occupancy">
-                                <span class="value">€40,150</span>
-                            </td>
-                            <td data-label="60% Occupancy" class="bg-blue-100">
-                                <span class="value" style="font-weight: bold;">€48,180</span>
-                            </td>
-                            <td data-label="70% Occupancy">
-                                <span class="value">€56,210</span>
-                            </td>
-                            <td data-label="75% Occupancy">
-                                <span class="value">€60,225</span>
-                            </td>
+                            <td data-label="ADR (€/night)"><span class="value" style="font-weight: 600;">€110</span></td>
+                            <td data-label="50% Occupancy"><span class="value">€40,150</span></td>
+                            <td data-label="60% Occupancy"><span class="value highlight-cell">€48,180</span></td>
+                            <td data-label="70% Occupancy"><span class="value">€56,210</span></td>
+                            <td data-label="75% Occupancy"><span class="value">€60,225</span></td>
                         </tr>
                         <tr>
-                            <td data-label="ADR">
-                                <span class="value" style="font-weight: 600;">€140</span>
-                            </td>
-                            <td data-label="50% Occupancy">
-                                <span class="value">€51,100</span>
-                            </td>
-                            <td data-label="60% Occupancy" class="bg-blue-100">
-                                <span class="value" style="font-weight: bold;">€61,320</span>
-                            </td>
-                            <td data-label="70% Occupancy">
-                                <span class="value">€71,560</span>
-                            </td>
-                            <td data-label="75% Occupancy">
-                                <span class="value">€76,650</span>
-                            </td>
+                            <td data-label="ADR (€/night)"><span class="value" style="font-weight: 600;">€140</span></td>
+                            <td data-label="50% Occupancy"><span class="value">€51,100</span></td>
+                            <td data-label="60% Occupancy"><span class="value highlight-cell">€61,320</span></td>
+                            <td data-label="70% Occupancy"><span class="value">€71,560</span></td>
+                            <td data-label="75% Occupancy"><span class="value">€76,650</span></td>
                         </tr>
                         <tr>
-                            <td data-label="ADR">
-                                <span class="value" style="font-weight: 600;">€180</span>
-                            </td>
-                            <td data-label="50% Occupancy">
-                                <span class="value">€65,700</span>
-                            </td>
-                            <td data-label="60% Occupancy" class="bg-green-100">
-                                <span class="value" style="font-weight: bold;">€78,840</span>
-                            </td>
-                            <td data-label="70% Occupancy">
-                                <span class="value">€91,980</span>
-                            </td>
-                            <td data-label="75% Occupancy">
-                                <span class="value">€98,550</span>
-                            </td>
+                            <td data-label="ADR (€/night)"><span class="value" style="font-weight: 600;">€180</span></td>
+                            <td data-label="50% Occupancy"><span class="value">€65,700</span></td>
+                            <td data-label="60% Occupancy"><span class="value highlight-cell">€78,840</span></td>
+                            <td data-label="70% Occupancy"><span class="value">€91,980</span></td>
+                            <td data-label="75% Occupancy"><span class="value">€98,550</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -324,7 +406,7 @@
 
         <section>
             <h3>Why Port Chambly Stands Out</h3>
-            <ul style="list-style-type: disc; padding-left: 1.5rem;">
+            <ul>
                 <li><span style="font-weight: 600; color: #333;">Exclusive Gated Waterfront Community:</span> Mediterranean-style architecture with river views, security, and tranquility—ideal for mid/long-term holiday rentals with stable demand.</li>
                 <li><span style="font-weight: 600; color: #333;">Competitive Edge:</span> An excellent alternative to busy Trou aux Biches or city-based Port Louis. Your properties offer proximity to Port Louis (10 mins) and beaches (20 mins) without the crowds.</li>
                 <li><span style="font-weight: 600; color: #333;">Lifestyle Appeal:</span> Marina access, communal pools/gym, and serene vibes attract couples/families seeking premium escapes (15–25% ADR premium over Port Louis).</li>
@@ -341,8 +423,8 @@
             <p class="text-center" style="margin-top: 1.5rem; font-weight: bold; font-size: 1.125rem; color: #00A79E;">Contact us today: Reply or call Rouslan +230 5761 3558.<br>Turning properties into profits—hassle-free.</p>
         </section>
 
-        <footer style="margin-top: 2rem; text-align: center; font-size: 0.75rem; color: #999;">
-            Powered by expert market analysis and insights.
+        <footer>
+            <p>&copy; 2025 Islander Holiday Retreats. Professional market analysis and vacation rental management services.</p>
         </footer>
     </div>
 
