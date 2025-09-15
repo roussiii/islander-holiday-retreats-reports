@@ -208,54 +208,106 @@
         <section>
             <h3>Scenario Variability Table (ADR vs. Occupancy Impact)</h3>
             <p style="color: #666;">This table highlights how pricing interacts with demand, showing how our strategies (in bold) outperform a long-term rental income of €12,000 per year.</p>
-            <table class="mobile-stack">
-                <thead>
-                    <tr>
-                        <th>ADR (€/night)</th>
-                        <th>50% Occupancy</th>
-                        <th style="font-weight: bold;">60% Occupancy</th>
-                        <th>70% Occupancy</th>
-                        <th>75% Occupancy</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td data-label="ADR (€/night)" style="font-weight: 600;">€80</td>
-                        <td data-label="50% Occupancy">€29,200</td>
-                        <td data-label="60% Occupancy" class="bg-teal-100" style="font-weight: bold;">€35,040</td>
-                        <td data-label="70% Occupancy">€40,880</td>
-                        <td data-label="75% Occupancy">€43,800</td>
-                    </tr>
-                    <tr>
-                        <td data-label="ADR (€/night)" style="font-weight: 600;">€100</td>
-                        <td data-label="50% Occupancy">€36,500</td>
-                        <td data-label="60% Occupancy" class="bg-teal-100" style="font-weight: bold;">€43,800</td>
-                        <td data-label="70% Occupancy">€51,100</td>
-                        <td data-label="75% Occupancy">€54,750</td>
-                    </tr>
-                    <tr>
-                        <td data-label="ADR (€/night)" style="font-weight: 600;">€110</td>
-                        <td data-label="50% Occupancy">€40,150</td>
-                        <td data-label="60% Occupancy" class="bg-blue-100" style="font-weight: bold;">€48,180</td>
-                        <td data-label="70% Occupancy">€56,210</td>
-                        <td data-label="75% Occupancy">€60,225</td>
-                    </tr>
-                    <tr>
-                        <td data-label="ADR (€/night)" style="font-weight: 600;">€140</td>
-                        <td data-label="50% Occupancy">€51,100</td>
-                        <td data-label="60% Occupancy" class="bg-blue-100" style="font-weight: bold;">€61,320</td>
-                        <td data-label="70% Occupancy">€71,560</td>
-                        <td data-label="75% Occupancy">€76,650</td>
-                    </tr>
-                    <tr>
-                        <td data-label="ADR (€/night)" style="font-weight: 600;">€180</td>
-                        <td data-label="50% Occupancy">€65,700</td>
-                        <td data-label="60% Occupancy" class="bg-green-100" style="font-weight: bold;">€78,840</td>
-                        <td data-label="70% Occupancy">€91,980</td>
-                        <td data-label="75% Occupancy">€98,550</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table class="mobile-stack">
+                    <thead>
+                        <tr>
+                            <th>ADR (€/night)</th>
+                            <th>50% Occupancy</th>
+                            <th style="font-weight: bold;">60% Occupancy</th>
+                            <th>70% Occupancy</th>
+                            <th>75% Occupancy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="ADR">
+                                <span class="value" style="font-weight: 600;">€80</span>
+                            </td>
+                            <td data-label="50% Occupancy">
+                                <span class="value">€29,200</span>
+                            </td>
+                            <td data-label="60% Occupancy" class="bg-teal-100">
+                                <span class="value" style="font-weight: bold;">€35,040</span>
+                            </td>
+                            <td data-label="70% Occupancy">
+                                <span class="value">€40,880</span>
+                            </td>
+                            <td data-label="75% Occupancy">
+                                <span class="value">€43,800</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td data-label="ADR">
+                                <span class="value" style="font-weight: 600;">€100</span>
+                            </td>
+                            <td data-label="50% Occupancy">
+                                <span class="value">€36,500</span>
+                            </td>
+                            <td data-label="60% Occupancy" class="bg-teal-100">
+                                <span class="value" style="font-weight: bold;">€43,800</span>
+                            </td>
+                            <td data-label="70% Occupancy">
+                                <span class="value">€51,100</span>
+                            </td>
+                            <td data-label="75% Occupancy">
+                                <span class="value">€54,750</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td data-label="ADR">
+                                <span class="value" style="font-weight: 600;">€110</span>
+                            </td>
+                            <td data-label="50% Occupancy">
+                                <span class="value">€40,150</span>
+                            </td>
+                            <td data-label="60% Occupancy" class="bg-blue-100">
+                                <span class="value" style="font-weight: bold;">€48,180</span>
+                            </td>
+                            <td data-label="70% Occupancy">
+                                <span class="value">€56,210</span>
+                            </td>
+                            <td data-label="75% Occupancy">
+                                <span class="value">€60,225</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td data-label="ADR">
+                                <span class="value" style="font-weight: 600;">€140</span>
+                            </td>
+                            <td data-label="50% Occupancy">
+                                <span class="value">€51,100</span>
+                            </td>
+                            <td data-label="60% Occupancy" class="bg-blue-100">
+                                <span class="value" style="font-weight: bold;">€61,320</span>
+                            </td>
+                            <td data-label="70% Occupancy">
+                                <span class="value">€71,560</span>
+                            </td>
+                            <td data-label="75% Occupancy">
+                                <span class="value">€76,650</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td data-label="ADR">
+                                <span class="value" style="font-weight: 600;">€180</span>
+                            </td>
+                            <td data-label="50% Occupancy">
+                                <span class="value">€65,700</span>
+                            </td>
+                            <td data-label="60% Occupancy" class="bg-green-100">
+                                <span class="value" style="font-weight: bold;">€78,840</span>
+                            </td>
+                            <td data-label="70% Occupancy">
+                                <span class="value">€91,980</span>
+                            </td>
+                            <td data-label="75% Occupancy">
+                                <span class="value">€98,550</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
 
         <hr>
