@@ -33,6 +33,52 @@
             background-color: white;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        /* Language Toggle Styles */
+        .language-toggle {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            display: flex;
+            background: #01458A;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+        
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .lang-btn.active {
+            background: #00A79E;
+        }
+        
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .lang-btn.active:hover {
+            background: #00A79E;
+        }
+        
+        /* Content visibility */
+        .lang-content {
+            display: none;
+        }
+        
+        .lang-content.active {
+            display: block;
         }
         
         /* Mobile responsiveness */
@@ -47,9 +93,15 @@
                 border-radius: 0;
                 box-shadow: none;
             }
+            .language-toggle {
+                top: 1rem;
+                right: 1rem;
+                transform: scale(0.9);
+            }
             h1 {
                 font-size: 1.75rem !important;
                 line-height: 1.1;
+                margin-top: 2rem !important;
             }
             h2 {
                 font-size: 1.25rem !important;
@@ -73,8 +125,14 @@
             .container {
                 padding: 0.75rem;
             }
+            .language-toggle {
+                transform: scale(0.8);
+                top: 0.5rem;
+                right: 0.5rem;
+            }
             h1 {
                 font-size: 1.5rem !important;
+                margin-top: 2.5rem !important;
             }
             h2 {
                 font-size: 1.1rem !important;
@@ -434,470 +492,969 @@
     </style>
 </head>
 <body>
-
     <div class="container">
-        <header>
-            <h1>Oryam Residence Portfolio Strategy</h1>
-            <h2>Strategic Asset Monetization Analysis</h2>
-            <p style="color: #666; margin-top: 0.5rem;">For Hervé Bellefroid | Prepared by Islander Holiday Retreats – "Profitez, on s'occupe du reste!"</p>
-            <p style="color: #666;">Date: September 15, 2025 | Contact: Rouslan +230 5761 3558 | rouslan@ihr-mu.com</p>
-        </header>
-
-        <div class="callout">
-            <div class="callout-title">The Opportunity</div>
-            <p style="margin-bottom: 0; color: #555;">Launch 3 ready units immediately generating €90,155 annual gross revenue. Scale to 5+ units as furnishing investments are completed. Maintain flexibility for individual sales while generating consistent revenue stream.</p>
+        <!-- Language Toggle -->
+        <div class="language-toggle">
+            <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+            <button class="lang-btn" onclick="switchLanguage('fr')">FR</button>
         </div>
 
-        <section>
-            <h2>Phase 1: Immediate Launch Metrics</h2>
-            <div class="metric-grid">
-                <div class="metric-card">
-                    <span class="metric-value">€90,155</span>
-                    <div class="metric-label">Annual Gross Revenue</div>
-                    <div class="metric-sublabel">3 ready units combined</div>
+        <!-- English Content -->
+        <div id="content-en" class="lang-content active">
+            <header>
+                <h1>Oryam Residence Portfolio Strategy</h1>
+                <h2>Strategic Asset Monetization Analysis</h2>
+                <p style="color: #666; margin-top: 0.5rem;">For Hervé Bellefroid | Prepared by Islander Holiday Retreats – "Profitez, on s'occupe du reste!"</p>
+                <p style="color: #666;">Date: September 15, 2025 | Contact: Rouslan +230 5761 3558 | rouslan@ihr-mu.com</p>
+            </header>
+
+            <div class="callout">
+                <div class="callout-title">The Opportunity</div>
+                <p style="margin-bottom: 0; color: #555;">Launch 3 ready units immediately generating €90,155 annual gross revenue. Scale to 5+ units as furnishing investments are completed. Maintain flexibility for individual sales while generating consistent revenue stream.</p>
+            </div>
+
+            <section>
+                <h2>Phase 1: Immediate Launch Metrics</h2>
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <span class="metric-value">€90,155</span>
+                        <div class="metric-label">Annual Gross Revenue</div>
+                        <div class="metric-sublabel">3 ready units combined</div>
+                    </div>
+                    <div class="metric-card" style="background: #f0fdf4;">
+                        <span class="metric-value" style="color: #059669;">25%</span>
+                        <div class="metric-label">Management Fee</div>
+                        <div class="metric-sublabel">All-inclusive service</div>
+                    </div>
+                    <div class="metric-card" style="background: #eff6ff;">
+                        <span class="metric-value" style="color: #2563eb;">€7,513</span>
+                        <div class="metric-label">Monthly Gross Revenue</div>
+                        <div class="metric-sublabel">Immediate launch capability</div>
+                    </div>
                 </div>
-                <div class="metric-card" style="background: #f0fdf4;">
-                    <span class="metric-value" style="color: #059669;">25%</span>
-                    <div class="metric-label">Management Fee</div>
-                    <div class="metric-sublabel">All-inclusive service</div>
+
+                <div class="callout" style="background: #f8f9fa; border-left-color: #6b7280;">
+                    <div class="callout-title">Calculation Basis</div>
+                    <p style="margin-bottom: 0; color: #555;">Formula: ADR × Occupancy Rate × 365 days = Annual Gross Revenue</p>
                 </div>
-                <div class="metric-card" style="background: #eff6ff;">
-                    <span class="metric-value" style="color: #2563eb;">€7,513</span>
-                    <div class="metric-label">Monthly Gross Revenue</div>
-                    <div class="metric-sublabel">Immediate launch capability</div>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2>Oryam Residence Market Positioning</h2>
+                <p style="color: #666;">Oryam Residence's premium gated community status and strategic location justify the projected ADR ranges through several key differentiators that command pricing premiums over standard vacation rentals.</p>
+                
+                <div class="table-container">
+                    <table class="mobile-stack">
+                        <thead>
+                            <tr>
+                                <th>Development Type</th>
+                                <th>Typical ADR Range</th>
+                                <th>Occupancy Rate</th>
+                                <th>Key Differentiators</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Development Type"><span class="value"><strong>Standard Apartments</strong></span></td>
+                                <td data-label="Typical ADR Range"><span class="value">€70-100</span></td>
+                                <td data-label="Occupancy Rate"><span class="value">50-60%</span></td>
+                                <td data-label="Key Differentiators"><span class="value">Basic amenities, individual management</span></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Development Type"><span class="value"><strong>Resort Communities</strong></span></td>
+                                <td data-label="Typical ADR Range"><span class="value">€120-180</span></td>
+                                <td data-label="Occupancy Rate"><span class="value">65-75%</span></td>
+                                <td data-label="Key Differentiators"><span class="value">Shared facilities, resort branding</span></td>
+                            </tr>
+                            <tr class="table-highlight">
+                                <td data-label="Development Type"><span class="value"><strong>Oryam Residence</strong></span></td>
+                                <td data-label="Typical ADR Range"><span class="value">€100-160</span></td>
+                                <td data-label="Occupancy Rate"><span class="value">65-70%</span></td>
+                                <td data-label="Key Differentiators"><span class="value">Gated security, swimming pool & fitness center, professional management</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
 
-            <div class="callout" style="background: #f8f9fa; border-left-color: #6b7280;">
-                <div class="callout-title">Calculation Basis</div>
-                <p style="margin-bottom: 0; color: #555;">Formula: ADR × Occupancy Rate × 365 days = Annual Gross Revenue</p>
-            </div>
-        </section>
-
-        <hr>
-
-        <section>
-            <h2>Oryam Residence Market Positioning</h2>
-            <p style="color: #666;">Oryam Residence's premium gated community status and strategic location justify the projected ADR ranges through several key differentiators that command pricing premiums over standard vacation rentals.</p>
-            
-            <div class="table-container">
-                <table class="mobile-stack">
-                    <thead>
-                        <tr>
-                            <th>Development Type</th>
-                            <th>Typical ADR Range</th>
-                            <th>Occupancy Rate</th>
-                            <th>Key Differentiators</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td data-label="Development Type"><span class="value"><strong>Standard Apartments</strong></span></td>
-                            <td data-label="Typical ADR Range"><span class="value">€70-100</span></td>
-                            <td data-label="Occupancy Rate"><span class="value">50-60%</span></td>
-                            <td data-label="Key Differentiators"><span class="value">Basic amenities, individual management</span></td>
-                        </tr>
-                        <tr>
-                            <td data-label="Development Type"><span class="value"><strong>Resort Communities</strong></span></td>
-                            <td data-label="Typical ADR Range"><span class="value">€120-180</span></td>
-                            <td data-label="Occupancy Rate"><span class="value">65-75%</span></td>
-                            <td data-label="Key Differentiators"><span class="value">Shared facilities, resort branding</span></td>
-                        </tr>
-                        <tr class="table-highlight">
-                            <td data-label="Development Type"><span class="value"><strong>Oryam Residence</strong></span></td>
-                            <td data-label="Typical ADR Range"><span class="value">€100-160</span></td>
-                            <td data-label="Occupancy Rate"><span class="value">65-70%</span></td>
-                            <td data-label="Key Differentiators"><span class="value">Gated security, pool & gym facilities, professional management</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
-                <div style="background: #f0f9ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 1rem;">
-                    <h4 style="color: #1e40af; margin-bottom: 0.75rem;">Premium Amenities</h4>
-                    <ul style="font-size: 0.9rem; color: #1d4ed8; margin: 0; padding-left: 1rem;">
-                        <li>24/7 gated security and controlled access</li>
-                        <li>Swimming pool and fitness center</li>
-                        <li>Landscaped gardens and common spaces</li>
-                        <li>Professional maintenance and upkeep</li>
-                    </ul>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                    <div style="background: #f0f9ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 1rem;">
+                        <h4 style="color: #1e40af; margin-bottom: 0.75rem;">Premium Amenities</h4>
+                        <ul style="font-size: 0.9rem; color: #1d4ed8; margin: 0; padding-left: 1rem;">
+                            <li>24/7 gated security and controlled access</li>
+                            <li>Swimming pool and fitness center</li>
+                            <li>Landscaped gardens and common spaces</li>
+                            <li>Professional maintenance and upkeep</li>
+                        </ul>
+                    </div>
+                    <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 1rem;">
+                        <h4 style="color: #166534; margin-bottom: 0.75rem;">Strategic Location</h4>
+                        <ul style="font-size: 0.9rem; color: #15803d; margin: 0; padding-left: 1rem;">
+                            <li>10-minute walk to the beach</li>
+                            <li>Proximity to tourist attractions</li>
+                            <li>Easy airport and shopping access</li>
+                            <li>Safe, family-friendly environment</li>
+                        </ul>
+                    </div>
                 </div>
-                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 1rem;">
-                    <h4 style="color: #166534; margin-bottom: 0.75rem;">Strategic Location</h4>
-                    <ul style="font-size: 0.9rem; color: #15803d; margin: 0; padding-left: 1rem;">
-                        <li>10-minute walk to the beach</li>
-                        <li>Proximity to tourist attractions</li>
-                        <li>Easy airport and shopping access</li>
-                        <li>Safe, family-friendly environment</li>
-                    </ul>
+
+                <p style="font-size: 0.9rem; color: #666; margin-top: 1rem;"><strong>ADR Justification:</strong> The projected €100-160 nightly rates reflect Oryam Residence's position between standard apartments and full resort properties. Professional management, security features, and community amenities support premium pricing while maintaining competitive occupancy rates through longer stays and repeat bookings.</p>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2>Implementation Timeline</h2>
+                <div class="timeline-item">
+                    <div class="timeline-number">1</div>
+                    <div class="timeline-content">
+                        <h4>Immediate Launch</h4>
+                        <p>A Penthouse, B21, D21 ready for immediate listing</p>
+                        <span class="tag tag-green">€90,155 annual gross potential</span>
+                    </div>
                 </div>
-            </div>
-
-            <p style="font-size: 0.9rem; color: #666; margin-top: 1rem;"><strong>ADR Justification:</strong> The projected €90-160 nightly rates reflect Oryam Residence's position between standard apartments and full resort properties. Professional management, security features, and community amenities support premium pricing while maintaining competitive occupancy rates through longer stays and repeat bookings.</p>
-        </section>
-
-        <hr>
-
-        <section>
-            <h2>Implementation Timeline</h2>
-            <div class="timeline-item">
-                <div class="timeline-number">1</div>
-                <div class="timeline-content">
-                    <h4>September 2025 Launch</h4>
-                    <p>A Penthouse, B21, D21 ready for immediate listing</p>
-                    <span class="tag tag-green">€90,155 annual gross potential</span>
+                <div class="timeline-item">
+                    <div class="timeline-number">2</div>
+                    <div class="timeline-content">
+                        <h4>Additional Units: Subject to Investment Decisions</h4>
+                        <p>A12, B Penthouse, others - 2 weeks post-furnishing completion</p>
+                        <span class="tag tag-blue">Expansion opportunities available</span>
+                    </div>
                 </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-number">2</div>
-                <div class="timeline-content">
-                    <h4>Additional Units: Subject to Investment Decisions</h4>
-                    <p>A12, B Penthouse, others - 2 weeks post-furnishing completion</p>
-                    <span class="tag tag-blue">Expansion opportunities available</span>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2>Property Portfolio Analysis</h2>
+                
+                <h3>Phase 1: Ready Properties (Immediate Launch)</h3>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;"><strong>Formula:</strong> ADR × Occupancy Rate × 365 days = Annual Gross Revenue</p>
+                <div class="table-container">
+                    <table class="mobile-stack">
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Rate/Night</th>
+                                <th>Occupancy Target</th>
+                                <th>Annual Gross Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Property"><span class="value"><strong>A Penthouse</strong></span></td>
+                                <td data-label="Rate/Night"><span class="value">€130</span></td>
+                                <td data-label="Occupancy Target"><span class="value">70%</span></td>
+                                <td data-label="Annual Gross Revenue"><span class="value">€33,215</span></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Property"><span class="value"><strong>B21</strong></span></td>
+                                <td data-label="Rate/Night"><span class="value">€120</span></td>
+                                <td data-label="Occupancy Target"><span class="value">65%</span></td>
+                                <td data-label="Annual Gross Revenue"><span class="value">€28,470</span></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Property"><span class="value"><strong>D21</strong></span></td>
+                                <td data-label="Rate/Night"><span class="value">€120</span></td>
+                                <td data-label="Occupancy Target"><span class="value">65%</span></td>
+                                <td data-label="Annual Gross Revenue"><span class="value">€28,470</span></td>
+                            </tr>
+                            <tr class="table-highlight">
+                                <td data-label="Property"><span class="value"><strong>PHASE 1 TOTAL</strong></span></td>
+                                <td data-label="Rate/Night"><span class="value">€123 avg</span></td>
+                                <td data-label="Occupancy Target"><span class="value">67% avg</span></td>
+                                <td data-label="Annual Gross Revenue"><span class="value"><strong>€90,155</strong></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-        </section>
 
-        <hr>
+                <h3>Phase 2: Investment Properties (Optional Expansion)</h3>
+                <div class="table-container">
+                    <table class="mobile-stack">
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Investment Required</th>
+                                <th>Rate/Night</th>
+                                <th>Occupancy</th>
+                                <th>Annual Gross</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Property"><span class="value"><strong>A12</strong></span></td>
+                                <td data-label="Investment Required"><span class="value">TBA (Piment Rouge, Sabrina, Other)</span></td>
+                                <td data-label="Rate/Night"><span class="value">€110</span></td>
+                                <td data-label="Occupancy"><span class="value">60%</span></td>
+                                <td data-label="Annual Gross"><span class="value">€24,090</span></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Property"><span class="value"><strong>B Penthouse</strong></span></td>
+                                <td data-label="Investment Required"><span class="value">TBA (Piment Rouge, Sabrina, Other)</span></td>
+                                <td data-label="Rate/Night"><span class="value">€120</span></td>
+                                <td data-label="Occupancy"><span class="value">65%</span></td>
+                                <td data-label="Annual Gross"><span class="value">€28,470</span></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Property"><span class="value"><strong>Additional Units</strong></span></td>
+                                <td data-label="Investment Required"><span class="value">TBA (Piment Rouge, Sabrina, Other)</span></td>
+                                <td data-label="Rate/Night"><span class="value">€100-120</span></td>
+                                <td data-label="Occupancy"><span class="value">55-65%</span></td>
+                                <td data-label="Annual Gross"><span class="value">€20,000-28,000 each</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">Investment amounts subject to furnishing requirements</p>
+            </section>
 
-        <section>
-            <h2>Property Portfolio Analysis</h2>
-            
-            <h3>Phase 1: Ready Properties (September Launch)</h3>
-            <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;"><strong>Formula:</strong> ADR × Occupancy Rate × 365 days = Annual Gross Revenue</p>
-            <div class="table-container">
-                <table class="mobile-stack">
-                    <thead>
-                        <tr>
-                            <th>Property</th>
-                            <th>Rate/Night</th>
-                            <th>Occupancy Target</th>
-                            <th>Annual Gross Revenue</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td data-label="Property"><span class="value"><strong>A Penthouse</strong></span></td>
-                            <td data-label="Rate/Night"><span class="value">€130</span></td>
-                            <td data-label="Occupancy Target"><span class="value">70%</span></td>
-                            <td data-label="Annual Gross Revenue"><span class="value">€33,215</span></td>
-                        </tr>
-                        <tr>
-                            <td data-label="Property"><span class="value"><strong>B21</strong></span></td>
-                            <td data-label="Rate/Night"><span class="value">€120</span></td>
-                            <td data-label="Occupancy Target"><span class="value">65%</span></td>
-                            <td data-label="Annual Gross Revenue"><span class="value">€28,470</span></td>
-                        </tr>
-                        <tr>
-                            <td data-label="Property"><span class="value"><strong>D21</strong></span></td>
-                            <td data-label="Rate/Night"><span class="value">€120</span></td>
-                            <td data-label="Occupancy Target"><span class="value">65%</span></td>
-                            <td data-label="Annual Gross Revenue"><span class="value">€28,470</span></td>
-                        </tr>
-                        <tr class="table-highlight">
-                            <td data-label="Property"><span class="value"><strong>PHASE 1 TOTAL</strong></span></td>
-                            <td data-label="Rate/Night"><span class="value">€123 avg</span></td>
-                            <td data-label="Occupancy Target"><span class="value">67% avg</span></td>
-                            <td data-label="Annual Gross Revenue"><span class="value"><strong>€90,155</strong></span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <hr>
 
-            <h3>Phase 2: Investment Properties (Optional Expansion)</h3>
-            <div class="table-container">
-                <table class="mobile-stack">
-                    <thead>
-                        <tr>
-                            <th>Property</th>
-                            <th>Investment Required</th>
-                            <th>Rate/Night</th>
-                            <th>Occupancy</th>
-                            <th>Annual Gross</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td data-label="Property"><span class="value"><strong>A12</strong></span></td>
-                            <td data-label="Investment Required"><span class="value">TBA (Piment Rouge, Sabrina, Other)</span></td>
-                            <td data-label="Rate/Night"><span class="value">€110</span></td>
-                            <td data-label="Occupancy"><span class="value">60%</span></td>
-                            <td data-label="Annual Gross"><span class="value">€24,090</span></td>
-                        </tr>
-                        <tr>
-                            <td data-label="Property"><span class="value"><strong>B Penthouse</strong></span></td>
-                            <td data-label="Investment Required"><span class="value">TBA (Piment Rouge, Sabrina, Other)</span></td>
-                            <td data-label="Rate/Night"><span class="value">€120</span></td>
-                            <td data-label="Occupancy"><span class="value">65%</span></td>
-                            <td data-label="Annual Gross"><span class="value">€28,470</span></td>
-                        </tr>
-                        <tr>
-                            <td data-label="Property"><span class="value"><strong>Additional Units</strong></span></td>
-                            <td data-label="Investment Required"><span class="value">TBA (Piment Rouge, Sabrina, Other)</span></td>
-                            <td data-label="Rate/Night"><span class="value">€100-120</span></td>
-                            <td data-label="Occupancy"><span class="value">55-65%</span></td>
-                            <td data-label="Annual Gross"><span class="value">€20,000-28,000 each</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <p style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">Investment amounts subject to furnishing requirements</p>
-        </section>
+            <section>
+                <h2>Revenue Scenario Analysis</h2>
+                
+                <h3>Three Portfolio Scenarios</h3>
+                <p style="color: #666; margin-bottom: 1rem;">Variable occupancy rates reflect market positioning strategy: premium ADR commands higher occupancy through longer stays and advance bookings</p>
+                
+                <div class="table-container">
+                    <table class="mobile-stack">
+                        <thead>
+                            <tr>
+                                <th>Scenario</th>
+                                <th>Units</th>
+                                <th>Avg ADR</th>
+                                <th>Avg Occupancy</th>
+                                <th>Annual Gross Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Scenario"><span class="value"><strong>Conservative (3 units)</strong></span></td>
+                                <td data-label="Units"><span class="value">3</span></td>
+                                <td data-label="Avg ADR"><span class="value">€100</span></td>
+                                <td data-label="Avg Occupancy"><span class="value">50%</span></td>
+                                <td data-label="Annual Gross Revenue"><span class="value">€54,750</span></td>
+                            </tr>
+                            <tr class="table-highlight">
+                                <td data-label="Scenario"><span class="value"><strong>Realistic Launch (3 units) - immediate deployment</strong></span></td>
+                                <td data-label="Units"><span class="value">3</span></td>
+                                <td data-label="Avg ADR"><span class="value">€123</span></td>
+                                <td data-label="Avg Occupancy"><span class="value">67%</span></td>
+                                <td data-label="Annual Gross Revenue"><span class="value">€90,155</span></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Scenario"><span class="value"><strong>Full Portfolio (5+ units)</strong></span></td>
+                                <td data-label="Units"><span class="value">5</span></td>
+                                <td data-label="Avg ADR"><span class="value">€120</span></td>
+                                <td data-label="Avg Occupancy"><span class="value">65%</span></td>
+                                <td data-label="Annual Gross Revenue"><span class="value">€142,350</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-        <hr>
+                <h3>ADR vs Occupancy Sensitivity Matrix</h3>
+                <p style="color: #666; margin-bottom: 1rem;">Annual gross revenue for 3-unit ready portfolio across different rate and occupancy combinations:</p>
+                
+                <div class="table-container">
+                    <table class="mobile-stack">
+                        <thead>
+                            <tr>
+                                <th>ADR</th>
+                                <th>55% Occupancy</th>
+                                <th>60% Occupancy</th>
+                                <th>65% Occupancy</th>
+                                <th>70% Occupancy</th>
+                                <th>75% Occupancy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="ADR"><span class="value"><strong>€100</strong></span></td>
+                                <td data-label="55% Occupancy"><span class="value">€60,225</span></td>
+                                <td data-label="60% Occupancy"><span class="value">€65,700</span></td>
+                                <td data-label="65% Occupancy"><span class="value">€71,175</span></td>
+                                <td data-label="70% Occupancy"><span class="value">€76,650</span></td>
+                                <td data-label="75% Occupancy"><span class="value">€82,125</span></td>
+                            </tr>
+                            <tr class="table-highlight">
+                                <td data-label="ADR"><span class="value"><strong>€120</strong></span></td>
+                                <td data-label="55% Occupancy"><span class="value">€72,270</span></td>
+                                <td data-label="60% Occupancy"><span class="value">€78,840</span></td>
+                                <td data-label="65% Occupancy"><span class="value">€85,410</span></td>
+                                <td data-label="70% Occupancy"><span class="value">€91,980</span></td>
+                                <td data-label="75% Occupancy"><span class="value">€98,550</span></td>
+                            </tr>
+                            <tr>
+                                <td data-label="ADR"><span class="value"><strong>€140</strong></span></td>
+                                <td data-label="55% Occupancy"><span class="value">€84,315</span></td>
+                                <td data-label="60% Occupancy"><span class="value">€91,980</span></td>
+                                <td data-label="65% Occupancy"><span class="value">€99,645</span></td>
+                                <td data-label="70% Occupancy"><span class="value">€107,310</span></td>
+                                <td data-label="75% Occupancy"><span class="value">€114,975</span></td>
+                            </tr>
+                            <tr>
+                                <td data-label="ADR"><span class="value"><strong>€160</strong></span></td>
+                                <td data-label="55% Occupancy"><span class="value">€96,360</span></td>
+                                <td data-label="60% Occupancy"><span class="value">€105,120</span></td>
+                                <td data-label="65% Occupancy"><span class="value">€113,880</span></td>
+                                <td data-label="70% Occupancy"><span class="value">€122,640</span></td>
+                                <td data-label="75% Occupancy"><span class="value">€131,400</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">Calculation: 3 units × 365 days × ADR × occupancy rate</p>
+            </section>
 
-        <section>
-            <h2>Revenue Scenario Analysis</h2>
-            
-            <h3>Three Portfolio Scenarios</h3>
-            <p style="color: #666; margin-bottom: 1rem;">Variable occupancy rates reflect market positioning strategy: premium ADR commands higher occupancy through longer stays and advance bookings</p>
-            
-            <div class="table-container">
-                <table class="mobile-stack">
-                    <thead>
-                        <tr>
-                            <th>Scenario</th>
-                            <th>Units</th>
-                            <th>Avg ADR</th>
-                            <th>Avg Occupancy</th>
-                            <th>Annual Gross Revenue</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td data-label="Scenario"><span class="value"><strong>Conservative (3 units)</strong></span></td>
-                            <td data-label="Units"><span class="value">3</span></td>
-                            <td data-label="Avg ADR"><span class="value">€100</span></td>
-                            <td data-label="Avg Occupancy"><span class="value">50%</span></td>
-                            <td data-label="Annual Gross Revenue"><span class="value">€54,750</span></td>
-                        </tr>
-                        <tr class="table-highlight">
-                            <td data-label="Scenario"><span class="value"><strong>Realistic Launch (3 units) - immediate deployment</strong></span></td>
-                            <td data-label="Units"><span class="value">3</span></td>
-                            <td data-label="Avg ADR"><span class="value">€123</span></td>
-                            <td data-label="Avg Occupancy"><span class="value">67%</span></td>
-                            <td data-label="Annual Gross Revenue"><span class="value">€90,155</span></td>
-                        </tr>
-                        <tr>
-                            <td data-label="Scenario"><span class="value"><strong>Full Portfolio (5+ units)</strong></span></td>
-                            <td data-label="Units"><span class="value">5</span></td>
-                            <td data-label="Avg ADR"><span class="value">€120</span></td>
-                            <td data-label="Avg Occupancy"><span class="value">65%</span></td>
-                            <td data-label="Annual Gross Revenue"><span class="value">€142,350</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <hr>
 
-            <h3>ADR vs Occupancy Sensitivity Matrix</h3>
-            <p style="color: #666; margin-bottom: 1rem;">Annual gross revenue for 3-unit ready portfolio across different rate and occupancy combinations:</p>
-            
-            <div class="table-container">
-                <table class="mobile-stack">
-                    <thead>
-                        <tr>
-                            <th>ADR</th>
-                            <th>55% Occupancy</th>
-                            <th>60% Occupancy</th>
-                            <th>65% Occupancy</th>
-                            <th>70% Occupancy</th>
-                            <th>75% Occupancy</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td data-label="ADR"><span class="value"><strong>€100</strong></span></td>
-                            <td data-label="55% Occupancy"><span class="value">€60,225</span></td>
-                            <td data-label="60% Occupancy"><span class="value">€65,700</span></td>
-                            <td data-label="65% Occupancy"><span class="value">€71,175</span></td>
-                            <td data-label="70% Occupancy"><span class="value">€76,650</span></td>
-                            <td data-label="75% Occupancy"><span class="value">€82,125</span></td>
-                        </tr>
-                        <tr class="table-highlight">
-                            <td data-label="ADR"><span class="value"><strong>€120</strong></span></td>
-                            <td data-label="55% Occupancy"><span class="value">€72,270</span></td>
-                            <td data-label="60% Occupancy"><span class="value">€78,840</span></td>
-                            <td data-label="65% Occupancy"><span class="value">€85,410</span></td>
-                            <td data-label="70% Occupancy"><span class="value">€91,980</span></td>
-                            <td data-label="75% Occupancy"><span class="value">€98,550</span></td>
-                        </tr>
-                        <tr>
-                            <td data-label="ADR"><span class="value"><strong>€140</strong></span></td>
-                            <td data-label="55% Occupancy"><span class="value">€84,315</span></td>
-                            <td data-label="60% Occupancy"><span class="value">€91,980</span></td>
-                            <td data-label="65% Occupancy"><span class="value">€99,645</span></td>
-                            <td data-label="70% Occupancy"><span class="value">€107,310</span></td>
-                            <td data-label="75% Occupancy"><span class="value">€114,975</span></td>
-                        </tr>
-                        <tr>
-                            <td data-label="ADR"><span class="value"><strong>€160</strong></span></td>
-                            <td data-label="55% Occupancy"><span class="value">€96,360</span></td>
-                            <td data-label="60% Occupancy"><span class="value">€105,120</span></td>
-                            <td data-label="65% Occupancy"><span class="value">€113,880</span></td>
-                            <td data-label="70% Occupancy"><span class="value">€122,640</span></td>
-                            <td data-label="75% Occupancy"><span class="value">€131,400</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <p style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">Calculation: 3 units × 365 days × ADR × occupancy rate</p>
-        </section>
+            <section>
+                <h2>Seasonal Revenue & Occupancy Projections</h2>
+                <p style="color: #666; margin-bottom: 1rem;">Monthly revenue projection for 3-unit ready portfolio showing seasonal tourism patterns</p>
+                <div class="chart-container">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </section>
 
-        <hr>
+            <hr>
 
-        <section>
-            <h2>Seasonal Revenue & Occupancy Projections</h2>
-            <p style="color: #666; margin-bottom: 1rem;">Monthly revenue projection for 3-unit ready portfolio showing seasonal tourism patterns</p>
-            <div class="chart-container">
-                <canvas id="revenueChart"></canvas>
-            </div>
-        </section>
-
-        <hr>
-
-        <section>
-            <h2>Investment Comparison: Short-term vs Long-term Rental</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
-                <div style="background: #f9fafb; border: 1px solid #d1d5db; border-radius: 8px; padding: 1.5rem;">
-                    <h4 style="color: #374151; margin-bottom: 1rem;">Traditional Long-Term Rental</h4>
-                    <div style="font-size: 0.9rem; color: #6b7280;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <span>Monthly Rent (2BR premium)</span>
-                            <span>€1,000-1,300</span>
+            <section>
+                <h2>Investment Comparison: Short-term vs Long-term Rental</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                    <div style="background: #f9fafb; border: 1px solid #d1d5db; border-radius: 8px; padding: 1.5rem;">
+                        <h4 style="color: #374151; margin-bottom: 1rem;">Traditional Long-Term Rental</h4>
+                        <div style="font-size: 0.9rem; color: #6b7280;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Monthly Rent (2BR premium)</span>
+                                <span>€1,000-1,300</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Annual Income (3 units)</span>
+                                <span>€36,000-47,000</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Management Complexity</span>
+                                <span>Low</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Tenant Turnover Risk</span>
+                                <span>Moderate</span>
+                            </div>
                         </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <span>Annual Income (3 units)</span>
-                            <span>€36,000-47,000</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <span>Management Complexity</span>
-                            <span>Low</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between;">
-                            <span>Tenant Turnover Risk</span>
-                            <span>Moderate</span>
+                    </div>
+                    <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 8px; padding: 1.5rem;">
+                        <h4 style="color: #1e40af; margin-bottom: 1rem;">Short-Term Rental Strategy</h4>
+                        <div style="font-size: 0.9rem; color: #374151;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Annual Gross Revenue (3 units)</span>
+                                <span style="font-weight: bold; color: #2563eb;">€90,155</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Management Complexity</span>
+                                <span>Professional (handled)</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Vacancy Risk</span>
+                                <span>Low (diversified bookings)</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 8px; padding: 1.5rem;">
-                    <h4 style="color: #1e40af; margin-bottom: 1rem;">Short-Term Rental Strategy</h4>
-                    <div style="font-size: 0.9rem; color: #374151;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <span>Annual Gross Revenue (3 units)</span>
-                            <span style="font-weight: bold; color: #2563eb;">€90,155</span>
+                <div style="text-align: center; margin-top: 1rem;">
+                    <span class="tag tag-green" style="font-size: 1rem; padding: 0.5rem 1rem;">92-151% Higher Gross Revenue with Short-Term Rental Strategy</span>
+                </div>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2>Three Strategic Exit Pathways</h2>
+                
+                <div class="strategy-card strategy-portfolio">
+                    <h4 style="color: #92400e;">Portfolio Sale Strategy</h4>
+                    <p style="color: #b45309;">Sell proven income-generating portfolio as turnkey business to institutional investor or hospitality operator. Premium: 20-30% above individual unit values due to demonstrated cash flow and operational systems.</p>
+                </div>
+                
+                <div class="strategy-card strategy-individual">
+                    <h4 style="color: #1e40af;">Individual Premium Sales</h4>
+                    <p style="color: #1d4ed8;">Market units individually with 12+ months proven income history. Premium: 15-25% vs comparable non-income properties due to established guest reviews and revenue track record.</p>
+                </div>
+
+                <div class="strategy-card strategy-hold">
+                    <h4 style="color: #065f46;">Long-term Hold Strategy</h4>
+                    <p style="color: #047857;">Maintain portfolio for sustained income generation. 5-year projection: €450,775 cumulative gross revenue from ready units alone.</p>
+                </div>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2>Service Delivery Framework</h2>
+                
+                <h3>Comprehensive Management Services</h3>
+                <ul style="color: #555;">
+                    <li>Tourist Accommodation Certificate applications and renewals</li>
+                    <li>Multi-platform distribution (Airbnb, Booking.com, etc.)</li>
+                    <li>Dynamic pricing and revenue optimization</li>
+                    <li>24/7 guest communication and support</li>
+                    <li>Professional cleaning coordination</li>
+                    <li>Maintenance and repair coordination</li>
+                    <li>Monthly financial reporting and performance analytics</li>
+                </ul>
+
+                <h3>Partner Network Services</h3>
+                <ul style="color: #555;">
+                    <li><strong>Tourism Residence Permit Processing:</strong> Direct connection to specialized consultant for full application management and government liaison</li>
+                    <li><strong>Legal and Regulatory Compliance:</strong> Partner advisors for ongoing compliance and regulatory updates</li>
+                    <li><strong>Insurance Coordination:</strong> Connections to appropriate short-term rental insurance providers</li>
+                    <li><strong>Property Enhancement:</strong> Vetted contractors and interior designers for furnishing and renovation projects</li>
+                </ul>
+
+                <h3>Management Fee Structure</h3>
+                <div style="margin-bottom: 1rem;">
+                    <p style="font-weight: 600; color: #374151; margin-bottom: 0.5rem;">All-Inclusive Management Fee: 25% of Gross Revenue</p>
+                    <p style="font-size: 0.9rem; color: #6b7280;">Industry standard fee structure includes guest communication, property management, cleaning coordination, maintenance, and listing optimization</p>
+                </div>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2>Implementation Checklist</h2>
+                <div style="margin: 1.5rem 0;">
+                    <div style="display: flex; align-items: center; margin-bottom: 0.75rem; padding: 0.5rem; border-radius: 4px; background: #f8f9fa;">
+                        <input type="checkbox" style="width: 1rem; height: 1rem; margin-right: 0.75rem; accent-color: #00A79E;">
+                        <span style="color: #374151;">Approve immediate launch of 3 ready units (A Penthouse, B21, D21)</span>
+                    </div>
+                    <div style="display: flex; align-items: center; margin-bottom: 0.75rem; padding: 0.5rem; border-radius: 4px; background: #f8f9fa;">
+                        <input type="checkbox" style="width: 1rem; height: 1rem; margin-right: 0.75rem; accent-color: #00A79E;">
+                        <span style="color: #374151;">Schedule professional photography for ready properties</span>
+                    </div>
+                    <div style="display: flex; align-items: center; margin-bottom: 0.75rem; padding: 0.5rem; border-radius: 4px; background: #f8f9fa;">
+                        <input type="checkbox" style="width: 1rem; height: 1rem; margin-right: 0.75rem; accent-color: #00A79E;">
+                        <span style="color: #374151;">Initiate Tourism Residence Permit applications through our specialist</span>
+                    </div>
+                    <div style="display: flex; align-items: center; margin-bottom: 0.75rem; padding: 0.5rem; border-radius: 4px; background: #f8f9fa;">
+                        <input type="checkbox" style="width: 1rem; height: 1rem; margin-right: 0.75rem; accent-color: #00A79E;">
+                        <span style="color: #374151;">Evaluate investment opportunities for additional units (A12, B Penthouse)</span>
+                    </div>
+                    <div style="display: flex; align-items: center; padding: 0.5rem; border-radius: 4px; background: #f8f9fa;">
+                        <input type="checkbox" style="width: 1rem; height: 1rem; margin-right: 0.75rem; accent-color: #00A79E;">
+                        <span style="color: #374151;">Establish management agreements and fee structures</span>
+                    </div>
+                </div>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2>Next Steps</h2>
+                <p style="color: #666;">Your portfolio presents an immediate opportunity to generate substantial revenue from 3 ready units while maintaining flexibility for expansion and eventual exit strategies. With the tourism season approaching, timing favors immediate action.</p>
+                <p style="color: #666;">The phased approach allows you to start generating €90,155 annual gross revenue immediately while evaluating additional investment opportunities for expansion. Each strategic pathway offers different advantages depending on your long-term objectives.</p>
+                <p class="text-center" style="margin-top: 1.5rem; font-weight: bold; font-size: 1.125rem; color: #00A79E;">Ready to launch your portfolio? Contact: Rouslan +230 5761 3558<br>Islander Holiday Retreats - "Profitez, on s'occupe du reste!"</p>
+            </section>
+
+            <footer>
+                Analysis based on market data from September 2025 | Conservative projections using realistic occupancy assumptions
+            </footer>
+        </div>
+
+        <!-- French Content -->
+        <div id="content-fr" class="lang-content">
+            <header>
+                <h1>Stratégie de Portefeuille Résidence Oryam</h1>
+                <h2>Analyse Stratégique de Monétisation d'Actifs Immobiliers</h2>
+                <p style="color: #666; margin-top: 0.5rem;">Pour Hervé Bellefroid | Préparé par Islander Holiday Retreats – "Profitez, on s'occupe du reste!"</p>
+                <p style="color: #666;">Date : 15 septembre 2025 | Contact : Rouslan +230 5761 3558 | rouslan@ihr-mu.com</p>
+            </header>
+
+            <div class="callout">
+                <div class="callout-title">L'Opportunité</div>
+                <p style="margin-bottom: 0; color: #555;">Lancez 3 unités prêtes de cette résidence privée générant immédiatement €90 155 de revenus locatifs bruts annuels. Évolutivité vers 5+ unités selon la finalisation des investissements d'ameublement. Maintenez la flexibilité pour les ventes individuelles tout en générant un flux de revenus constant.</p>
+            </div>
+
+            <section>
+                <h2>Phase 1 : Métriques de Lancement Immédiat</h2>
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <span class="metric-value">€90 155</span>
+                        <div class="metric-label">Revenus Locatifs Bruts Annuels</div>
+                        <div class="metric-sublabel">3 unités prêtes combinées</div>
+                    </div>
+                    <div class="metric-card" style="background: #f0fdf4;">
+                        <span class="metric-value" style="color: #059669;">25%</span>
+                        <div class="metric-label">Frais de Gestion</div>
+                        <div class="metric-sublabel">Service tout inclus</div>
+                    </div>
+                    <div class="metric-card" style="background: #eff6ff;">
+                        <span class="metric-value" style="color: #2563eb;">€7 513</span>
+                        <div class="metric-label">Revenus Locatifs Bruts Mensuels</div>
+                        <div class="metric-sublabel">Capacité de lancement immédiate</div>
+                    </div>
+                </div>
+
+                <div class="callout" style="background: #f8f9fa; border-left-color: #6b7280;">
+                    <div class="callout-title">Base de Calcul</div>
+                    <p style="margin-bottom: 0; color: #555;">Formule : Prix Moyen par Nuit × Taux d'Occupation × 365 jours = Revenus Locatifs Bruts Annuels</p>
+                </div>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2>Positionnement Marché de la Résidence Oryam</h2>
+                <p style="color: #666;">Le statut de résidence privée fermée premium de la Résidence Oryam et sa localisation stratégique justifient les gammes de prix projetées grâce à plusieurs différentiateurs clés qui permettent des tarifs supérieurs par rapport aux locations saisonnières standard.</p>
+                
+                <div class="table-container">
+                    <table class="mobile-stack">
+                        <thead>
+                            <tr>
+                                <th>Type de Développement</th>
+                                <th>Gamme Tarif Moyen</th>
+                                <th>Taux d'Occupation</th>
+                                <th>Différentiateurs Clés</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Type de Développement"><span class="value"><strong>Appartements Standard</strong></span></td>
+                                <td data-label="Prix Moyen par Nuit"><span class="value">€70-100</span></td>
+                                <td data-label="Taux d'Occupation"><span class="value">50-60%</span></td>
+                                <td data-label="Différentiateurs Clés"><span class="value">Équipements de base, gestion individuelle</span></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Type de Développement"><span class="value"><strong>Résidences de Tourisme</strong></span></td>
+                                <td data-label="Prix Moyen par Nuit"><span class="value">€120-180</span></td>
+                                <td data-label="Taux d'Occupation"><span class="value">65-75%</span></td>
+                                <td data-label="Différentiateurs Clés"><span class="value">Installations partagées, label resort</span></td>
+                            </tr>
+                            <tr class="table-highlight">
+                                <td data-label="Type de Développement"><span class="value"><strong>Résidence Oryam</strong></span></td>
+                                <td data-label="Prix Moyen par Nuit"><span class="value">€100-160</span></td>
+                                <td data-label="Taux d'Occupation"><span class="value">65-70%</span></td>
+                                <td data-label="Différentiateurs Clés"><span class="value">Résidence privée sécurisée, piscine et salle de sport, gestion professionnelle</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                    <div style="background: #f0f9ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 1rem;">
+                        <h4 style="color: #1e40af; margin-bottom: 0.75rem;">Équipements Premium</h4>
+                        <ul style="font-size: 0.9rem; color: #1d4ed8; margin: 0; padding-left: 1rem;">
+                            <li>Sécurité fermée 24/7 et accès contrôlé</li>
+                            <li>Piscine et centre de fitness</li>
+                            <li>Jardins paysagers et espaces communs</li>
+                            <li>Maintenance et entretien professionnels</li>
+                        </ul>
+                    </div>
+                    <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 1rem;">
+                        <h4 style="color: #166534; margin-bottom: 0.75rem;">Localisation Stratégique</h4>
+                        <ul style="font-size: 0.9rem; color: #15803d; margin: 0; padding-left: 1rem;">
+                            <li>10 minutes à pied de la plage</li>
+                            <li>Proximité des attractions touristiques</li>
+                            <li>Accès facile à l'aéroport et commerces</li>
+                            <li>Environnement sûr et familial</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p style="font-size: 0.9rem; color: #666; margin-top: 1rem;"><strong>Justification du Prix Moyen par Nuit :</strong> Les tarifs projetés €100-160 par nuit reflètent le positionnement de la Résidence Oryam entre les appartements standard et les résidences de tourisme complètes. La gestion professionnelle, les services de sécurité et les équipements communautaires justifient une tarification premium tout en maintenant des taux d'occupation compétitifs grâce aux séjours prolongés et à la fidélisation de la clientèle.</p>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2>Chronologie de Mise en Œuvre</h2>
+                <div class="timeline-item">
+                    <div class="timeline-number">1</div>
+                    <div class="timeline-content">
+                        <h4>Lancement Immédiat</h4>
+                        <p>A Penthouse, B21, D21 prêts pour mise en ligne immédiate</p>
+                        <span class="tag tag-green">€90 155 potentiel brut annuel</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">2</div>
+                    <div class="timeline-content">
+                        <h4>Unités Supplémentaires : Soumis aux Décisions d'Investissement</h4>
+                        <p>A12, B Penthouse, autres - 2 semaines post-finalisation ameublement</p>
+                        <span class="tag tag-blue">Opportunités d'expansion disponibles</span>
+                    </div>
+                </div>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2>Analyse du Portefeuille Immobilier</h2>
+                
+                <h3>Phase 1 : Propriétés Prêtes (Lancement Immédiat)</h3>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;"><strong>Formule :</strong> Prix Moyen par Nuit × Taux d'Occupation × 365 jours = Revenus Locatifs Bruts Annuels</p>
+                <div class="table-container">
+                    <table class="mobile-stack">
+                        <thead>
+                            <tr>
+                                <th>Propriété</th>
+                                <th>Tarif/Nuit</th>
+                                <th>Objectif Occupation</th>
+                                <th>Revenus Bruts Annuels</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Propriété"><span class="value"><strong>A Penthouse</strong></span></td>
+                                <td data-label="Prix/Nuit"><span class="value">€130</span></td>
+                                <td data-label="Objectif Occupation"><span class="value">70%</span></td>
+                                <td data-label="Revenus Locatifs Bruts Annuels"><span class="value">€33 215</span></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Propriété"><span class="value"><strong>B21</strong></span></td>
+                                <td data-label="Prix/Nuit"><span class="value">€120</span></td>
+                                <td data-label="Objectif Occupation"><span class="value">65%</span></td>
+                                <td data-label="Revenus Locatifs Bruts Annuels"><span class="value">€28 470</span></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Propriété"><span class="value"><strong>D21</strong></span></td>
+                                <td data-label="Prix/Nuit"><span class="value">€120</span></td>
+                                <td data-label="Objectif Occupation"><span class="value">65%</span></td>
+                                <td data-label="Revenus Locatifs Bruts Annuels"><span class="value">€28 470</span></td>
+                            </tr>
+                            <tr class="table-highlight">
+                                <td data-label="Propriété"><span class="value"><strong>TOTAL PHASE 1</strong></span></td>
+                                <td data-label="Prix/Nuit"><span class="value">€123 moy</span></td>
+                                <td data-label="Objectif Occupation"><span class="value">67% moy</span></td>
+                                <td data-label="Revenus Locatifs Bruts Annuels"><span class="value"><strong>€90 155</strong></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Phase 2 : Propriétés d'Investissement (Expansion Optionnelle)</h3>
+                <div class="table-container">
+                    <table class="mobile-stack">
+                        <thead>
+                            <tr>
+                                <th>Propriété</th>
+                                <th>Investissement Requis</th>
+                                <th>Tarif/Nuit</th>
+                                <th>Occupation</th>
+                                <th>Brut Annuel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Propriété"><span class="value"><strong>A12</strong></span></td>
+                                <td data-label="Investissement Requis"><span class="value">TBD (Piment Rouge, Sabrina, Autre)</span></td>
+                                <td data-label="Tarif/Nuit"><span class="value">€110</span></td>
+                                <td data-label="Occupation"><span class="value">60%</span></td>
+                                <td data-label="Brut Annuel"><span class="value">€24 090</span></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Propriété"><span class="value"><strong>B Penthouse</strong></span></td>
+                                <td data-label="Investissement Requis"><span class="value">TBD (Piment Rouge, Sabrina, Autre)</span></td>
+                                <td data-label="Tarif/Nuit"><span class="value">€120</span></td>
+                                <td data-label="Occupation"><span class="value">65%</span></td>
+                                <td data-label="Brut Annuel"><span class="value">€28 470</span></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Propriété"><span class="value"><strong>Unités Supplémentaires</strong></span></td>
+                                <td data-label="Investissement Requis"><span class="value">TBD (Piment Rouge, Sabrina, Autre)</span></td>
+                                <td data-label="Tarif/Nuit"><span class="value">€100-120</span></td>
+                                <td data-label="Occupation"><span class="value">55-65%</span></td>
+                                <td data-label="Brut Annuel"><span class="value">€20 000-28 000 chacune</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">Montants d'investissement soumis aux exigences d'ameublement</p>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2>Analyse des Scénarios de Revenus</h2>
+                
+                <h3>Trois Scénarios de Portefeuille</h3>
+                <p style="color: #666; margin-bottom: 1rem;">Les taux d'occupation variables reflètent la stratégie de positionnement marché : un tarif premium commande une occupation plus élevée grâce aux séjours prolongés et réservations anticipées</p>
+                
+                <div class="table-container">
+                    <table class="mobile-stack">
+                        <thead>
+                            <tr>
+                                <th>Scénario</th>
+                                <th>Unités</th>
+                                <th>Tarif Moy</th>
+                                <th>Occupation Moy</th>
+                                <th>Revenus Bruts Annuels</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Scénario"><span class="value"><strong>Conservateur (3 unités)</strong></span></td>
+                                <td data-label="Unités"><span class="value">3</span></td>
+                                <td data-label="Tarif Moy"><span class="value">€100</span></td>
+                                <td data-label="Occupation Moy"><span class="value">50%</span></td>
+                                <td data-label="Revenus Bruts Annuels"><span class="value">€54 750</span></td>
+                            </tr>
+                            <tr class="table-highlight">
+                                <td data-label="Scénario"><span class="value"><strong>Lancement Réaliste (3 unités) - déploiement immédiat</strong></span></td>
+                                <td data-label="Unités"><span class="value">3</span></td>
+                                <td data-label="Tarif Moy"><span class="value">€123</span></td>
+                                <td data-label="Occupation Moy"><span class="value">67%</span></td>
+                                <td data-label="Revenus Bruts Annuels"><span class="value">€90 155</span></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Scénario"><span class="value"><strong>Portefeuille Complet (5+ unités)</strong></span></td>
+                                <td data-label="Unités"><span class="value">5</span></td>
+                                <td data-label="Tarif Moy"><span class="value">€120</span></td>
+                                <td data-label="Occupation Moy"><span class="value">65%</span></td>
+                                <td data-label="Revenus Bruts Annuels"><span class="value">€142 350</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Matrice de Sensibilité Prix Moyen vs Taux d'Occupation</h3>
+                <p style="color: #666; margin-bottom: 1rem;">Revenus locatifs bruts annuels pour le portefeuille de 3 unités prêtes selon différentes combinaisons de prix et de taux d'occupation :</p>
+                
+                <div class="table-container">
+                    <table class="mobile-stack">
+                        <thead>
+                            <tr>
+                                <th>Prix Moyen par Nuit</th>
+                                <th>55% Occupation</th>
+                                <th>60% Occupation</th>
+                                <th>65% Occupation</th>
+                                <th>70% Occupation</th>
+                                <th>75% Occupation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Prix Moyen par Nuit"><span class="value"><strong>€100</strong></span></td>
+                                <td data-label="55% Occupation"><span class="value">€60 225</span></td>
+                                <td data-label="60% Occupation"><span class="value">€65 700</span></td>
+                                <td data-label="65% Occupation"><span class="value">€71 175</span></td>
+                                <td data-label="70% Occupation"><span class="value">€76 650</span></td>
+                                <td data-label="75% Occupation"><span class="value">€82 125</span></td>
+                            </tr>
+                            <tr class="table-highlight">
+                                <td data-label="Prix Moyen par Nuit"><span class="value"><strong>€120</strong></span></td>
+                                <td data-label="55% Occupation"><span class="value">€72 270</span></td>
+                                <td data-label="60% Occupation"><span class="value">€78 840</span></td>
+                                <td data-label="65% Occupation"><span class="value">€85 410</span></td>
+                                <td data-label="70% Occupation"><span class="value">€91 980</span></td>
+                                <td data-label="75% Occupation"><span class="value">€98 550</span></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Prix Moyen par Nuit"><span class="value"><strong>€140</strong></span></td>
+                                <td data-label="55% Occupation"><span class="value">€84 315</span></td>
+                                <td data-label="60% Occupation"><span class="value">€91 980</span></td>
+                                <td data-label="65% Occupation"><span class="value">€99 645</span></td>
+                                <td data-label="70% Occupation"><span class="value">€107 310</span></td>
+                                <td data-label="75% Occupation"><span class="value">€114 975</span></td>
+                            </tr>
+                            <tr>
+                                <td data-label="Prix Moyen par Nuit"><span class="value"><strong>€160</strong></span></td>
+                                <td data-label="55% Occupation"><span class="value">€96 360</span></td>
+                                <td data-label="60% Occupation"><span class="value">€105 120</span></td>
+                                <td data-label="65% Occupation"><span class="value">€113 880</span></td>
+                                <td data-label="70% Occupation"><span class="value">€122 640</span></td>
+                                <td data-label="75% Occupation"><span class="value">€131 400</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">Calcul : 3 unités × 365 jours × prix moyen par nuit × taux d'occupation</p>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2>Projections de Revenus et Occupation Saisonnières</h2>
+                <p style="color: #666; margin-bottom: 1rem;">Projection de revenus mensuels pour le portefeuille de 3 unités prêtes montrant les tendances touristiques saisonnières</p>
+                <div class="chart-container">
+                    <canvas id="revenueChartFr"></canvas>
+                </div>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2>Comparaison d'Investissement : Location Saisonnière vs Location Long Terme</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                    <div style="background: #f9fafb; border: 1px solid #d1d5db; border-radius: 8px; padding: 1.5rem;">
+                        <h4 style="color: #374151; margin-bottom: 1rem;">Location Résidentielle Traditionnelle</h4>
+                        <div style="font-size: 0.9rem; color: #6b7280;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Loyer Mensuel (2CH premium)</span>
+                                <span>€1 000-1 300</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Revenus Annuels (3 unités)</span>
+                                <span>€36 000-47 000</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Complexité de Gestion</span>
+                                <span>Faible</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Risque Rotation Locataires</span>
+                                <span>Modéré</span>
+                            </div>
                         </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <span>Management Complexity</span>
-                            <span>Professional (handled)</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between;">
-                            <span>Vacancy Risk</span>
-                            <span>Low (diversified bookings)</span>
+                    </div>
+                    <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 8px; padding: 1.5rem;">
+                        <h4 style="color: #1e40af; margin-bottom: 1rem;">Stratégie Location Saisonnière</h4>
+                        <div style="font-size: 0.9rem; color: #374151;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Revenus Locatifs Bruts Annuels (3 unités)</span>
+                                <span style="font-weight: bold; color: #2563eb;">€90 155</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Complexité de Gestion</span>
+                                <span>Professionnelle (gérée)</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Risque de Vacance</span>
+                                <span>Faible (réservations diversifiées)</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div style="text-align: center; margin-top: 1rem;">
-                <span class="tag tag-green" style="font-size: 1rem; padding: 0.5rem 1rem;">66-109% Higher Gross Revenue with Short-Term Rental Strategy</span>
-            </div>
-        </section>
-
-        <hr>
-
-        <section>
-            <h2>Three Strategic Exit Pathways</h2>
-            
-            <div class="strategy-card strategy-portfolio">
-                <h4 style="color: #92400e;">Portfolio Sale Strategy</h4>
-                <p style="color: #b45309;">Sell proven income-generating portfolio as turnkey business to institutional investor or hospitality operator. Premium: 20-30% above individual unit values due to demonstrated cash flow and operational systems.</p>
-            </div>
-            
-            <div class="strategy-card strategy-individual">
-                <h4 style="color: #1e40af;">Individual Premium Sales</h4>
-                <p style="color: #1d4ed8;">Market units individually with 12+ months proven income history. Premium: 15-25% vs comparable non-income properties due to established guest reviews and revenue track record.</p>
-            </div>
-
-            <div class="strategy-card strategy-hold">
-                <h4 style="color: #065f46;">Long-term Hold Strategy</h4>
-                <p style="color: #047857;">Maintain portfolio for sustained income generation. 5-year projection: €450,775 cumulative gross revenue from ready units alone.</p>
-            </div>
-        </section>
-
-        <hr>
-
-        <section>
-            <h2>Service Delivery Framework</h2>
-            
-            <h3>Direct Management Services</h3>
-            <ul style="color: #555;">
-                <li>Tourist Accommodation Certificate applications and renewals</li>
-                <li>Multi-platform distribution (Airbnb, Booking.com, etc.)</li>
-                <li>Dynamic pricing and revenue optimization</li>
-                <li>24/7 guest communication and support</li>
-                <li>Cleaning and maintenance coordination</li>
-                <li>Monthly financial reporting and performance analytics</li>
-            </ul>
-
-            <h3>Partner Network Services</h3>
-            <ul style="color: #555;">
-                <li><strong>Tourism Residence Permit Processing:</strong> Direct connection to specialized consultant for full application management and government liaison</li>
-                <li><strong>Legal and Regulatory Compliance:</strong> Partner advisors for ongoing compliance and regulatory updates</li>
-                <li><strong>Insurance Coordination:</strong> Connections to appropriate short-term rental insurance providers</li>
-                <li><strong>Property Enhancement:</strong> Vetted contractors and interior designers for furnishing and renovation projects</li>
-            </ul>
-
-            <h3>Management Fee Structure</h3>
-            <div style="margin-bottom: 1rem;">
-                <p style="font-weight: 600; color: #374151; margin-bottom: 0.5rem;">All-Inclusive Management Fee: 25% of Gross Revenue</p>
-                <p style="font-size: 0.9rem; color: #6b7280;">Industry standard fee structure includes guest communication, property management, cleaning coordination, maintenance, and listing optimization</p>
-            </div>
-        </section>
-
-        <hr>
-
-        <section>
-            <h2>Implementation Checklist</h2>
-            <div style="margin: 1.5rem 0;">
-                <div style="display: flex; align-items: center; margin-bottom: 0.75rem; padding: 0.5rem; border-radius: 4px; background: #f8f9fa;">
-                    <input type="checkbox" style="width: 1rem; height: 1rem; margin-right: 0.75rem; accent-color: #00A79E;">
-                    <span style="color: #374151;">Approve immediate launch of 3 ready units (A Penthouse, B21, D21)</span>
+                <div style="text-align: center; margin-top: 1rem;">
+                    <span class="tag tag-green" style="font-size: 1rem; padding: 0.5rem 1rem;">92-151% de Revenus Locatifs Bruts Supérieurs avec la Stratégie Location Saisonnière</span>
                 </div>
-                <div style="display: flex; align-items: center; margin-bottom: 0.75rem; padding: 0.5rem; border-radius: 4px; background: #f8f9fa;">
-                    <input type="checkbox" style="width: 1rem; height: 1rem; margin-right: 0.75rem; accent-color: #00A79E;">
-                    <span style="color: #374151;">Schedule professional photography for ready properties</span>
-                </div>
-                <div style="display: flex; align-items: center; margin-bottom: 0.75rem; padding: 0.5rem; border-radius: 4px; background: #f8f9fa;">
-                    <input type="checkbox" style="width: 1rem; height: 1rem; margin-right: 0.75rem; accent-color: #00A79E;">
-                    <span style="color: #374151;">Initiate Tourism Residence Permit applications through our specialist</span>
-                </div>
-                <div style="display: flex; align-items: center; margin-bottom: 0.75rem; padding: 0.5rem; border-radius: 4px; background: #f8f9fa;">
-                    <input type="checkbox" style="width: 1rem; height: 1rem; margin-right: 0.75rem; accent-color: #00A79E;">
-                    <span style="color: #374151;">Evaluate investment opportunities for additional units (A12, B Penthouse)</span>
-                </div>
-                <div style="display: flex; align-items: center; padding: 0.5rem; border-radius: 4px; background: #f8f9fa;">
-                    <input type="checkbox" style="width: 1rem; height: 1rem; margin-right: 0.75rem; accent-color: #00A79E;">
-                    <span style="color: #374151;">Establish management agreements and fee structures</span>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <hr>
+            <hr>
 
-        <section>
-            <h2>Next Steps</h2>
-            <p style="color: #666;">Your portfolio presents an immediate opportunity to generate substantial revenue from 3 ready units while maintaining flexibility for expansion and eventual exit strategies. With the tourism season approaching, timing favors immediate action.</p>
-            <p style="color: #666;">The phased approach allows you to start generating €90,155 annual gross revenue immediately while evaluating additional investment opportunities for expansion. Each strategic pathway offers different advantages depending on your long-term objectives.</p>
-            <p class="text-center" style="margin-top: 1.5rem; font-weight: bold; font-size: 1.125rem; color: #00A79E;">Ready to launch your portfolio? Contact: Rouslan +230 5761 3558<br>Islander Holiday Retreats - "Profitez, on s'occupe du reste!"</p>
-        </section>
+            <section>
+                <h2>Trois Voies de Sortie Stratégiques</h2>
+                
+                <div class="strategy-card strategy-portfolio">
+                    <h4 style="color: #92400e;">Stratégie de Vente de Portefeuille</h4>
+                    <p style="color: #b45309;">Vendre le portefeuille générateur de revenus prouvés comme entreprise clé en main à un investisseur institutionnel ou opérateur hôtelier. Prime : 20-30% au-dessus des valeurs unitaires individuelles grâce aux flux de trésorerie démontrés et systèmes opérationnels.</p>
+                </div>
+                
+                <div class="strategy-card strategy-individual">
+                    <h4 style="color: #1e40af;">Ventes Premium Individuelles</h4>
+                    <p style="color: #1d4ed8;">Commercialiser les unités individuellement avec 12+ mois d'historique de revenus prouvés. Prime : 15-25% vs propriétés sans revenus comparables grâce aux avis clients établis et historique de revenus.</p>
+                </div>
 
-        <footer>
-            Analysis based on market data from September 2025 | Conservative projections using realistic occupancy assumptions
-        </footer>
+                <div class="strategy-card strategy-hold">
+                    <h4 style="color: #065f46;">Stratégie de Détention Long Terme</h4>
+                    <p style="color: #047857;">Maintenir le portefeuille pour génération de revenus soutenue. Projection 5 ans : €450 775 revenus bruts cumulés des unités prêtes seules.</p>
+                </div>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2>Cadre de Prestation de Services</h2>
+                
+                <h3>Services de Gestion Complets</h3>
+                <ul style="color: #555;">
+                    <li>Applications et renouvellements de Certificat d'Hébergement Touristique</li>
+                    <li>Distribution multi-plateformes (Airbnb, Booking.com, etc.)</li>
+                    <li>Tarification dynamique et optimisation des revenus</li>
+                    <li>Communication et support client 24/7</li>
+                    <li>Coordination du nettoyage professionnel</li>
+                    <li>Coordination de la maintenance et réparations</li>
+                    <li>Rapports financiers mensuels et analyses de performance</li>
+                </ul>
+
+                <h3>Services Réseau Partenaires</h3>
+                <ul style="color: #555;">
+                    <li><strong>Traitement Permis de Résidence Touristique :</strong> Connexion directe à consultant spécialisé pour gestion complète des demandes et liaison gouvernementale</li>
+                    <li><strong>Conformité Légale et Réglementaire :</strong> Conseillers partenaires pour conformité continue et mises à jour réglementaires</li>
+                    <li><strong>Coordination Assurance :</strong> Connexions aux fournisseurs d'assurance location court terme appropriés</li>
+                    <li><strong>Amélioration Propriété :</strong> Entrepreneurs et designers d'intérieur vérifiés pour projets d'ameublement et rénovation</li>
+                </ul>
+
+                <h3>Structure Frais de Gestion</h3>
+                <div style="margin-bottom: 1rem;">
+                    <p style="font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Frais de Gestion Tout Inclus : 25% des Revenus Bruts</p>
+                    <p style="font-size: 0.9rem; color: #6b7280;">Structure de frais standard de l'industrie incluant communication client, gestion propriété, coordination nettoyage, maintenance, et optimisation des annonces</p>
+                </div>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2>Liste de Contrôle de Mise en Œuvre</h2>
+                <div style="margin: 1.5rem 0;">
+                    <div style="display: flex; align-items: center; margin-bottom: 0.75rem; padding: 0.5rem; border-radius: 4px; background: #f8f9fa;">
+                        <input type="checkbox" style="width: 1rem; height: 1rem; margin-right: 0.75rem; accent-color: #00A79E;">
+                        <span style="color: #374151;">Approuver le lancement immédiat de 3 unités prêtes (A Penthouse, B21, D21)</span>
+                    </div>
+                    <div style="display: flex; align-items: center; margin-bottom: 0.75rem; padding: 0.5rem; border-radius: 4px; background: #f8f9fa;">
+                        <input type="checkbox" style="width: 1rem; height: 1rem; margin-right: 0.75rem; accent-color: #00A79E;">
+                        <span style="color: #374151;">Programmer la photographie professionnelle pour propriétés prêtes</span>
+                    </div>
+                    <div style="display: flex; align-items: center; margin-bottom: 0.75rem; padding: 0.5rem; border-radius: 4px; background: #f8f9fa;">
+                        <input type="checkbox" style="width: 1rem; height: 1rem; margin-right: 0.75rem; accent-color: #00A79E;">
+                        <span style="color: #374151;">Initier les demandes de Permis de Résidence Touristique via notre spécialiste</span>
+                    </div>
+                    <div style="display: flex; align-items: center; margin-bottom: 0.75rem; padding: 0.5rem; border-radius: 4px; background: #f8f9fa;">
+                        <input type="checkbox" style="width: 1rem; height: 1rem; margin-right: 0.75rem; accent-color: #00A79E;">
+                        <span style="color: #374151;">Évaluer les opportunités d'investissement pour unités supplémentaires (A12, B Penthouse)</span>
+                    </div>
+                    <div style="display: flex; align-items: center; padding: 0.5rem; border-radius: 4px; background: #f8f9fa;">
+                        <input type="checkbox" style="width: 1rem; height: 1rem; margin-right: 0.75rem; accent-color: #00A79E;">
+                        <span style="color: #374151;">Établir les accords de gestion et structures de frais</span>
+                    </div>
+                </div>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2>Prochaines Étapes</h2>
+                <p style="color: #666;">Votre portefeuille présente une opportunité immédiate de générer des revenus substantiels à partir de 3 unités prêtes tout en maintenant la flexibilité pour l'expansion et les stratégies de sortie éventuelles. Avec la saison touristique qui approche, le timing favorise l'action immédiate.</p>
+                <p style="color: #666;">L'approche par phases vous permet de commencer à générer €90 155 de revenus bruts annuels immédiatement tout en évaluant les opportunités d'investissement supplémentaires pour l'expansion. Chaque voie stratégique offre différents avantages selon vos objectifs à long terme.</p>
+                <p class="text-center" style="margin-top: 1.5rem; font-weight: bold; font-size: 1.125rem; color: #00A79E;">Prêt à lancer votre portefeuille ? Contact : Rouslan +230 5761 3558<br>Islander Holiday Retreats - "Profitez, on s'occupe du reste!"</p>
+            </section>
+
+            <footer>
+                Analyse basée sur les données de marché de septembre 2025 | Projections conservatrices utilisant des hypothèses d'occupation réalistes
+            </footer>
+        </div>
     </div>
 
     <script>
+        function switchLanguage(lang) {
+            // Hide all content
+            document.querySelectorAll('.lang-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show selected language content
+            document.getElementById('content-' + lang).classList.add('active');
+            
+            // Update button states
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[onclick="switchLanguage('${lang}')"]`).classList.add('active');
+            
+            // Update page title
+            const titles = {
+                'en': 'Oryam Residence - Strategic Asset Analysis',
+                'fr': 'Oryam Residence - Analyse Stratégique d\'Actifs'
+            };
+            document.title = titles[lang];
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
+            // Create English chart
             const chartCanvas = document.getElementById('revenueChart');
             if (chartCanvas) {
                 const ctx = chartCanvas.getContext('2d');
@@ -998,6 +1555,110 @@
                 } catch (error) {
                     console.error('Chart error:', error);
                     chartCanvas.parentElement.innerHTML = '<div style="padding: 2rem; text-align: center; color: #666;">Revenue data available in tables above</div>';
+                }
+            }
+
+            // Create French chart
+            const chartCanvasFr = document.getElementById('revenueChartFr');
+            if (chartCanvasFr) {
+                const ctxFr = chartCanvasFr.getContext('2d');
+                const monthsFr = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'];
+                // Same data as English version
+                const lowScenario = [3800, 4200, 4500, 4000, 3600, 3600, 3800, 4000, 4200, 4800, 5200, 5800];
+                const midScenario = [6600, 7200, 7800, 7000, 6400, 6400, 6600, 7000, 7500, 8000, 8500, 9000];
+                const highScenario = [9500, 10200, 10800, 10000, 9200, 9200, 9500, 10000, 10800, 11500, 12400, 13000];
+                const occupancy = [58, 60, 62, 58, 55, 55, 58, 60, 62, 65, 70, 75];
+
+                try {
+                    new Chart(ctxFr, {
+                        type: 'line',
+                        data: {
+                            labels: monthsFr,
+                            datasets: [
+                                {
+                                    label: 'Scénario Bas (€)',
+                                    data: lowScenario,
+                                    borderColor: '#A1C8E5',
+                                    borderWidth: 2,
+                                    tension: 0.4,
+                                    fill: false
+                                },
+                                {
+                                    label: 'Scénario Moyen (€)',
+                                    data: midScenario,
+                                    borderColor: '#01458A',
+                                    borderWidth: 2,
+                                    tension: 0.4,
+                                    fill: false
+                                },
+                                {
+                                    label: 'Scénario Haut (€)',
+                                    data: highScenario,
+                                    borderColor: '#00A79E',
+                                    borderWidth: 2,
+                                    tension: 0.4,
+                                    fill: false
+                                },
+                                {
+                                    label: 'Occupation (%)',
+                                    data: occupancy,
+                                    borderColor: '#E8A331',
+                                    borderWidth: 2,
+                                    tension: 0.4,
+                                    yAxisID: 'y1',
+                                    fill: false
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: {
+                                    grid: { display: false }
+                                },
+                                y: {
+                                    type: 'linear',
+                                    display: true,
+                                    position: 'left',
+                                    title: {
+                                        display: true,
+                                        text: 'Revenus Bruts Mensuels (€)'
+                                    },
+                                    beginAtZero: true
+                                },
+                                y1: {
+                                    type: 'linear',
+                                    display: true,
+                                    position: 'right',
+                                    title: {
+                                        display: true,
+                                        text: 'Occupation (%)'
+                                    },
+                                    beginAtZero: false,
+                                    grid: { drawOnChartArea: false },
+                                    ticks: {
+                                        callback: function(value) {
+                                            return value + '%';
+                                        }
+                                    }
+                                }
+                            },
+                            plugins: {
+                                tooltip: {
+                                    mode: 'index',
+                                    intersect: false
+                                },
+                                legend: {
+                                    display: true,
+                                    position: 'top'
+                                }
+                            }
+                        }
+                    });
+                } catch (error) {
+                    console.error('French chart error:', error);
+                    chartCanvasFr.parentElement.innerHTML = '<div style="padding: 2rem; text-align: center; color: #666;">Données de revenus disponibles dans les tableaux ci-dessus</div>';
                 }
             }
         });
