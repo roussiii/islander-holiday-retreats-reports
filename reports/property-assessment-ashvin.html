@@ -73,6 +73,19 @@
         .checkbox-item.needs {
             background: #ffebee;
         }
+        .checkbox-item.completed {
+            background: #e8f5e9 !important;
+            border-radius: 3px;
+            border-left: 3px solid #4caf50 !important;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-item.completed label {
+            color: #2e7d32 !important;
+            text-decoration: line-through;
+            opacity: 0.8;
+        }
+
         .essential {
             font-weight: bold;
             color: #cc0000;
@@ -148,7 +161,7 @@
     </style>
 </head>
 <body>
-    <button class="print-button" onclick="window.print()">🖨️ Print/Save as PDF</button>
+            <button class="print-button" onclick="window.print()">🖨️ Print/Save as PDF</button>
 
     <div class="header">
         <h1>PROPERTY INVENTORY ASSESSMENT</h1>
@@ -207,12 +220,12 @@
         
         <h3>Basic Appliances</h3>
         <div class="checkbox-item needs"><input type="checkbox" id="kitchen1"><label for="kitchen1">Fully equipped kitchen with adequate storage</label></div>
-        <div class="checkbox-item needs"><input type="checkbox" id="kitchen2"><label for="kitchen2">Electric oven</label></div>
-        <div class="checkbox-item needs"><input type="checkbox" id="kitchen3"><label for="kitchen3">4-burner cooktop/hob</label></div>
-        <div class="checkbox-item needs"><input type="checkbox" id="kitchen4"><label for="kitchen4">Range hood/extractor fan</label></div>
-        <div class="checkbox-item needs"><input type="checkbox" id="kitchen5"><label for="kitchen5">Microwave oven</label></div>
-        <div class="checkbox-item needs"><input type="checkbox" id="kitchen6"><label for="kitchen6">Refrigerator with freezer compartment</label></div>
-        <div class="checkbox-item needs"><input type="checkbox" id="kitchen7"><label for="kitchen7">Dishwasher</label></div>
+        <div class="checkbox-item completed"><input type="checkbox" id="kitchen2" checked><label for="kitchen2">Electric oven</label></div>
+        <div class="checkbox-item completed"><input type="checkbox" id="kitchen3" checked><label for="kitchen3">4-burner cooktop/hob</label></div>
+        <div class="checkbox-item completed"><input type="checkbox" id="kitchen4" checked><label for="kitchen4">Range hood/extractor fan</label></div>
+        <div class="checkbox-item completed"><input type="checkbox" id="kitchen5" checked><label for="kitchen5">Microwave oven</label></div>
+        <div class="checkbox-item completed"><input type="checkbox" id="kitchen6" checked><label for="kitchen6">Refrigerator with freezer compartment</label></div>
+        <div class="checkbox-item completed"><input type="checkbox" id="kitchen7" checked><label for="kitchen7">Dishwasher</label></div>
         <div class="checkbox-item needs"><input type="checkbox" id="kitchen8"><label for="kitchen8">Coffee maker</label></div>
         <div class="checkbox-item needs"><input type="checkbox" id="kitchen9"><label for="kitchen9">Electric kettle</label></div>
         <div class="checkbox-item needs"><input type="checkbox" id="kitchen10"><label for="kitchen10">Toaster</label></div>
