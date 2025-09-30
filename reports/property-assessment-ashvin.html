@@ -1,1 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Assessment - Ashvin's Apartment</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.5;
+      color: #333;
+      background: #f9f9f9;
+    }
+    .header {
+      text-align: center;
+      border-bottom: 4px solid #0066cc;
+      padding-bottom: 15px;
+      margin-bottom: 30px;
+    }
+    .header h1 {
+      color: #0066cc;
+      margin: 0;
+      font-size: 28px;
+    }
+    .info-section {
+      background: #e6f3ff;
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      line-height: 1.6;
+    }
+    .section {
+      margin: 30px 0;
+      padding: 20px;
+      border-left: 5px solid #0066cc;
+      background: #fff;
+      border-radius: 6px;
+    }
+    .section h2 {
+      color: #0066cc;
+      margin-top: 0;
+      font-size: 20px;
+    }
+    .section h3 {
+      margin: 15px 0 10px 0;
+      font-size: 16px;
+      color: #444;
+    }
+    .checkbox-item {
+      display: flex;
+      align-items: flex-start;
+      margin: 8px 0;
+      padding: 6px;
+      border-radius: 4px;
+    }
+    .checkbox-item input[type="checkbox"] {
+      margin-right: 10px;
+      margin-top: 3px;
+      transform: scale(1.2);
+      flex-shrink: 0;
+    }
+    .checkbox-item.has {
+      background: #e8f5e9; /* green */
+    }
+    .checkbox-item.needs-attention {
+      background: #fff3e0; /* orange */
+      border-left: 3px solid #ff9800;
+      padding-left: 10px;
+    }
+    .checkbox-item.needs {
+      background: #ffebee; /* red */
+    }
+    .essential {
+      font-weight: bold;
+      color: #cc0000;
+    }
+    .note {
+      color: #666;
+      font-style: italic;
+      font-size: 14px;
+      margin-left: 28px;
+    }
+    .summary-box {
+      background: #fff9e6;
+      border: 2px solid #ffc107;
+      padding: 20px;
+      margin: 40px 0;
+      border-radius: 8px;
+    }
+    .summary-box h3 {
+      margin-top: 0;
+      color: #f57c00;
+      font-size: 18px;
+    }
+    .summary-box ul {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+    .summary-box li {
+      margin: 6px 0;
+    }
+    .legend {
+      display: flex;
+      gap: 20px;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .legend-box {
+      width: 18px;
+      height: 18px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>PROPERTY INVENTORY ASSESSMENT</h1>
+    <p><strong>Islander Holiday Retreats</strong><br>
+    Port Chambly, Mauritius</p>
+  </div>
 
+  <div class="info-section">
+    <strong>Property Owner:</strong> Ashvin Agjaybee<br>
+    <strong>Location:</strong> Port Chambly, Mauritius<br>
+    <strong>Type:</strong> 2-bedroom apartment<br>
+    <strong>Layout:</strong> Ground floor (living room, kitchen, terrace) + First floor (2 bedrooms, bathroom)<br>
+    <strong>Guest capacity:</strong> 4 persons<br>
+    <strong>Assessment Date:</strong> September 29, 2025<br>
+    <strong>Prepared by:</strong> Islander Holiday Retreats
+  </div>
+
+  <div class="summary-box">
+    <h3>📋 QUICK SUMMARY - What Ashvin Needs to Purchase/Fix</h3>
+    <strong>🔧 NEEDS FIXING:</strong>
+    <ul>
+      <li>Bedside table in Bedroom 1 - needs repair</li>
+      <li>Consider replacing dining table + chairs for better fit</li>
+    </ul>
+    
+    <strong>🛒 MAJOR ITEMS TO PURCHASE:</strong>
+    <ul>
+      <li>Complete Kitchen Setup: All appliances, cookware, tableware</li>
+      <li>Complete Bedding: Sheets, duvet covers, pillowcases for both bedrooms</li>
+      <li>All Towels: Hand towels and bath towels (24 total)</li>
+      <li>Living Room: Smart TV, coffee table, WiFi setup, sofa</li>
+      <li>Terrace Furniture: Complete outdoor setup</li>
+      <li>Cleaning Equipment: Ironing board, vacuum cleaner, cleaning supplies</li>
+      <li>Safety Equipment: First aid kit, fire extinguisher, smoke detectors</li>
+    </ul>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-box" style="background:#e8f5e9;"></div> Has</div>
+    <div class="legend-item"><div class="legend-box" style="background:#fff3e0;"></div> Needs Attention</div>
+    <div class="legend-item"><div class="legend-box" style="background:#ffebee;"></div> Needs Purchase</div>
+  </div>
+</body>
+</html>
