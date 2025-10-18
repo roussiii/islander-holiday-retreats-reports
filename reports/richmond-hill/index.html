@@ -1,1 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Richmond Hill Apartment - Revenue Estimation Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F7F3E9;
+            margin: 0;
+            padding: 0;
+            color: #333333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #01458A;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #01458A;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #01458A;
+            padding-bottom: 0.5rem;
+        }
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #01458A;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #01458A;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        p {
+            color: #333333;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        .header {
+            background: #01458A;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+            margin: -2rem -2rem 2rem -2rem;
+        }
+        .header h1 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0.25rem 0;
+            font-size: 0.95rem;
+        }
+        .header a {
+            color: white;
+            text-decoration: underline;
+        }
+        .highlight {
+            background: linear-gradient(135deg, #e8f4f8 0%, #f0f7fa 100%);
+            padding: 2rem;
+            border-left: 4px solid #01458A;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            color: #856404;
+        }
+        .warning h4 {
+            color: #856404;
+            margin-top: 0;
+        }
+        .metric {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #01458A;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+        .metric-label {
+            font-size: 0.95rem;
+            color: #666;
+            display: block;
+            margin-top: 0.5rem;
+            font-weight: 400;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        thead {
+            background: #01458A;
+            color: white;
+        }
+        th {
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+        tbody tr.highlight-row {
+            background: #e8f4f8;
+            font-weight: 600;
+        }
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 2rem 0;
+        }
+        ul {
+            line-height: 1.9;
+            margin: 1rem 0;
+        }
+        li {
+            margin-bottom: 0.75rem;
+        }
+        .recommendations {
+            background: #f0f7fa;
+            padding: 1.5rem;
+            border-left: 4px solid #01458A;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .recommendations h4 {
+            color: #01458A;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .recommendations ul {
+            margin: 0.5rem 0;
+        }
+        .cta {
+            background: #01458A;
+            color: white;
+            padding: 2.5rem;
+            text-align: center;
+            border-radius: 8px;
+            margin-top: 3rem;
+        }
+        .cta h3 {
+            color: white;
+            border: none;
+            margin: 0 0 1rem 0;
+        }
+        .cta a {
+            color: white;
+            text-decoration: underline;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .card {
+            background: white;
+            border: 2px solid #e8f4f8;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .card.highlight {
+            background: #e8f4f8;
+            border-color: #01458A;
+        }
+        .card h4 {
+            color: #01458A;
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+        }
+        .card .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #01458A;
+            margin: 0.5rem 0;
+        }
+        .card .label {
+            color: #666;
+            font-size: 0.85rem;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+                margin: 1rem;
+            }
+            .metric {
+                font-size: 2rem;
+            }
+            .chart-container {
+                height: 300px;
+            }
+            table {
+                font-size: 0.8rem;
+            }
+            th, td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Revenue Estimation Report</h1>
+            <p><strong>2-Bedroom Apartment, Richmond Hill Complex, Grand Baie</strong></p>
+            <p>Prepared by Islander Holiday Retreats — "Profitez, on s'occupe du reste!"</p>
+            <p>Date: October 14, 2025 | Contact: Rouslan +230 5761 3558 | <a href="mailto:rouslan@ihr-mu.com">rouslan@ihr-mu.com</a></p>
+        </div>
 
+        <div class="highlight">
+            <h3>Executive Summary</h3>
+            <p>Dear Manoj,</p>
+            <p>Your 2-bedroom apartment in the <strong>Richmond Hill Complex</strong> is strategically positioned adjacent to Super U in central Grand Baie. The property's exceptional walkability—10 minutes to beach and restaurants—creates strong appeal for budget-conscious travelers and digital nomads prioritizing convenience.</p>
+            
+            <div class="metric">
+                €14,600 – €26,280
+                <span class="metric-label">Annual Gross Revenue Range (Post-Renovation)</span>
+            </div>
+            
+            <p>To achieve these projections, the property requires comprehensive renovation focused on modern finishes, updated bathrooms, and quality furniture throughout. Post-renovation, the apartment can compete effectively in the €80–120/night category based on seasonality.</p>
+        </div>
+
+        <div class="warning">
+            <h4>⚠️ Investment Required: Comprehensive Renovation</h4>
+            <p>Market analysis shows Richmond Hill properties achieving €80–120/night feature modern, renovated interiors with contemporary finishes. To compete effectively, this property requires:</p>
+            <ul style="margin-bottom: 0;">
+                <li>Complete bathroom renovation with modern fixtures</li>
+                <li>Furniture upgrades in all rooms</li>
+                <li>Kitchen enhancements (Nespresso, dishwasher, working fridge, counters)</li>
+                <li>Dedicated office space for digital nomads</li>
+                <li>Balcony optimization (large aluminum sliding doors, bamboo blinds, A/C integration)</li>
+            </ul>
+            <p style="margin-top: 1rem; margin-bottom: 0;"><strong>Current competitive position:</strong> €50–65/night</p>
+            <p style="margin-bottom: 0;"><strong>Post-renovation target:</strong> €80–120/night</p>
+        </div>
+
+        <h2>Richmond Hill Complex Advantage</h2>
+        <p>Richmond Hill's central Grand Baie location delivers consistent demand from travelers who value walkability and convenience. The complex is established and known for its accessibility.</p>
+        
+        <ul>
+            <li><strong>🏙️ Unbeatable Walkability:</strong> Super U supermarket adjacent, 10-minute walk to beach, restaurants, and nightlife. Perfect for travelers without cars.</li>
+            <li><strong>🎯 Digital Nomad Magnet:</strong> Central location, dedicated office space, and high-speed WiFi attract remote workers seeking monthly bookings.</li>
+            <li><strong>💰 Competitive Mid-Market:</strong> €80–120/night targets budget-conscious travelers prioritizing location and quality over luxury amenities.</li>
+            <li><strong>🏢 Complex Benefits:</strong> Parking, security, established reputation in Grand Baie's rental market.</li>
+            <li><strong>📈 Value-Add Opportunity:</strong> Current condition provides opportunity to capture untapped value through strategic renovation and professional management.</li>
+        </ul>
+
+        <h2>Market Positioning</h2>
+        <p>Post-renovation, your apartment competes in Grand Baie's mid-market segment—properties without pools or sea views but with excellent location and modern interiors.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>ADR (€/night)</th>
+                    <th>Key Features</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Basic Grand Baie (dated)</td>
+                    <td>€50–75</td>
+                    <td>Limited amenities, older finishes</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td><strong>Richmond Hill Target</strong></td>
+                    <td><strong>€80–120</strong></td>
+                    <td><strong>Modern renovated, central location, no pool</strong></td>
+                </tr>
+                <tr>
+                    <td>Grand Baie with Pool</td>
+                    <td>€110–140</td>
+                    <td>Central location, shared pool amenities</td>
+                </tr>
+                <tr>
+                    <td>Beachfront Premium</td>
+                    <td>€180–280</td>
+                    <td>Sea views, beach access, luxury positioning</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Revenue Projections (Post-Renovation)</h2>
+        <p>Based on 365 available nights, seasonal pricing (+25% peak Nov–Apr, -15% low May–Oct), and professional management after renovation completion.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Scenario</th>
+                    <th>Base ADR (€/night)</th>
+                    <th>Avg Occupancy</th>
+                    <th>Annual Gross Revenue</th>
+                    <th>Monthly Equivalent</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Conservative</strong></td>
+                    <td>€50–65</td>
+                    <td>45–50%</td>
+                    <td><strong>€8,212–€11,863</strong></td>
+                    <td>€684–€989</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td><strong>Base (Most Likely)</strong></td>
+                    <td>€80–100</td>
+                    <td>50–55%</td>
+                    <td><strong>€14,600–€20,075</strong></td>
+                    <td>€1,217–€1,673</td>
+                </tr>
+                <tr>
+                    <td><strong>Optimistic</strong></td>
+                    <td>€110–120</td>
+                    <td>55–60%</td>
+                    <td><strong>€22,083–€26,280</strong></td>
+                    <td>€1,840–€2,190</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="color: #856404; background: #fff3cd; padding: 1rem; border-radius: 4px; margin-top: 1rem;"><strong>Note:</strong> Conservative scenario represents current condition (not recommended for listing). Base and optimistic scenarios assume quality renovation completion.</p>
+
+        <h2>Revenue by ADR and Occupancy</h2>
+        <div class="chart-container">
+            <canvas id="variabilityChart"></canvas>
+        </div>
+
+        <h2>Seasonal Revenue Pattern</h2>
+        <div class="chart-container">
+            <canvas id="seasonalChart"></canvas>
+        </div>
+
+        <div class="recommendations">
+            <h3>Renovation Priorities</h3>
+            <p>We provide design consultation, renovation guidance, contractor coordination, and professional photography post-renovation. Key focus areas:</p>
+            
+            <h4>Essential Improvements</h4>
+            <ul>
+                <li><strong>Bathrooms:</strong> Complete renovation with modern fixtures, functional bathtub verification</li>
+                <li><strong>Furniture:</strong> Contemporary pieces in all rooms—bedroom, living, dining</li>
+                <li><strong>Kitchen:</strong> Nespresso machine, dishwasher, working fridge, counter upgrade</li>
+                <li><strong>Office Space:</strong> Dedicated workspace attracting digital nomad segment</li>
+                <li><strong>Balcony Enhancement:</strong> Large aluminum sliding doors, bamboo blinds, plants, outdoor furniture, smart A/C circuit integration (A/C won't run if doors open)</li>
+            </ul>
+            
+            <h4>Professional Presentation</h4>
+            <ul>
+                <li>Professional photography emphasizing interiors and central location</li>
+                <li>Strategic staging to maximize perceived space</li>
+                <li>Modern, bright aesthetic appealing to international travelers</li>
+            </ul>
+        </div>
+
+        <h2>Financial Summary</h2>
+        <div class="summary-cards">
+            <div class="card">
+                <h4>Current State</h4>
+                <div class="value">Not Ready</div>
+                <div class="label">Renovation required</div>
+            </div>
+            <div class="card highlight">
+                <h4>Post-Renovation Base</h4>
+                <div class="value">€14,600–20,075</div>
+                <div class="label">Most likely annual gross</div>
+            </div>
+            <div class="card">
+                <h4>Optimized Potential</h4>
+                <div class="value">€22k–26k</div>
+                <div class="label">With strong execution</div>
+            </div>
+        </div>
+
+        <div class="cta">
+            <h3>Next Steps</h3>
+            <p style="font-size: 1.1rem; margin: 1rem 0;">Let's schedule a property visit to discuss your renovation vision, review design recommendations, and create your transformation plan.</p>
+            
+            <p><strong>We provide comprehensive renovation support:</strong></p>
+            <ul style="text-align: left; max-width: 600px; margin: 1rem auto; line-height: 1.8;">
+                <li>Design consultation and style guidance</li>
+                <li>Contractor coordination and quality oversight</li>
+                <li>Post-renovation professional photography</li>
+                <li>Tourism Authority licensing facilitation</li>
+                <li>Launch optimization across all platforms</li>
+            </ul>
+            
+            <p style="font-size: 1.2rem; margin-top: 2rem;"><strong>Contact: <a href="tel:+2305761355">+230 5761 3558</a> or <a href="mailto:rouslan@ihr-mu.com">rouslan@ihr-mu.com</a></strong></p>
+            <p style="font-style: italic; margin-top: 1rem;">Turning properties into profits—hassle-free.</p>
+        </div>
+    </div>
+
+    <script>
+        // Variability Chart
+        const variabilityCtx = document.getElementById('variabilityChart').getContext('2d');
+        new Chart(variabilityCtx, {
+            type: 'bar',
+            data: {
+                labels: ['€50', '€65', '€80', '€100', '€110', '€120'],
+                datasets: [
+                    {
+                        label: '45% Occupancy',
+                        data: [8212, 10658, 13140, 16425, 18068, 19710],
+                        backgroundColor: 'rgba(1, 69, 138, 0.7)',
+                        borderColor: 'rgba(1, 69, 138, 1)',
+                        borderWidth: 2
+                    },
+                    {
+                        label: '50% Occupancy',
+                        data: [9125, 11863, 14600, 18250, 20075, 21900],
+                        backgroundColor: 'rgba(52, 152, 219, 0.7)',
+                        borderColor: 'rgba(52, 152, 219, 1)',
+                        borderWidth: 2
+                    },
+                    {
+                        label: '55% Occupancy',
+                        data: [10038, 13068, 16060, 20075, 22083, 24090],
+                        backgroundColor: 'rgba(46, 204, 113, 0.7)',
+                        borderColor: 'rgba(46, 204, 113, 1)',
+                        borderWidth: 2
+                    },
+                    {
+                        label: '60% Occupancy',
+                        data: [10950, 14273, 17520, 21900, 24090, 26280],
+                        backgroundColor: 'rgba(155, 89, 182, 0.7)',
+                        borderColor: 'rgba(155, 89, 182, 1)',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Annual Gross Revenue by ADR and Occupancy (€)',
+                        font: { size: 16, weight: 'bold' },
+                        color: '#01458A'
+                    },
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: { size: 12 },
+                            color: '#333'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Annual Gross Revenue (€)',
+                            font: { size: 13, weight: 'bold' },
+                            color: '#01458A'
+                        },
+                        ticks: {
+                            color: '#666',
+                            callback: function(value) {
+                                return '€' + value.toLocaleString();
+                            }
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Average Daily Rate (€/night)',
+                            font: { size: 13, weight: 'bold' },
+                            color: '#01458A'
+                        },
+                        ticks: {
+                            color: '#666'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Seasonal Chart
+        const seasonalCtx = document.getElementById('seasonalChart').getContext('2d');
+        new Chart(seasonalCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [
+                    {
+                        label: 'Conservative (€50-65)',
+                        data: [989, 989, 989, 989, 703, 703, 703, 703, 703, 703, 989, 989],
+                        borderColor: 'rgba(1, 69, 138, 1)',
+                        backgroundColor: 'rgba(1, 69, 138, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        borderWidth: 3,
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'Base (€80-100)',
+                        data: [1673, 1673, 1673, 1673, 1190, 1190, 1190, 1190, 1190, 1190, 1673, 1673],
+                        borderColor: 'rgba(52, 152, 219, 1)',
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        borderWidth: 3,
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'Optimistic (€110-120)',
+                        data: [2190, 2190, 2190, 2190, 1558, 1558, 1558, 1558, 1558, 1558, 2190, 2190],
+                        borderColor: 'rgba(46, 204, 113, 1)',
+                        backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        borderWidth: 3,
+                        pointRadius: 5
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Monthly Gross Revenue by Scenario (€)',
+                        font: { size: 16, weight: 'bold' },
+                        color: '#01458A'
+                    },
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: { size: 12 },
+                            color: '#333'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Monthly Gross Revenue (€)',
+                            font: { size: 13, weight: 'bold' },
+                            color: '#01458A'
+                        },
+                        ticks: {
+                            color: '#666',
+                            callback: function(value) {
+                                return '€' + value.toLocaleString();
+                            }
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Month (Peak: Nov-Apr | Low: May-Oct)',
+                            font: { size: 13, weight: 'bold' },
+                            color: '#01458A'
+                        },
+                        ticks: {
+                            color: '#666'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
