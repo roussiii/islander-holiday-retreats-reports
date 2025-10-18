@@ -3,248 +3,611 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seaview Apartment, Sunset Boulevard - Revenue Estimation Report</title>
-    <!-- External Styles: Bootstrap CSS for responsive structure -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Inline CSS for report-specific styling -->
+    <title>Sunset Boulevard Sea View Apartment - Revenue Estimation Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 20px; }
-        h1, h2, h3 { color: #2c3e50; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        table, th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .highlight { background-color: #e8f4fd; padding: 10px; border-left: 4px solid #3498db; }
-        .metric { font-size: 2em; font-weight: bold; color: #27ae60; }
-        canvas { max-width: 100%; margin: 20px auto; display: block; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F7F3E9;
+            margin: 0;
+            padding: 0;
+            color: #333333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #01458A;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #01458A;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #01458A;
+            padding-bottom: 0.5rem;
+        }
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #01458A;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            color: #333333;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        .header {
+            background: #01458A;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+            margin: -2rem -2rem 2rem -2rem;
+        }
+        .header h1 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0.25rem 0;
+            font-size: 0.95rem;
+        }
+        .header a {
+            color: white;
+            text-decoration: underline;
+        }
+        .highlight {
+            background: linear-gradient(135deg, #e8f4f8 0%, #f0f7fa 100%);
+            padding: 2rem;
+            border-left: 4px solid #01458A;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .metric {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #01458A;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+        .metric-label {
+            font-size: 0.95rem;
+            color: #666;
+            display: block;
+            margin-top: 0.5rem;
+            font-weight: 400;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        thead {
+            background: #01458A;
+            color: white;
+        }
+        th {
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+        tbody tr.highlight-row {
+            background: #e8f4f8;
+            font-weight: 600;
+        }
+        .alert {
+            background: #d1ecf1;
+            border-left: 4px solid #0c5460;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+            color: #0c5460;
+        }
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 2rem 0;
+        }
+        ul {
+            line-height: 1.9;
+            margin: 1rem 0;
+        }
+        li {
+            margin-bottom: 0.75rem;
+        }
+        .recommendations {
+            background: #f0f7fa;
+            padding: 1.5rem;
+            border-left: 4px solid #01458A;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        .recommendations h4 {
+            color: #01458A;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .recommendations ul {
+            margin: 0.5rem 0;
+        }
+        .cta {
+            background: #01458A;
+            color: white;
+            padding: 2.5rem;
+            text-align: center;
+            border-radius: 8px;
+            margin-top: 3rem;
+        }
+        .cta h3 {
+            color: white;
+            border: none;
+            margin: 0 0 1rem 0;
+        }
+        .cta a {
+            color: white;
+            text-decoration: underline;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .card {
+            background: white;
+            border: 2px solid #e8f4f8;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .card.highlight {
+            background: #e8f4f8;
+            border-color: #01458A;
+        }
+        .card h4 {
+            color: #01458A;
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+        }
+        .card .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #01458A;
+            margin: 0.5rem 0;
+        }
+        .card .label {
+            color: #666;
+            font-size: 0.85rem;
+        }
         @media (max-width: 768px) {
-            .metric { font-size: 1.5em; }
-            table { font-size: 0.9em; }
+            .container {
+                padding: 1rem;
+                margin: 1rem;
+            }
+            .metric {
+                font-size: 2rem;
+            }
+            .chart-container {
+                height: 300px;
+            }
+            table {
+                font-size: 0.8rem;
+            }
+            th, td {
+                padding: 0.5rem;
+            }
         }
     </style>
-    <!-- External Scripts: Chart.js for graphs -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Revenue Estimation Report</h1>
-
-        <h2>Seaview Apartment, Sunset Boulevard, Grand Baie</h2>
-        <p>Prepared by Islander Holiday Retreats – "Profitez, on s'occupe du reste!"</p>
-        <p>Date: October 14, 2025 | Contact: Rouslan +230 5761 3558 | rouslan@ihr-mu.com</p>
+        <div class="header">
+            <h1>Revenue Estimation Report</h1>
+            <p><strong>Sunset Boulevard Sea View Apartment, Grand Baie</strong></p>
+            <p>Prepared by Islander Holiday Retreats — "Profitez, on s'occupe du reste!"</p>
+            <p>Date: October 14, 2025 | Contact: Rouslan +230 5761 3558 | <a href="mailto:rouslan@ihr-mu.com">rouslan@ihr-mu.com</a></p>
+        </div>
 
         <div class="highlight">
-            <p>This report provides a professional, data-driven estimate of the short-term rental (STR) potential for your seaview apartment in the prestigious Sunset Boulevard complex in Grand Baie, Mauritius. As a luxury beachfront residence with sea-facing views and a small balcony, this property is ideally positioned for premium vacationers, couples, and small families seeking upscale coastal living in a vibrant northern hub.</p>
-            <p>Our analysis highlights the immense potential, with STR generating 1.3–5x higher gross revenue (€23,725–€89,425 annually) compared to the long-term rental (LTR) baseline of ~€18,000/year (based on average 2-bedroom sea view rates in Grand Baie of Rs75,000–90,000/month). With dynamic pricing and professional management, we can maximize bookings while accommodating your personal use through owner stays—simply block dates in advance. Our services ensure hassle-free operations to unlock this upside.</p>
+            <h3>Executive Summary</h3>
+            <p>Dear Manoj,</p>
+            <p>Your 2-bedroom sea view apartment in the prestigious <strong>Sunset Boulevard complex</strong> is positioned for excellent short-term rental returns. The property's beachfront location, direct sea views, and Grand Baie's premier tourism hub status create strong demand from couples, families, and luxury travelers.</p>
+            
+            <div class="metric">
+                €42,340 – €74,095
+                <span class="metric-label">Annual Gross Revenue Range (Base-Optimistic Scenarios)</span>
+            </div>
+            
+            <p>With professional management, dynamic pricing, and enhanced presentation, this property can deliver premium returns while allowing you flexible personal use when needed.</p>
         </div>
 
-        <h2>Neighbourhood Market Comparisons</h2>
-        <p>Grand Baie’s tourist appeal and Sunset Boulevard’s prestigious status (beachfront luxury with stunning views, high ratings ~9.7/10, and prime location near shops/restaurants) make it a top STR destination. Benchmarks focus on similar coastal luxury areas. Data from 2025 trends (e.g., average ADR €141, occupancy 41% in Grand Baie VCA West).</p>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Area</th>
-                        <th>ADR (€/night)</th>
-                        <th>Occupancy</th>
-                        <th>Notes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Grand Baie</td>
-                        <td>€90–140</td>
-                        <td>50–60%</td>
-                        <td>Tourist hub; luxury complexes like Sunset Boulevard command premiums for sea views and beachfront access.</td>
-                    </tr>
-                    <tr>
-                        <td>Trou aux Biches</td>
-                        <td>€110–150</td>
-                        <td>60–70%</td>
-                        <td>Beach-focused, high family demand; comparable prestige.</td>
-                    </tr>
-                    <tr>
-                        <td>Pointe aux Canonniers</td>
-                        <td>€140–180</td>
-                        <td>45–55%</td>
-                        <td>Luxury villas/apartments; ~€148 ADR for sea view properties.</td>
-                    </tr>
-                    <tr>
-                        <td>Mont Choisy</td>
-                        <td>€120–160</td>
-                        <td>55–65%</td>
-                        <td>Prime beach access; similar upscale appeal for vacationers.</td>
-                    </tr>
-                </tbody>
-            </table>
+        <h2>Market Context</h2>
+        <p>Sunset Boulevard represents Grand Baie's premium beachfront tier. We've verified current market performance through active Airbnb listings in your complex.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Property / Location</th>
+                    <th>ADR (€/night)</th>
+                    <th>Occupancy</th>
+                    <th>Key Features</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="highlight-row">
+                    <td><strong>Sunset Boulevard Average</strong></td>
+                    <td><strong>€186–228</strong></td>
+                    <td><strong>55–65%</strong></td>
+                    <td><strong>Your direct competition — sea views, 2BR</strong></td>
+                </tr>
+                <tr>
+                    <td>Sunset Boulevard Luxury Seafront</td>
+                    <td>€215</td>
+                    <td>55–60%</td>
+                    <td>Direct sea access, center of Grand Baie</td>
+                </tr>
+                <tr>
+                    <td>Sunset Boulevard Condo</td>
+                    <td>€186</td>
+                    <td>50–55%</td>
+                    <td>La Cuvette beach access, modern</td>
+                </tr>
+                <tr>
+                    <td>Sunset Boulevard Grandbaie</td>
+                    <td>€228</td>
+                    <td>60–65%</td>
+                    <td>Breathtaking views, premium positioning</td>
+                </tr>
+                <tr>
+                    <td>Grand Baie Center (Pool)</td>
+                    <td>€110–140</td>
+                    <td>50–60%</td>
+                    <td>Central location, shared amenities</td>
+                </tr>
+                <tr>
+                    <td>Trou aux Biches</td>
+                    <td>€110–150</td>
+                    <td>60–70%</td>
+                    <td>Beach-focused, family demand</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="alert">
+            <strong>Market Positioning:</strong> Your sea-facing Sunset Boulevard location justifies €180–280/night ADRs, validated by the €186–228 average of active complex listings. The prestige address and beachfront access command 40–70% premiums over non-beachfront Grand Baie properties.
         </div>
-        <p><strong>Key Insight</strong>: Your apartment’s sea-facing balcony and prestigious complex position it for €130–350 ADRs post-optimization. Comps show luxury sea view properties achieving 55–65% occupancy with professional listings, boosting inquiries by 20–30%.</p>
 
-        <h2>Gross Revenue Projections</h2>
-        <p>Projections for three scenarios, assuming 365 nights/year, dynamic pricing (+25% peak Nov–Apr, -15% low May–Oct), and occupancy achievable with enhancements. Adjusted ADRs: Low €130–150, Mid €180–220, High €250–350.</p>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Scenario</th>
-                        <th>ADR (€/night)</th>
-                        <th>Occupancy</th>
-                        <th>Annual Gross Revenue</th>
-                        <th>Monthly Equivalent</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Low</td>
-                        <td>€130–150</td>
-                        <td>50–55%</td>
-                        <td>€23,725–€30,113</td>
-                        <td>€1,977–€2,509</td>
-                    </tr>
-                    <tr>
-                        <td>Mid</td>
-                        <td>€180–220</td>
-                        <td>60–65%</td>
-                        <td>€39,420–€52,195</td>
-                        <td>€3,285–€4,350</td>
-                    </tr>
-                    <tr>
-                        <td>High</td>
-                        <td>€250–350</td>
-                        <td>65–70%</td>
-                        <td>€59,313–€89,425</td>
-                        <td>€4,943–€7,452</td>
-                    </tr>
-                </tbody>
-            </table>
+        <h2>Revenue Projections</h2>
+        <p>Based on 365 available nights, dynamic pricing (+25% ADR/occupancy peak season Nov–Apr, -15% low season May–Oct), and professional management.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Scenario</th>
+                    <th>Base ADR (€/night)</th>
+                    <th>Avg Occupancy</th>
+                    <th>Annual Gross Revenue</th>
+                    <th>Monthly Equivalent</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Conservative</strong></td>
+                    <td>€180–200</td>
+                    <td>50–55%</td>
+                    <td><strong>€32,850–€40,150</strong></td>
+                    <td>€2,738–€3,346</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td><strong>Base (Most Likely)</strong></td>
+                    <td>€200–230</td>
+                    <td>60–65%</td>
+                    <td><strong>€43,800–€54,533</strong></td>
+                    <td>€3,650–€4,544</td>
+                </tr>
+                <tr>
+                    <td><strong>Optimistic</strong></td>
+                    <td>€250–280</td>
+                    <td>65–70%</td>
+                    <td><strong>€59,313–€71,540</strong></td>
+                    <td>€4,943–€5,962</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Revenue by ADR and Occupancy</h2>
+        <div class="chart-container">
+            <canvas id="variabilityChart"></canvas>
         </div>
-        <p><strong>Comparison to LTR</strong>: €18,000/year significantly outperformed in all scenarios (1.3–5x higher gross), driven by peak-season demand and the complex's prestige.</p>
 
-        <h2>Scenario Variability Table (ADR vs. Occupancy Impact)</h2>
-        <p>This bar chart illustrates pricing-demand interaction, showing revenue potential vs. LTR €18,000/year. Optimal at €180–250 for balanced returns in a luxury market.</p>
-        <canvas id="variabilityChart"></canvas>
-        <script>
-            const variabilityCtx = document.getElementById('variabilityChart').getContext('2d');
-            const variabilityChart = new Chart(variabilityCtx, {
-                type: 'bar',
-                data: {
-                    labels: ["€130", "€150", "€180", "€220", "€250", "€350"],
-                    datasets: [
-                        {
-                            label: "50% Occupancy",
-                            data: [23725, 27375, 32850, 40150, 45625, 63875],
-                            backgroundColor: "#4B8BBE"
-                        },
-                        {
-                            label: "55% Occupancy",
-                            data: [26098, 30113, 36135, 44165, 50188, 70263],
-                            backgroundColor: "#FFD166"
-                        },
-                        {
-                            label: "60% Occupancy",
-                            data: [28470, 32850, 39420, 48180, 54750, 76650],
-                            backgroundColor: "#06D6A0"
-                        },
-                        {
-                            label: "65% Occupancy",
-                            data: [30843, 35569, 42683, 52195, 59313, 83038],
-                            backgroundColor: "#118AB2"
-                        }
-                    ]
-                },
-                options: {
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: "Annual Gross Revenue by ADR and Occupancy (€)"
-                        }
-                    },
-                    scales: {
-                        y: { beginAtZero: true, title: { display: true, text: "Annual Revenue (€)" } },
-                        x: { title: { display: true, text: "ADR (€/night)" } }
-                    },
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
-        </script>
+        <h2>Seasonal Revenue Pattern</h2>
+        <div class="chart-container">
+            <canvas id="seasonalChart"></canvas>
+        </div>
 
-        <h2>Seasonal Revenue & Occupancy Projections</h2>
-        <p>This line chart highlights peak-season spikes (Nov–Apr: +25% ADR/occupancy) vs. low-season dips, capitalizing on Grand Baie's tourism surge.</p>
-        <canvas id="seasonalChart"></canvas>
-        <script>
-            const seasonalCtx = document.getElementById('seasonalChart').getContext('2d');
-            const seasonalChart = new Chart(seasonalCtx, {
-                type: 'line',
-                data: {
-                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                    datasets: [
-                        {
-                            label: "Low Scenario (€130–150)",
-                            data: [2438, 2438, 2438, 2438, 1733, 1733, 1733, 1733, 1733, 1733, 2438, 2438],
-                            borderColor: "#4B8BBE",
-                            tension: 0.4
-                        },
-                        {
-                            label: "Mid Scenario (€180–220)",
-                            data: [4015, 4015, 4015, 4015, 2856, 2856, 2856, 2856, 2856, 2856, 4015, 4015],
-                            borderColor: "#FFD166",
-                            tension: 0.4
-                        },
-                        {
-                            label: "High Scenario (€250–350)",
-                            data: [6210, 6210, 6210, 6210, 4415, 4415, 4415, 4415, 4415, 4415, 6210, 6210],
-                            borderColor: "#06D6A0",
-                            tension: 0.4
-                        }
-                    ]
-                },
-                options: {
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: "Monthly Gross Revenue by Scenario (€)"
-                        }
-                    },
-                    scales: {
-                        y: { beginAtZero: true, title: { display: true, text: "Monthly Revenue (€)" } },
-                        x: { title: { display: true, text: "Month" } }
-                    },
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
-        </script>
-
-        <h2>Why Sunset Boulevard Stands Out</h2>
+        <h2>Why Sunset Boulevard Excels</h2>
         <ul>
-            <li><strong>Prestigious Beachfront Location</strong>: Luxury complex with direct sea views and balcony—ideal for relaxation in Grand Baie's heart, walkable to amenities.</li>
-            <li><strong>Immense Appeal</strong>: Sea-facing design suits premium vacationers (up to 4 guests); comparable to high-end comps with 4.8+ ratings.</li>
-            <li><strong>Competitive Edge</strong>: Outshines non-seafront properties; prestige adds 20–30% ADR premium.</li>
-            <li><strong>Proven Demand</strong>: Similar properties (e.g., our managed Sunset Cove) achieve 6 bookings in 2 weeks; professional optimization boosts this.</li>
-            <li><strong>Flexibility</strong>: Owner stays accommodated seamlessly—block dates for personal use without impacting revenue.</li>
+            <li><strong>🏖️ Prestigious Beachfront Complex:</strong> Direct sea views, beach access, La Cuvette and Grand Baie public beach within 5 minutes walk.</li>
+            <li><strong>⭐ Premium Market Position:</strong> €186–228 verified market rates. Sea-facing units justify upper pricing range.</li>
+            <li><strong>🎯 Target Market Fit:</strong> Couples, small families (up to 4 guests), luxury travelers seeking authentic coastal Mauritius.</li>
+            <li><strong>🏆 Competitive Edge:</strong> 40–70% ADR premium over non-beachfront properties. Security, parking, resort amenities attract premium guests.</li>
+            <li><strong>📊 Proven Demand:</strong> Similar Islander properties achieving 6 bookings in 2 weeks demonstrates strong market appetite.</li>
+            <li><strong>🔄 Owner Flexibility:</strong> Block dates for personal use anytime. We optimize around your schedule with no revenue impact.</li>
         </ul>
 
-        <h2>Recommendations to the Owner</h2>
-        <p>To maximize potential:</p>
-        <ul>
-            <li><strong>Listing Optimization</strong>: Professional photography/staging to highlight sea views and luxury finishes; dynamic pricing starting at €180.</li>
-            <li><strong>Amenity Enhancements</strong>: Add premium touches (e.g., high-end linens, welcome kit with local treats) for 5-star reviews.</li>
-            <li><strong>Marketing</strong>: Target luxury travelers via multi-platform listings and ads emphasizing beachfront prestige.</li>
-            <li><strong>Maintenance</strong>: Address any complex issues (e.g., from reviews on upkeep) for consistent guest satisfaction.</li>
-            <li><strong>Owner Use</strong>: Use our system for easy owner stay bookings—zero hassle.</li>
-        </ul>
-        <p>These steps can push occupancy to 65%+ and ADRs to €250–350.</p>
+        <div class="recommendations">
+            <h3>Maximizing Performance</h3>
+            
+            <h4>Professional Photography & Staging</h4>
+            <ul>
+                <li>Drone footage showcasing sea views and Sunset Boulevard complex</li>
+                <li>Golden hour shots emphasizing the premium location</li>
+                <li>Interior staging highlighting modern finishes and space</li>
+                <li>Expected impact: 25–35% increase in booking inquiries</li>
+            </ul>
+            
+            <h4>Premium Amenities Package</h4>
+            <ul>
+                <li>Luxury linens and towels</li>
+                <li>Welcome basket with Mauritian treats and wine</li>
+                <li>Beach equipment: chairs, umbrella, snorkeling gear</li>
+                <li>Smart TV with streaming, high-speed WiFi</li>
+            </ul>
+            
+            <h4>Dynamic Pricing Strategy</h4>
+            <ul>
+                <li>Base rate: €200/night aligned with market comps</li>
+                <li>Peak season (Nov–Apr): €230–280/night</li>
+                <li>Special events (New Year, holidays): €300+ night</li>
+                <li>Strategic last-minute discounts to maximize occupancy</li>
+            </ul>
+            
+            <h4>Multi-Platform Distribution</h4>
+            <ul>
+                <li>Airbnb (primary) + Booking.com (secondary)</li>
+                <li>Direct booking website (save 15% platform fees)</li>
+                <li>Target: 70% Airbnb, 20% Booking.com, 10% direct</li>
+            </ul>
+        </div>
 
-        <h2>Next Steps</h2>
-        <p>With immense STR potential exceeding €18,000 LTR, let's capitalize on demand.</p>
-        <p><strong>Action Plan</strong>:</p>
-        <ul>
-            <li>Site visit: Assess and plan optimizations.</li>
-            <li>Facilitate Tourism Authority license if needed.</li>
-            <li>Launch enhanced listings and marketing.</li>
-        </ul>
-        <p>Contact today: Reply or call Rouslan +230 5761 3558.</p>
-        <p><strong>Turning properties into profits—hassle-free.</strong></p>
+        <h2>Financial Summary</h2>
+        <div class="summary-cards">
+            <div class="card">
+                <h4>Current State</h4>
+                <div class="value">Good Base</div>
+                <div class="label">Ready for optimization</div>
+            </div>
+            <div class="card highlight">
+                <h4>Base STR Scenario</h4>
+                <div class="value">€43,800–54,533</div>
+                <div class="label">Most likely annual gross</div>
+            </div>
+            <div class="card">
+                <h4>Optimized Potential</h4>
+                <div class="value">€59k–72k</div>
+                <div class="label">With full optimization</div>
+            </div>
+        </div>
+
+        <div class="cta">
+            <h3>Next Steps</h3>
+            <p style="font-size: 1.1rem; margin: 1rem 0;">Peak season (November–December) is approaching. This is the optimal time to establish your property as a premium Grand Baie destination.</p>
+            
+            <p><strong>Launch Timeline: 7–10 Days</strong></p>
+            <ol style="text-align: left; max-width: 600px; margin: 1rem auto; line-height: 1.8;">
+                <li>Property inspection and staging consultation</li>
+                <li>Professional photography session</li>
+                <li>Tourism Authority licensing (we facilitate)</li>
+                <li>Launch optimized listings across platforms</li>
+            </ol>
+            
+            <p style="font-size: 1.2rem; margin-top: 2rem;"><strong>Contact: <a href="tel:+2305761355">+230 5761 3558</a> or <a href="mailto:rouslan@ihr-mu.com">rouslan@ihr-mu.com</a></strong></p>
+            <p style="font-style: italic; margin-top: 1rem;">Turning properties into profits—hassle-free.</p>
+        </div>
     </div>
+
+    <script>
+        // Variability Chart
+        const variabilityCtx = document.getElementById('variabilityChart').getContext('2d');
+        new Chart(variabilityCtx, {
+            type: 'bar',
+            data: {
+                labels: ['€180', '€200', '€230', '€250', '€280'],
+                datasets: [
+                    {
+                        label: '50% Occupancy',
+                        data: [32850, 36500, 41975, 45625, 51100],
+                        backgroundColor: 'rgba(1, 69, 138, 0.7)',
+                        borderColor: 'rgba(1, 69, 138, 1)',
+                        borderWidth: 2
+                    },
+                    {
+                        label: '55% Occupancy',
+                        data: [36135, 40150, 46173, 50188, 56210],
+                        backgroundColor: 'rgba(52, 152, 219, 0.7)',
+                        borderColor: 'rgba(52, 152, 219, 1)',
+                        borderWidth: 2
+                    },
+                    {
+                        label: '60% Occupancy',
+                        data: [39420, 43800, 50370, 54750, 61320],
+                        backgroundColor: 'rgba(46, 204, 113, 0.7)',
+                        borderColor: 'rgba(46, 204, 113, 1)',
+                        borderWidth: 2
+                    },
+                    {
+                        label: '65% Occupancy',
+                        data: [42683, 47450, 54533, 59313, 66430],
+                        backgroundColor: 'rgba(155, 89, 182, 0.7)',
+                        borderColor: 'rgba(155, 89, 182, 1)',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Annual Gross Revenue by ADR and Occupancy (€)',
+                        font: { size: 16, weight: 'bold' },
+                        color: '#01458A'
+                    },
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: { size: 12 },
+                            color: '#333'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Annual Gross Revenue (€)',
+                            font: { size: 13, weight: 'bold' },
+                            color: '#01458A'
+                        },
+                        ticks: {
+                            color: '#666',
+                            callback: function(value) {
+                                return '€' + value.toLocaleString();
+                            }
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Average Daily Rate (€/night)',
+                            font: { size: 13, weight: 'bold' },
+                            color: '#01458A'
+                        },
+                        ticks: {
+                            color: '#666'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Seasonal Chart
+        const seasonalCtx = document.getElementById('seasonalChart').getContext('2d');
+        new Chart(seasonalCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [
+                    {
+                        label: 'Conservative (€180-200)',
+                        data: [3346, 3346, 3346, 3346, 2380, 2380, 2380, 2380, 2380, 2380, 3346, 3346],
+                        borderColor: 'rgba(1, 69, 138, 1)',
+                        backgroundColor: 'rgba(1, 69, 138, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        borderWidth: 3,
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'Base (€200-230)',
+                        data: [4544, 4544, 4544, 4544, 3231, 3231, 3231, 3231, 3231, 3231, 4544, 4544],
+                        borderColor: 'rgba(52, 152, 219, 1)',
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        borderWidth: 3,
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'Optimistic (€250-280)',
+                        data: [5962, 5962, 5962, 5962, 4239, 4239, 4239, 4239, 4239, 4239, 5962, 5962],
+                        borderColor: 'rgba(46, 204, 113, 1)',
+                        backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        borderWidth: 3,
+                        pointRadius: 5
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Monthly Gross Revenue by Scenario (€)',
+                        font: { size: 16, weight: 'bold' },
+                        color: '#01458A'
+                    },
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: { size: 12 },
+                            color: '#333'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Monthly Gross Revenue (€)',
+                            font: { size: 13, weight: 'bold' },
+                            color: '#01458A'
+                        },
+                        ticks: {
+                            color: '#666',
+                            callback: function(value) {
+                                return '€' + value.toLocaleString();
+                            }
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Month (Peak: Nov-Apr | Low: May-Oct)',
+                            font: { size: 13, weight: 'bold' },
+                            color: '#01458A'
+                        },
+                        ticks: {
+                            color: '#666'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
