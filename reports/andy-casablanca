@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa Blanca — Inspection Report</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F5F2EC;color:#1a1a1a;padding:1.5rem;}
+.wrap{max-width:740px;margin:0 auto;}
+
+/* Header */
+.top-bar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;gap:12px;flex-wrap:wrap;}
+.main-title{font-size:21px;font-weight:700;color:#0C447C;}
+.sub{font-size:13px;color:#666;margin-top:4px;}
+.badge{font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;white-space:nowrap;}
+.badge-amber{background:#FAEEDA;color:#854F0B;}
+.badge-red{background:#FCEBEB;color:#A32D2D;}
+.badge-green{background:#EAF3DE;color:#3B6D11;}
+.badge-blue{background:#E6F1FB;color:#0C447C;}
+.badge-grey{background:#F0EFED;color:#555;}
+
+/* Summary grid */
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem;}
+@media(max-width:500px){.summary-grid{grid-template-columns:repeat(2,1fr);}}
+.stat{background:#fff;border-radius:10px;padding:1rem;text-align:center;border:1px solid #e8e4de;}
+.stat-num{font-size:24px;font-weight:700;}
+.stat-num.red{color:#A32D2D;}
+.stat-num.amber{color:#854F0B;}
+.stat-num.green{color:#3B6D11;}
+.stat-num.blue{color:#0C447C;}
+.stat-label{font-size:11px;color:#888;margin-top:4px;line-height:1.3;}
+
+/* Tabs */
+.tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.tab{font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px;border:1px solid #ddd;background:#fff;color:#666;cursor:pointer;transition:all 0.15s;}
+.tab.active{background:#185FA5;color:#fff;border-color:#185FA5;}
+.tab:hover:not(.active){background:#f0ece6;border-color:#ccc;}
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* Cards */
+.room-card{background:#fff;border-radius:12px;padding:1rem 1.25rem;margin-bottom:10px;border:1px solid #e8e4de;}
+.room-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
+.room-name{font-size:14px;font-weight:700;color:#0C447C;}
+.section-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#aaa;margin:14px 0 8px;}
+
+/* Item rows */
+.item-row{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid #f0ece6;}
+.item-row:last-child{border-bottom:none;padding-bottom:0;}
+.item-row:first-child{padding-top:0;}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.dot-ok{background:#5DA832;}
+.dot-warn{background:#E8A030;}
+.dot-bad{background:#C93535;}
+.dot-info{background:#185FA5;}
+.dot-tbd{background:#bbb;}
+.item-text{font-size:13px;line-height:1.5;flex:1;}
+.item-text strong{font-weight:600;}
+.item-note{font-size:11px;color:#888;margin-top:2px;}
+.trade-tag{font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;margin-left:6px;vertical-align:middle;}
+.trade-carpenter{background:#FFF3E0;color:#7B4F00;}
+.trade-plumber{background:#E3F2FD;color:#0D47A1;}
+.trade-electrician{background:#FFF8E1;color:#827717;}
+.trade-ac{background:#E8F5E9;color:#1B5E20;}
+.trade-pest{background:#FCE4EC;color:#880E4F;}
+.trade-painter{background:#EDE7F6;color:#311B92;}
+.trade-general{background:#F5F5F5;color:#424242;}
+.trade-exterior{background:#E0F7FA;color:#006064;}
+
+/* Checklist */
+.check-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f0ece6;cursor:pointer;}
+.check-row:last-child{border-bottom:none;}
+.check-box{width:18px;height:18px;border-radius:4px;border:2px solid #ccc;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
+.check-box.done{background:#185FA5;border-color:#185FA5;}
+.check-box.done::after{content:'✓';color:#fff;font-size:11px;font-weight:700;}
+.check-row.done-row .check-label{text-decoration:line-through;color:#aaa;}
+.check-label{font-size:13px;flex:1;}
+.blocker-flag{font-size:10px;font-weight:700;color:#A32D2D;background:#FCEBEB;padding:2px 7px;border-radius:10px;margin-left:4px;}
+
+/* Inventory table */
+.inv-table{width:100%;border-collapse:collapse;font-size:12.5px;}
+.inv-table th{text-align:left;padding:7px 8px;background:#f5f2ec;color:#555;font-weight:600;border-bottom:2px solid #e8e4de;}
+.inv-table td{padding:7px 8px;border-bottom:1px solid #f0ece6;vertical-align:top;}
+.inv-table tr:last-child td{border-bottom:none;}
+.qty-ok{color:#3B6D11;font-weight:600;}
+.qty-warn{color:#854F0B;font-weight:600;}
+.qty-bad{color:#A32D2D;font-weight:600;}
+
+/* Exterior / Remodel section */
+.remodel-card{background:#fff;border-radius:12px;padding:1rem 1.25rem;margin-bottom:10px;border:2px solid #B2DFF5;}
+.remodel-header{font-size:14px;font-weight:700;color:#006064;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.remodel-header::before{content:'🏗️';}
+.guideline-row{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid #f0ece6;}
+.guideline-row:last-child{border-bottom:none;}
+.guideline-icon{font-size:16px;flex-shrink:0;}
+.guideline-text{font-size:13px;line-height:1.5;flex:1;}
+.guideline-text strong{font-weight:600;display:block;margin-bottom:2px;}
+.guideline-text span{color:#555;}
+.priority-high{color:#A32D2D;font-size:10px;font-weight:700;background:#FCEBEB;padding:2px 6px;border-radius:8px;margin-left:6px;}
+.priority-med{color:#854F0B;font-size:10px;font-weight:700;background:#FAEEDA;padding:2px 6px;border-radius:8px;margin-left:6px;}
+.priority-low{color:#3B6D11;font-size:10px;font-weight:700;background:#EAF3DE;padding:2px 6px;border-radius:8px;margin-left:6px;}
+
+.img-placeholder{background:#EFF7FC;border:2px dashed #B2DFF5;border-radius:10px;padding:2rem;text-align:center;color:#5B9EC9;font-size:13px;margin:10px 0;}
+.img-placeholder strong{display:block;margin-bottom:4px;font-size:14px;}
+
+/* Access card */
+.access-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:480px){.access-grid{grid-template-columns:1fr;}}
+.access-item{background:#f8f6f2;border-radius:8px;padding:10px 12px;}
+.access-key{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:4px;}
+.access-val{font-size:14px;font-weight:600;color:#1a1a1a;}
+.access-val.tbd{color:#aaa;font-weight:400;font-style:italic;}
+
+/* Footer */
+.footer{margin-top:2rem;text-align:center;font-size:11px;color:#aaa;}
+.ihr-blue{color:#0C447C;font-weight:600;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="top-bar">
+    <div>
+      <div class="main-title">🏡 Casa Blanca — Inspection Report</div>
+      <div class="sub">Andy · Trou aux Biches, Bon Azur · IHR North West</div>
+      <div class="sub" style="margin-top:4px;">2-Bedroom Villa · Shared Pool · Last updated: <span id="lastUpdated"></span></div>
+    </div>
+    <span class="badge badge-amber">In Progress</span>
+  </div>
+
+  <!-- Summary stats -->
+  <div class="summary-grid">
+    <div class="stat">
+      <div class="stat-num red" id="cnt-critical">0</div>
+      <div class="stat-label">Critical / Blockers</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num amber" id="cnt-works">0</div>
+      <div class="stat-label">Works Required</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num blue" id="cnt-checklist">0</div>
+      <div class="stat-label">Checklist Items</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num green" id="cnt-done">0</div>
+      <div class="stat-label">Completed</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="showPanel('repairs')">🔧 Repairs by Trade</button>
+    <button class="tab" onclick="showPanel('exterior')">🌿 Exterior & Pool</button>
+    <button class="tab" onclick="showPanel('inventory')">📦 Inventory</button>
+    <button class="tab" onclick="showPanel('access')">🔑 Access & Utilities</button>
+    <button class="tab" onclick="showPanel('checklist')">✅ Pre-Listing Checklist</button>
+  </div>
+
+  <!-- PANEL: Repairs by Trade -->
+  <div class="panel active" id="panel-repairs">
+
+    <!-- VILLA 1 -->
+    <div class="section-label" style="font-size:12px;font-weight:700;color:#0C447C;background:#E6F1FB;padding:6px 12px;border-radius:8px;margin-bottom:10px;">🏠 Villa 1</div>
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">🪚 Carpentry — Villa 1</div></div>
+      <div class="section-label">Entrance</div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Replace cracked window pane in entrance door</strong></div>
+        <span class="trade-tag trade-carpenter">Carpenter</span>
+      </div>
+      <div class="section-label">Kitchen</div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Replace kitchen curtains with white sheer curtains (voile)</strong></div>
+        <span class="trade-tag trade-general">General</span>
+      </div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Paint bar counter white</strong></div>
+        <span class="trade-tag trade-painter">Painter</span>
+      </div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Add LED sensor lights inside kitchen cabinets</strong></div>
+        <span class="trade-tag trade-electrician">Electrician</span>
+      </div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Add rubber mat lining inside cabinets and drawers</strong></div>
+        <span class="trade-tag trade-general">General</span>
+      </div>
+      <div class="section-label">Bedroom</div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Paint bedroom doors white</strong></div>
+        <span class="trade-tag trade-painter">Painter</span>
+      </div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Add white sheer curtains (voile) to bedroom windows</strong></div>
+        <span class="trade-tag trade-general">General</span>
+      </div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Add 1 bedside table and lamp</strong></div>
+        <span class="trade-tag trade-general">General</span>
+      </div>
+    </div>
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">🔧 Plumbing — Villa 1</div></div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Full repair of under-sink area — kitchen</strong></div>
+        <span class="trade-tag trade-plumber">Plumber</span>
+      </div>
+    </div>
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">⚡ Electricity — Villa 1</div></div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Replace all bulbs with warm white throughout</strong></div>
+        <span class="trade-tag trade-electrician">Electrician</span>
+      </div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Install LED sensor cabinet lights — kitchen</strong></div>
+        <span class="trade-tag trade-electrician">Electrician</span>
+      </div>
+    </div>
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">🐜 Pest Control — Villa 1</div></div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Full pest control treatment — interior and exterior</strong></div>
+        <span class="trade-tag trade-pest">Pest Control</span>
+      </div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Plant mosquito-repellent plants in garden — citronella, lemongrass, basil</strong></div>
+        <span class="trade-tag trade-general">General</span>
+      </div>
+    </div>
+
+    <!-- VILLA 2 -->
+    <div class="section-label" style="font-size:12px;font-weight:700;color:#0C447C;background:#E6F1FB;padding:6px 12px;border-radius:8px;margin-bottom:10px;margin-top:6px;">🏠 Villa 2</div>
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">🔧 Plumbing — Villa 2</div></div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Replace flexible hose pipes — kitchen sink</strong></div>
+        <span class="trade-tag trade-plumber">Plumber</span>
+      </div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Replace flexible hose pipes — bathroom sink</strong></div>
+        <span class="trade-tag trade-plumber">Plumber</span>
+      </div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Replace shower curtain — white</strong></div>
+        <span class="trade-tag trade-general">General</span>
+      </div>
+    </div>
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">🪚 Carpentry — Villa 2</div></div>
+      <div class="section-label">Store Room</div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Fix and paint wooden shelves white</strong></div>
+        <span class="trade-tag trade-carpenter">Carpenter</span>
+      </div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Add bottom shelf — raised off floor tiles</strong></div>
+        <span class="trade-tag trade-carpenter">Carpenter</span>
+      </div>
+      <div class="section-label">Bathroom</div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Replace shower shelves / caddy</strong></div>
+        <span class="trade-tag trade-carpenter">Carpenter</span>
+      </div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Add storage shelves under bathroom sink</strong></div>
+        <span class="trade-tag trade-carpenter">Carpenter</span>
+      </div>
+      <div class="section-label">Living Room</div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Wall-mount the TV</strong></div>
+        <span class="trade-tag trade-carpenter">Carpenter</span>
+      </div>
+    </div>
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">🎨 Painting — Villa 2</div></div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Paint store room shelves white</strong></div>
+        <span class="trade-tag trade-painter">Painter</span>
+      </div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Repaint interior walls white to maximise light</strong></div>
+        <span class="trade-tag trade-painter">Painter</span>
+      </div>
+    </div>
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">⚡ Electricity — Villa 2</div></div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Add LED light in store room</strong></div>
+        <span class="trade-tag trade-electrician">Electrician</span>
+      </div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Replace all bulbs with warm white throughout</strong></div>
+        <span class="trade-tag trade-electrician">Electrician</span>
+      </div>
+    </div>
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">🛋️ Furnishing & Décor — Villa 2</div></div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>General interior refresh and refurnish</strong></div>
+        <span class="trade-tag trade-general">General</span>
+      </div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Add sofa cover — white or light linen</strong></div>
+        <span class="trade-tag trade-general">General</span>
+      </div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Add 2–3 indoor plants</strong></div>
+        <span class="trade-tag trade-general">General</span>
+      </div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Add decorative items — cushions, throw, wall art, coffee table tray</strong></div>
+        <span class="trade-tag trade-general">General</span>
+      </div>
+      <div class="item-row">
+        <div class="dot dot-warn"></div>
+        <div class="item-text"><strong>Mosquito net over bed — recommended for guest comfort</strong></div>
+        <span class="trade-tag trade-general">General</span>
+      </div>
+    </div>
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">❄️ Air Conditioning — Both Villas</div><span class="badge badge-green">OK</span></div>
+      <div class="item-row">
+        <div class="dot dot-ok"></div>
+        <div class="item-text"><strong>All AC units confirmed working and cooling correctly</strong></div>
+        <span class="trade-tag trade-ac">AC Tech</span>
+      </div>
+    </div>
+
+  </div><!-- /panel-repairs -->
+
+  <!-- PANEL: Exterior & Pool -->
+  <div class="panel" id="panel-exterior">
+
+    <div class="remodel-card">
+      <div class="remodel-header">Exterior Vision — Casa Blanca</div>
+      <p style="font-size:12.5px;color:#555;margin-bottom:12px;line-height:1.5;">A beautiful exterior is one of Casa Blanca's greatest assets for rental potential. The name sets the expectation — crisp white, sun-drenched, tropical. Reference visuals below.</p>
+
+      <div class="section-label">Facade & Entrance</div>
+      <div class="guideline-row">
+        <div class="guideline-icon">🚪</div>
+        <div class="guideline-text">
+          <strong>Repaint entrance gate white to match facade</strong>
+        </div>
+      </div>
+      <div class="guideline-row">
+        <div class="guideline-icon">💡</div>
+        <div class="guideline-text">
+          <strong>Add warm white wall lanterns at entrance and gate</strong>
+        </div>
+      </div>
+      <div class="guideline-row">
+        <div class="guideline-icon">🌺</div>
+        <div class="guideline-text">
+          <strong>Add potted plants flanking entrance for instant kerb appeal</strong>
+        </div>
+      </div>
+
+      <div class="section-label">Terrace & Pool — Revamp</div>
+      <div class="guideline-row">
+        <div class="guideline-icon">🛋️</div>
+        <div class="guideline-text">
+          <strong>Revamp terrace furniture — cohesive palette, white resin or teak</strong>
+        </div>
+      </div>
+      <div class="guideline-row">
+        <div class="guideline-icon">☂️</div>
+        <div class="guideline-text">
+          <strong>Add parasol or sail shade over terrace seating</strong>
+        </div>
+      </div>
+      <div class="guideline-row">
+        <div class="guideline-icon">🏊</div>
+        <div class="guideline-text">
+          <strong>Add 4 sun loungers with side tables at pool — white or natural finish</strong>
+        </div>
+      </div>
+      <div class="guideline-row">
+        <div class="guideline-icon">🏗️</div>
+        <div class="guideline-text">
+          <strong>Add pergola or shade structure over terrace — white or natural wood</strong>
+        </div>
+      </div>
+      <div class="guideline-row">
+        <div class="guideline-icon">🌙</div>
+        <div class="guideline-text">
+          <strong>Add string lights over terrace / pergola for evening atmosphere</strong>
+        </div>
+      </div>
+      <div class="guideline-row">
+        <div class="guideline-icon">🏊</div>
+        <div class="guideline-text">
+          <strong>Repair any cracked pool tiles or uneven decking</strong>
+        </div>
+      </div>
+
+      <div class="section-label">Garden & Boundary</div>
+      <div class="guideline-row">
+        <div class="guideline-icon">✂️</div>
+        <div class="guideline-text">
+          <strong>Lawn cut, edges trimmed, dead plants removed before photoshoot</strong>
+        </div>
+      </div>
+      <div class="guideline-row">
+        <div class="guideline-icon">🌿</div>
+        <div class="guideline-text">
+          <strong>Plant tropical species around pool — bougainvillea, bird of paradise, traveller's palm</strong>
+        </div>
+      </div>
+      <div class="guideline-row">
+        <div class="guideline-icon">🌱</div>
+        <div class="guideline-text">
+          <strong>Plant mosquito-repellent species in garden — citronella, lemongrass, basil</strong>
+        </div>
+      </div>
+      <div class="guideline-row">
+        <div class="guideline-icon">🧱</div>
+        <div class="guideline-text">
+          <strong>Repaint perimeter walls white or neutral to match villa</strong>
+        </div>
+      </div>
+      <div class="guideline-row">
+        <div class="guideline-icon">🗑️</div>
+        <div class="guideline-text">
+          <strong>Remove all clutter, debris and stored items from exterior</strong>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /panel-exterior -->
+
+  <!-- PANEL: Inventory -->
+  <div class="panel" id="panel-inventory">
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">🛏️ Bedroom — Villa 1</div><span class="badge badge-red">Missing Items</span></div>
+      <table class="inv-table">
+        <tr><th>Item</th><th>Required</th><th>Present</th><th>Notes</th></tr>
+        <tr><td>Bed</td><td>1 King</td><td class="qty-ok">✓</td><td>King size</td></tr>
+        <tr><td>Fitted sheet sets</td><td>3 sets</td><td class="qty-warn">2 present</td><td>Add 1 more set</td></tr>
+        <tr><td>Duvet + cover</td><td>1</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Pillows</td><td>2</td><td class="qty-ok">✓</td><td>2 present</td></tr>
+        <tr><td>Mattress protector</td><td>1</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Wardrobe / storage</td><td>Yes</td><td class="qty-ok">✓</td><td></td></tr>
+        <tr><td>Bedside table</td><td>2</td><td class="qty-bad">⚠ Add 1</td><td>1 present — add 1</td></tr>
+        <tr><td>Bedside lamp</td><td>2</td><td class="qty-bad">⚠ Add 1</td><td>1 present — add 1</td></tr>
+        <tr><td>White sheer curtains (voile)</td><td>Yes</td><td class="qty-bad">⚠ To install</td><td></td></tr>
+        <tr><td>AC unit + remote</td><td>Yes</td><td class="qty-ok">✓</td><td></td></tr>
+        <tr><td>Mirror</td><td>Yes</td><td class="qty-ok">✓</td><td></td></tr>
+      </table>
+    </div>
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">🛏️ Bedroom — Villa 2</div><span class="badge badge-amber">To Verify</span></div>
+      <table class="inv-table">
+        <tr><th>Item</th><th>Required</th><th>Present</th><th>Notes</th></tr>
+        <tr><td>Bed</td><td>1 King</td><td class="qty-ok">✓</td><td>King size</td></tr>
+        <tr><td>Fitted sheet sets</td><td>3 sets</td><td class="qty-warn">2 present</td><td>Add 1 more set</td></tr>
+        <tr><td>Duvet + cover</td><td>1</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Pillows</td><td>2</td><td class="qty-ok">✓</td><td>2 present</td></tr>
+        <tr><td>Mattress protector</td><td>1</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Wardrobe / storage</td><td>Yes</td><td class="qty-ok">✓</td><td></td></tr>
+        <tr><td>Bedside table</td><td>2</td><td class="qty-bad">⚠ Add 1</td><td>1 present — add 1</td></tr>
+        <tr><td>Bedside lamp</td><td>2</td><td class="qty-bad">⚠ Add 1</td><td>1 present — add 1</td></tr>
+        <tr><td>AC unit + remote</td><td>Yes</td><td class="qty-ok">✓</td><td></td></tr>
+        <tr><td>Mirror</td><td>Yes</td><td class="qty-ok">✓</td><td></td></tr>
+      </table>
+    </div>
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">🛁 Bathrooms (x2)</div><span class="badge badge-amber">To Verify</span></div>
+      <table class="inv-table">
+        <tr><th>Item</th><th>Required</th><th>Present</th><th>Notes</th></tr>
+        <tr><td>Large towels</td><td>4 (2/bath)</td><td class="qty-warn">TBC</td><td>2 sets per bathroom</td></tr>
+        <tr><td>Hand towels</td><td>4 (2/bath)</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Bath mat</td><td>2</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Toilet brush</td><td>2</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Mirror</td><td>2</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Soap dispenser / holder</td><td>2</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Shower curtain or screen</td><td>TBC</td><td class="qty-warn">TBC</td><td></td></tr>
+      </table>
+    </div>
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">🍳 Kitchen</div><span class="badge badge-amber">To Verify</span></div>
+      <table class="inv-table">
+        <tr><th>Item</th><th>Required</th><th>Present</th><th>Notes</th></tr>
+        <tr><td>Plates (dinner)</td><td>4+</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Side plates</td><td>4+</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Bowls</td><td>4+</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Mugs</td><td>4+</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Glasses (water)</td><td>4+</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Wine glasses</td><td>4+</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Cutlery set</td><td>4 covers</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Pots & pans</td><td>Set</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Fridge</td><td>Yes</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Hob (gas/electric)</td><td>Yes</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Microwave</td><td>Yes</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Kettle</td><td>Yes</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Toaster</td><td>Yes</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Coffee maker</td><td>Yes</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Washing machine</td><td>TBC</td><td class="qty-warn">TBC</td><td></td></tr>
+      </table>
+    </div>
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">🛋️ Living Room</div><span class="badge badge-amber">To Verify</span></div>
+      <table class="inv-table">
+        <tr><th>Item</th><th>Required</th><th>Present</th><th>Notes</th></tr>
+        <tr><td>Sofa / seating</td><td>Yes</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>TV (smart)</td><td>Yes</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Coffee table</td><td>Yes</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Dining table + chairs</td><td>4 seats</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Fan / AC</td><td>Yes</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Decorative items</td><td>Yes</td><td class="qty-warn">TBC</td><td>Plants, art, cushions</td></tr>
+      </table>
+    </div>
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">🏊 Pool Area</div><span class="badge badge-amber">To Verify</span></div>
+      <table class="inv-table">
+        <tr><th>Item</th><th>Required</th><th>Present</th><th>Notes</th></tr>
+        <tr><td>Sun loungers</td><td>4</td><td class="qty-warn">TBC</td><td>Min 2, ideally 4</td></tr>
+        <tr><td>Side table(s)</td><td>2</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Umbrella / parasol</td><td>1+</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Pool net / skimmer</td><td>Yes</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Pool lighting</td><td>Yes</td><td class="qty-warn">TBC</td><td></td></tr>
+        <tr><td>Outdoor shower</td><td>Recommended</td><td class="qty-warn">TBC</td><td>To rinse before pool</td></tr>
+      </table>
+    </div>
+
+  </div><!-- /panel-inventory -->
+
+  <!-- PANEL: Access & Utilities -->
+  <div class="panel" id="panel-access">
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">🔑 Access Details</div></div>
+      <div class="access-grid">
+        <div class="access-item">
+          <div class="access-key">Key / Entry Method</div>
+          <div class="access-val tbd">To be confirmed</div>
+        </div>
+        <div class="access-item">
+          <div class="access-key">Keybox Code</div>
+          <div class="access-val tbd">To be confirmed</div>
+        </div>
+        <div class="access-item">
+          <div class="access-key">Gate / Entrance</div>
+          <div class="access-val tbd">To be confirmed</div>
+        </div>
+        <div class="access-item">
+          <div class="access-key">Security / Guard</div>
+          <div class="access-val tbd">To be confirmed</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">📶 WiFi</div></div>
+      <div class="access-grid">
+        <div class="access-item">
+          <div class="access-key">Network Name (SSID)</div>
+          <div class="access-val tbd">To be confirmed</div>
+        </div>
+        <div class="access-item">
+          <div class="access-key">Password</div>
+          <div class="access-val tbd">To be confirmed</div>
+        </div>
+        <div class="access-item">
+          <div class="access-key">Coverage</div>
+          <div class="access-val tbd">To be verified on visit</div>
+        </div>
+        <div class="access-item">
+          <div class="access-key">Router Location</div>
+          <div class="access-val tbd">To be confirmed</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">⚡ Utilities</div></div>
+      <div class="access-grid">
+        <div class="access-item">
+          <div class="access-key">Electricity Meter</div>
+          <div class="access-val tbd">Location TBC</div>
+        </div>
+        <div class="access-item">
+          <div class="access-key">Water Meter</div>
+          <div class="access-val tbd">Location TBC</div>
+        </div>
+        <div class="access-item">
+          <div class="access-key">Water Heater / Boiler</div>
+          <div class="access-val tbd">Type & location TBC</div>
+        </div>
+        <div class="access-item">
+          <div class="access-key">Gas (if applicable)</div>
+          <div class="access-val tbd">To be confirmed</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">🏊 Pool Management</div></div>
+      <div class="access-grid">
+        <div class="access-item">
+          <div class="access-key">Pool Pump / Filter</div>
+          <div class="access-val tbd">Location TBC</div>
+        </div>
+        <div class="access-item">
+          <div class="access-key">Pool Maintenance Schedule</div>
+          <div class="access-val tbd">To be confirmed</div>
+        </div>
+        <div class="access-item">
+          <div class="access-key">Pool Company / Contact</div>
+          <div class="access-val tbd">To be confirmed</div>
+        </div>
+        <div class="access-item">
+          <div class="access-key">Shared With Other Unit?</div>
+          <div class="access-val tbd">Confirm arrangement</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /panel-access -->
+
+  <!-- PANEL: Pre-Listing Checklist -->
+  <div class="panel" id="panel-checklist">
+
+    <div class="room-card">
+      <div class="room-header"><div class="room-name">📋 Pre-Listing Checklist</div><span class="badge badge-amber">0 / 15 done</span></div>
+      <p style="font-size:12px;color:#888;margin-bottom:12px;">Tap an item to mark it complete. Items marked <span class="blocker-flag">BLOCKER</span> must be resolved before the listing goes live.</p>
+
+      <div class="check-row" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-label">Signed management contract from Andy <span class="blocker-flag">BLOCKER</span></div>
+      </div>
+      <div class="check-row" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-label">Owner profile form completed <a href="https://tinyurl.com/2689ev9u" target="_blank" style="color:#185FA5;font-size:11px;margin-left:6px;">tinyurl.com/2689ev9u</a></div>
+      </div>
+      <div class="check-row" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-label">All structural / electrical / plumbing works completed</div>
+      </div>
+      <div class="check-row" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-label">Exterior works & garden clean-up done <span class="blocker-flag">BLOCKER</span></div>
+      </div>
+      <div class="check-row" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-label">Pest control treatment completed</div>
+      </div>
+      <div class="check-row" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-label">Full inventory verified and gaps filled</div>
+      </div>
+      <div class="check-row" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-label">Linen & towel stock confirmed (3 sets per room)</div>
+      </div>
+      <div class="check-row" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-label">Keybox installed and code confirmed</div>
+      </div>
+      <div class="check-row" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-label">WiFi credentials confirmed and tested</div>
+      </div>
+      <div class="check-row" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-label">Cleaning team confirmed and briefed</div>
+      </div>
+      <div class="check-row" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-label">Professional photoshoot completed <span class="blocker-flag">BLOCKER</span></div>
+      </div>
+      <div class="check-row" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-label">Guest welcome guide prepared</div>
+      </div>
+    </div>
+
+  </div><!-- /panel-checklist -->
+
+  <div class="footer">
+    <span class="ihr-blue">Islander Holiday Retreats</span> · North West Region · Profitez, on s'occupe du reste!
+  </div>
+
+</div><!-- /wrap -->
+
+<script>
+// Set date
+document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+
+// Tab switching
+function showPanel(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Checklist toggle
+function toggleCheck(row){
+  const box = row.querySelector('.check-box');
+  const isDone = box.classList.toggle('done');
+  row.classList.toggle('done-row', isDone);
+  updateChecklistBadge();
+  updateStats();
+}
+
+function updateChecklistBadge(){
+  const total = document.querySelectorAll('.check-row').length;
+  const done = document.querySelectorAll('.check-box.done').length;
+  const badge = document.querySelector('#panel-checklist .badge');
+  if(badge) badge.textContent = done+' / '+total+' done';
+}
+
+// Stats counters — update as items are filled in
+function updateStats(){
+  const done = document.querySelectorAll('.check-box.done').length;
+  document.getElementById('cnt-done').textContent = done;
+  // Critical = dot-bad count
+  document.getElementById('cnt-critical').textContent = document.querySelectorAll('.dot-bad').length;
+  // Works = dot-warn count
+  document.getElementById('cnt-works').textContent = document.querySelectorAll('.dot-warn').length;
+  // Checklist total minus done
+  const total = document.querySelectorAll('.check-row').length;
+  document.getElementById('cnt-checklist').textContent = total - done;
+}
+
+updateStats();
+</script>
+</body>
+</html>
