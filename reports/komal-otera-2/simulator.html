@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Simulateur de revenus — Otera 2 · Islander Holiday Retreats</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ocean:#0E6E7E; --ocean-deep:#0A5460; --ink:#14262B; --mist:#7FB2BC;
+  --foam:#F4F8F9; --sand:#D9C9A8; --sand-deep:#B89F6E; --line:#DCE7E9; --white:#FFFFFF;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--foam);color:var(--ink);line-height:1.5}
+.wrap{max-width:680px;margin:0 auto;padding:20px 16px 48px}
+
+header{padding:8px 0 20px;border-bottom:2px solid var(--ocean);margin-bottom:22px;
+  display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.brand{font-family:'Sora',sans-serif;font-weight:700;font-size:14px;letter-spacing:.08em;color:var(--ocean)}
+.doc-label{font-size:11px;color:#5A6A6E;text-align:right;line-height:1.4}
+
+h1{font-family:'Sora',sans-serif;font-size:21px;font-weight:600;line-height:1.3;margin-bottom:6px}
+.sub{font-size:13px;color:#5A6A6E;margin-bottom:20px}
+
+/* Net figure — the headline */
+.net-card{background:var(--ocean);color:var(--white);border-radius:14px;padding:20px 22px;margin-bottom:14px}
+.net-label{font-size:12px;letter-spacing:.05em;text-transform:uppercase;opacity:.85}
+.net-value{font-family:'Sora',sans-serif;font-size:40px;font-weight:700;font-variant-numeric:tabular-nums;
+  line-height:1.15;transition:opacity .15s}
+.net-sub{font-size:12.5px;opacity:.85;margin-top:2px}
+
+.waterfall{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:26px}
+.wf{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.wf .k{font-size:10.5px;color:#5A6A6E;letter-spacing:.03em}
+.wf .v{font-family:'Sora',sans-serif;font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;margin-top:2px}
+
+/* The chart-as-control */
+.chart-card{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:18px 14px 14px;margin-bottom:10px}
+.chart-title{font-family:'Sora',sans-serif;font-size:14px;font-weight:600;color:var(--ocean);margin-bottom:2px}
+.chart-hint{font-size:12px;color:#5A6A6E;margin-bottom:14px}
+.chart{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;align-items:end}
+.mcol{display:flex;flex-direction:column;align-items:center;gap:4px}
+.mgross{font-size:9px;color:#5A6A6E;font-variant-numeric:tabular-nums;min-height:12px;white-space:nowrap}
+.barzone{position:relative;width:100%;height:150px;display:flex;align-items:flex-end;justify-content:center;
+  cursor:ns-resize;touch-action:none;border-radius:6px}
+.barzone:focus-visible{outline:2px solid var(--ocean);outline-offset:2px}
+.bar{width:78%;max-width:30px;border-radius:5px 5px 0 0;background:var(--mist);
+  transition:background .2s;min-height:3px;pointer-events:none}
+.mcol.core .bar{background:var(--ocean)}
+.mcol.perso .bar{background:var(--sand)}
+.mname{font-size:10.5px;font-weight:600;color:var(--ink)}
+.mocc{font-size:9.5px;color:#5A6A6E;font-variant-numeric:tabular-nums}
+.madr{font-size:8.5px;color:#9AACB0;font-variant-numeric:tabular-nums}
+.perso-btn{margin-top:3px;font-family:'Inter',sans-serif;font-size:8.5px;padding:3px 5px;border-radius:20px;
+  border:1px solid var(--line);background:var(--white);color:#5A6A6E;cursor:pointer;line-height:1}
+.mcol.perso .perso-btn{background:var(--sand);border-color:var(--sand-deep);color:#6B5A33;font-weight:600}
+
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin:12px 4px 0;font-size:10.5px;color:#5A6A6E}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.dot{width:9px;height:9px;border-radius:3px;display:inline-block}
+
+/* Presets + reset */
+.controls{display:flex;gap:8px;margin-bottom:26px;flex-wrap:wrap}
+.chip{font-family:'Inter',sans-serif;font-size:12px;font-weight:500;padding:7px 14px;border-radius:20px;
+  border:1px solid var(--line);background:var(--white);color:var(--ink);cursor:pointer}
+.chip.active{background:var(--ocean);border-color:var(--ocean);color:var(--white)}
+.chip.ghost{color:#5A6A6E}
+
+.note{font-size:11.5px;color:#5A6A6E;font-style:italic;border-top:1px solid var(--line);padding-top:14px}
+footer{margin-top:26px;font-size:10.5px;color:#8A9A9E;line-height:1.6}
+@media (max-width:420px){
+  .net-value{font-size:34px}
+  .waterfall{grid-template-columns:1fr 1fr 1fr;gap:6px}
+  .wf{padding:8px 8px}.wf .v{font-size:13px}
+  .barzone{height:130px}
+  .madr{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="brand">ISLANDER HOLIDAY RETREATS</div>
+  <div class="doc-label">Simulateur de revenus<br>Résidence Otera 2 · Juillet 2026</div>
+</header>
+
+<h1>Votre appartement, votre calendrier</h1>
+<p class="sub">Appartement 2 chambres, rez-de-chaussée face mer — préparé pour Mme Komal Hassamal.
+Ajustez l'occupation de chaque mois et observez l'effet sur votre revenu net.</p>
+
+<div class="net-card">
+  <div class="net-label">Net pour vous, par an</div>
+  <div class="net-value" id="net">—</div>
+  <div class="net-sub" id="netSub">après frais des plateformes et commission IHR</div>
+</div>
+
+<div class="waterfall">
+  <div class="wf"><div class="k">Revenu brut</div><div class="v" id="gross">—</div></div>
+  <div class="wf"><div class="k">Plateformes ≈ 15 %</div><div class="v" id="plat">—</div></div>
+  <div class="wf"><div class="k">Commission IHR 25 %</div><div class="v" id="ihr">—</div></div>
+</div>
+
+<div class="chart-card">
+  <div class="chart-title">Revenu brut mois par mois</div>
+  <div class="chart-hint">Faites glisser une barre pour changer l'occupation du mois. « Séjour perso » réserve le mois entier pour vous.</div>
+  <div class="chart" id="chart"></div>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--ocean)"></i>Cœur de saison</span>
+    <span><i class="dot" style="background:var(--mist)"></i>Reste de l'année</span>
+    <span><i class="dot" style="background:var(--sand)"></i>Vos séjours</span>
+  </div>
+</div>
+
+<div class="controls">
+  <button class="chip" data-preset="prudent">Prudent 55 %</button>
+  <button class="chip active" data-preset="realiste">Réaliste 65 %</button>
+  <button class="chip" data-preset="optimiste">Optimiste 75 %</button>
+  <button class="chip ghost" id="reset">Réinitialiser</button>
+</div>
+
+<p class="note" id="insight"></p>
+
+<p class="note" style="font-style:normal;border-top:none;padding-top:6px">
+<strong style="color:var(--ocean)">La phase de lancement.</strong>
+Les premiers mois construisent l'élan de l'annonce — réservations, avis, visibilité — avant la montée
+progressive des tarifs. Un lancement en août–septembre permet d'aborder le cœur de saison d'octobre à
+janvier avec des avis déjà en place.</p>
+
+<footer>Estimation indicative fondée sur les conditions de marché observées en juillet 2026 (tarif de lancement 135–220&nbsp;€/nuit, pointes de fêtes 250–300&nbsp;€). Les revenus réels dépendent de la saison, de la demande et du calendrier de disponibilité.<br>Islander Holiday Retreats — IHR North West Limited · Grand Baie, Île Maurice</footer>
+
+</div>
+
+<script>
+const MONTHS=[
+ {n:'Jan',days:31,adr:185},{n:'Fév',days:28,adr:150},{n:'Mar',days:31,adr:150},
+ {n:'Avr',days:30,adr:150},{n:'Mai',days:31,adr:135},{n:'Juin',days:30,adr:135},
+ {n:'Juil',days:31,adr:140},{n:'Août',days:31,adr:145},{n:'Sep',days:30,adr:135},
+ {n:'Oct',days:31,adr:160},{n:'Nov',days:30,adr:165},{n:'Déc',days:31,adr:230}
+];
+const CORE=[0,9,10,11];
+const PRESETS={
+ prudent:  [65,55,55,55,45,40,50,55,45,60,65,70],
+ realiste: [75,65,65,65,55,50,60,65,55,70,75,80],
+ optimiste:[85,75,75,75,65,60,70,75,65,80,85,90]
+};
+let occ=[...PRESETS.realiste];
+let perso=Array(12).fill(false);
+let savedOcc=Array(12).fill(0);
+const MAXBAR = 31*0.95*230; // scale ceiling
+
+const fmt=v=>Math.round(v).toLocaleString('fr-FR')+' €';
+const gross=i=>perso[i]?0:MONTHS[i].days*(occ[i]/100)*MONTHS[i].adr;
+
+const chart=document.getElementById('chart');
+MONTHS.forEach((m,i)=>{
+  const col=document.createElement('div');
+  col.className='mcol'+(CORE.includes(i)?' core':'');
+  col.innerHTML=`
+    <div class="mgross" id="g${i}"></div>
+    <div class="barzone" id="z${i}" role="slider" tabindex="0"
+         aria-label="Occupation ${m.n}" aria-valuemin="0" aria-valuemax="95" aria-valuenow="${occ[i]}">
+      <div class="bar" id="b${i}"></div>
+    </div>
+    <div class="mname">${m.n}</div>
+    <div class="mocc" id="o${i}"></div>
+    <div class="madr">${m.adr} €/n</div>
+    <button class="perso-btn" id="p${i}">séjour<br>perso</button>`;
+  chart.appendChild(col);
+});
+
+function render(){
+  let G=0;
+  MONTHS.forEach((m,i)=>{
+    const g=gross(i); G+=g;
+    const h=Math.max(3, g/MAXBAR*100);
+    document.getElementById('b'+i).style.height=h+'%';
+    document.getElementById('g'+i).textContent=g>0?Math.round(g/100)/10+'k':'';
+    document.getElementById('o'+i).textContent=perso[i]?'à vous':occ[i]+' %';
+    document.getElementById('z'+i).setAttribute('aria-valuenow',occ[i]);
+    const col=chart.children[i];
+    col.classList.toggle('perso',perso[i]);
+  });
+  const plat=G*0.15, ihr=G*0.25, net=G-plat-ihr;
+  document.getElementById('gross').textContent=fmt(G);
+  document.getElementById('plat').textContent='− '+fmt(plat);
+  document.getElementById('ihr').textContent='− '+fmt(ihr);
+  document.getElementById('net').textContent=fmt(net);
+
+  const nP=perso.filter(Boolean).length;
+  const base=MONTHS.reduce((s,m,i)=>s+m.days*((perso[i]?savedOcc[i]:occ[i])/100)*m.adr,0);
+  const delta=(base-G)*0.60;
+  const insight=document.getElementById('insight');
+  if(nP===0){
+    insight.textContent="Chaque barre correspond au revenu brut du mois. Le montant net affiché est celui qui vous revient, après tous les frais.";
+  }else{
+    const noms=MONTHS.filter((_,i)=>perso[i]).map(m=>m.n).join(', ');
+    insight.textContent=`Séjours personnels : ${noms}. L'appartement reste à vous ces mois-là, pour environ ${fmt(delta)} de revenu net en moins sur l'année.`;
+  }
+  document.getElementById('netSub').textContent=
+    nP>0?`après frais — avec ${nP} mois réservé${nP>1?'s':''} pour vos séjours`
+        :'après frais des plateformes et commission IHR';
+}
+
+function setOcc(i,v){
+  occ[i]=Math.max(0,Math.min(95,Math.round(v/5)*5));
+  if(perso[i]){perso[i]=false;}
+  clearChips(); render();
+}
+function clearChips(){document.querySelectorAll('.chip[data-preset]').forEach(c=>c.classList.remove('active'));}
+
+MONTHS.forEach((m,i)=>{
+  const z=document.getElementById('z'+i);
+  let dragging=false;
+  const fromY=e=>{
+    const r=z.getBoundingClientRect();
+    const y=(e.touches?e.touches[0].clientY:e.clientY);
+    const frac=1-Math.max(0,Math.min(1,(y-r.top)/r.height));
+    setOcc(i, frac*MAXBAR/(m.days*m.adr)*100);
+  };
+  z.addEventListener('pointerdown',e=>{dragging=true;z.setPointerCapture(e.pointerId);fromY(e);});
+  z.addEventListener('pointermove',e=>{if(dragging)fromY(e);});
+  z.addEventListener('pointerup',()=>dragging=false);
+  z.addEventListener('keydown',e=>{
+    if(e.key==='ArrowUp'){e.preventDefault();setOcc(i,occ[i]+5);}
+    if(e.key==='ArrowDown'){e.preventDefault();setOcc(i,occ[i]-5);}
+  });
+  document.getElementById('p'+i).addEventListener('click',()=>{
+    if(!perso[i]){savedOcc[i]=occ[i];perso[i]=true;}
+    else{perso[i]=false;occ[i]=savedOcc[i];}
+    clearChips(); render();
+  });
+});
+
+document.querySelectorAll('.chip[data-preset]').forEach(c=>{
+  c.addEventListener('click',()=>{
+    occ=[...PRESETS[c.dataset.preset]]; perso=Array(12).fill(false);
+    clearChips(); c.classList.add('active'); render();
+  });
+});
+document.getElementById('reset').addEventListener('click',()=>{
+  occ=[...PRESETS.realiste]; perso=Array(12).fill(false);
+  clearChips(); document.querySelector('[data-preset="realiste"]').classList.add('active'); render();
+});
+
+render();
+</script>
+</body>
+</html>
