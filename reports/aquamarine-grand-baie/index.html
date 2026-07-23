@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Aquamarine — Revenue Estimate | IHR</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap');
 
@@ -143,7 +144,7 @@
         <li><strong>Furnished Townhouse, Grand Baie</strong> (2BR/1BA, 5 guests): €76/night — Airbnb "Guest favourite," 4.82★ (11 reviews)</li>
       </ul>
       <p class="note">These are live Airbnb listings inside the same residence — the closest possible comp set. Rates shown are for August (low/shoulder season); peak season (Dec–Jan, July) typically runs meaningfully higher.</p>
-      <p class="note"><strong>What this means for you:</strong> nicer 2BR/1BA units in the same complex already command €56–94/night at low season. Your apartment has a genuine edge over all three of these: an extra bedroom and bathroom (real capacity for families of 5–6, not just 4), and — from what we saw during our visit — better overall finish and presentation than the townhouse currently sold as the residence's "Guest favourite."</p>
+      <p class="note"><strong>What this means for you:</strong> nicer 2BR/1BA units in the same complex already command €56–76/night at low season. Your apartment has a genuine edge over all three of these: an extra bedroom and bathroom (real capacity for families of 5–6, not just 4), and — from what we saw during our visit — better overall finish and presentation than the townhouse currently sold as the residence's "Guest favourite."</p>
     </div>
   </div>
 
@@ -153,21 +154,25 @@
       <table>
         <tr>
           <th>Scenario</th>
+          <th>Avg. nightly rate</th>
           <th>Your net revenue/year</th>
-          <th>Your net revenue/month</th>
+          <th>Your net revenue/month <span style="font-weight:400; text-transform:none; letter-spacing:0;">(yearly average)</span></th>
         </tr>
         <tr class="scenario-row">
           <td><span class="pill cons">Conservative</span></td>
+          <td>€85</td>
           <td>≈ €14,000 / Rs 756,000</td>
           <td>≈ Rs 63,000</td>
         </tr>
         <tr class="scenario-row highlight">
           <td><span class="pill base">Target</span></td>
+          <td>€95</td>
           <td>≈ €17,700 / Rs 955,000</td>
           <td>≈ Rs 79,600</td>
         </tr>
         <tr class="scenario-row">
           <td><span class="pill opt">Optimistic — strong peak season</span></td>
+          <td>€115</td>
           <td>≈ €22,000 / Rs 1,190,000</td>
           <td>≈ Rs 99,000</td>
         </tr>
@@ -179,16 +184,60 @@
   <div class="section">
     <h2>Seasonality — How the Year Breaks Down</h2>
     <div class="card">
-      <table>
-        <tr><th>Period</th><th>Demand level</th><th>Typical monthly net (indicative)</th></tr>
-        <tr class="scenario-row"><td>Dec – Jan</td><td>Peak season</td><td>Rs 110,000 – 140,000</td></tr>
-        <tr class="scenario-row"><td>Jul – Aug</td><td>Peak season</td><td>Rs 100,000 – 130,000</td></tr>
-        <tr class="scenario-row"><td>Feb – Mar, Oct – Nov</td><td>Shoulder season</td><td>Rs 70,000 – 90,000</td></tr>
-        <tr class="scenario-row"><td>Apr – Jun, Sep</td><td>Low season</td><td>Rs 40,000 – 60,000</td></tr>
-      </table>
-      <p class="note">Rentals never earn the same every month — Mauritius has clear peak and low seasons. The Rs 70,000–80,000/month target is the average across the full year, not a flat monthly figure: stronger months during the holidays and Mauritian winter carry the weaker months in between. This is a normal pattern across every property we manage, and it's why we track and quote performance on an annual basis.</p>
+      <canvas id="seasonalityChart" style="max-height:280px;"></canvas>
+      <p class="note">Rentals never earn the same every month — Mauritius has clear peak and low seasons. The chart above is illustrative of that pattern, not a per-month guarantee: stronger months during the holidays and Mauritian winter carry the weaker months in between. The Rs 70,000–80,000/month target is the average across the full year — it's why we track and quote performance annually rather than month to month.</p>
     </div>
   </div>
+
+  <script>
+    const seasonCtx = document.getElementById('seasonalityChart').getContext('2d');
+    new Chart(seasonCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+        datasets: [
+          {
+            label: 'Illustrative seasonal pattern',
+            data: [125,80,80,50,50,50,115,115,50,80,80,125],
+            backgroundColor: '#C9A060',
+            borderRadius: 6,
+            barPercentage: 0.65,
+            order: 2
+          },
+          {
+            label: 'Yearly average target',
+            data: Array(12).fill(79.6),
+            type: 'line',
+            borderColor: '#1B4F5A',
+            borderWidth: 2,
+            borderDash: [6,4],
+            pointRadius: 0,
+            fill: false,
+            order: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom', labels: { font: { family: 'Nunito Sans', size: 12 } } },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => ctx.dataset.label + ': Rs ' + Math.round(ctx.parsed.y) + 'k/month'
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: 'Rs thousands / month (illustrative)' },
+            grid: { color: '#f0eee9' }
+          },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+  </script>
 
   <div class="section">
     <h2>Why Your Property Performs</h2>
@@ -218,6 +267,13 @@
     </div>
   </div>
 
+  <div class="section">
+    <h2>Your Launch Phase</h2>
+    <div class="card">
+      <p style="font-size:14.5px;">New listings start with zero reviews, so the first weeks are about visibility and credibility, not maximizing rate. We price a little more aggressively at launch to win early bookings and build up reviews quickly — that track record is what unlocks higher-paying guests down the line. Once the listing has visibility and a strong review base, we shift toward commanding higher ADRs. This is normal for every property we bring online, and it's factored into the yearly average above.</p>
+    </div>
+  </div>
+
   <div class="cta">
     <h3>Next Step</h3>
     <p>Once the contract is signed, we'll schedule the inspection and deep clean right away.</p>
@@ -225,7 +281,7 @@
 
 </div>
 
-<footer>Islander Holiday Retreats · ihr-mu.com · Estimate prepared July 19, 2026</footer>
+<footer>Islander Holiday Retreats · ihr-mu.com</footer>
 
 </body>
 </html>
