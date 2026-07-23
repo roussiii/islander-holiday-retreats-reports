@@ -70,12 +70,27 @@ h1{font-family:'Sora',sans-serif;font-size:21px;font-weight:600;line-height:1.3;
 
 .note{font-size:11.5px;color:#5A6A6E;font-style:italic;border-top:1px solid var(--line);padding-top:14px}
 footer{margin-top:26px;font-size:10.5px;color:#8A9A9E;line-height:1.6}
-@media (max-width:420px){
-  .net-value{font-size:34px}
-  .waterfall{grid-template-columns:1fr 1fr 1fr;gap:6px}
+.chart-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;
+  margin:0 -6px;padding:0 6px}
+.scroll-hint{display:none;font-size:10.5px;color:#8A9A9E;text-align:center;margin-top:8px}
+.perso-btn{touch-action:manipulation}
+@media (max-width:560px){
+  .net-value{font-size:32px}
+  .waterfall{gap:6px}
   .wf{padding:8px 8px}.wf .v{font-size:13px}
-  .barzone{height:130px}
+  .wf .k{font-size:9.5px}
+  /* chart becomes a comfortable horizontal scroller: ~52px per month */
+  .chart{min-width:640px;gap:6px}
+  .barzone{height:140px}
+  .bar{max-width:34px}
+  .mname{font-size:11.5px}
+  .mocc{font-size:10.5px}
+  .mgross{font-size:9.5px}
   .madr{display:none}
+  .perso-btn{font-size:10px;padding:5px 8px;margin-top:4px}
+  .scroll-hint{display:block}
+  h1{font-size:19px}
+  .chip{padding:8px 13px;font-size:12.5px}
 }
 </style>
 </head>
@@ -106,7 +121,8 @@ Ajustez l'occupation de chaque mois et observez l'effet sur votre revenu net.</p
 <div class="chart-card">
   <div class="chart-title">Revenu brut mois par mois</div>
   <div class="chart-hint">Faites glisser une barre pour changer l'occupation du mois. « Séjour perso » réserve le mois entier pour vous.</div>
-  <div class="chart" id="chart"></div>
+  <div class="chart-scroll"><div class="chart" id="chart"></div></div>
+  <div class="scroll-hint" aria-hidden="true">&#8596; faites défiler pour voir tous les mois</div>
   <div class="legend">
     <span><i class="dot" style="background:var(--ocean)"></i>Cœur de saison</span>
     <span><i class="dot" style="background:var(--mist)"></i>Reste de l'année</span>
