@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Projection de revenus — Villa Grand Baie | Islander Holiday Retreats</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#01458A; --ink:#0B1F33; --teal:#00A79E; --teal-dark:#00857E;
+  --paper:#FAFCFE; --wash:#EAF2F9; --line:#D8E4EE; --grey:#5A6B7B; --amber:#B8842E;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Archivo',sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;font-size:16px}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--teal-dark)}
+h1,h2,.num{font-family:'Fraunces',serif;font-weight:650}
+h2{font-size:24px;color:var(--blue);margin-bottom:14px}
+section{padding:40px 0;border-top:1px solid var(--line)}
+header{background:linear-gradient(160deg,var(--blue) 0%,#022E5C 100%);color:#fff;padding:52px 0 46px}
+header .eyebrow{color:#8FD6D2}
+h1{font-size:clamp(28px,6vw,42px);line-height:1.14;margin:10px 0 6px}
+.hero-net{margin-top:24px}
+.hero-net .num{font-size:clamp(34px,7.5vw,52px);color:#7FE0DA;line-height:1}
+.hero-net .lbl{font-size:14px;color:#B9CFE4;margin-top:6px}
+.hero-meta{margin-top:24px;font-size:13px;color:#B9CFE4}
+/* CURRENT STATE STRIP */
+.cur{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.cur .stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px}
+.cur .stat .num{font-size:24px;color:var(--blue)}
+.cur .stat .lbl{font-size:12.5px;color:var(--grey);margin-top:4px}
+.cur .stat.src{grid-column:1/-1;background:var(--wash);border:1px dashed #B9CFE4;font-size:12.5px;color:var(--grey);padding:12px 16px}
+/* SCENARIO CARDS */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:6px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px 20px}
+.card.mid{border-color:var(--teal);box-shadow:0 6px 22px rgba(0,167,158,.13)}
+.card .tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--grey)}
+.card.mid .tag{color:var(--teal-dark)}
+.card .num{font-size:24px;color:var(--teal-dark);margin:10px 0 2px}
+.card .per{font-size:13px;color:var(--grey)}
+.card .sub{font-size:13px;color:var(--grey);margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
+/* TABLE */
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:14px}
+th,td{padding:11px 12px;text-align:right;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+thead th{background:var(--blue);color:#fff;font-weight:600;font-size:12.5px}
+tbody tr:last-child td{border-bottom:none}
+tr.net td{background:var(--teal);color:#fff;font-weight:700}
+.note{font-size:13px;color:var(--grey);margin-top:12px}
+/* COMPARISON BARS */
+.bars{margin-top:10px}
+.bar-row{margin:20px 0}
+.bar-row .lab{display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px;gap:10px}
+.bar-row .lab b{font-family:'Fraunces',serif;white-space:nowrap}
+.bar{height:32px;border-radius:8px;background:var(--wash);position:relative;overflow:hidden}
+.bar>span{position:absolute;inset:0 auto 0 0;border-radius:8px}
+.bar.ltr>span{width:39%;background:#9FB4C6}
+.bar.cur>span{width:40%;background:var(--amber)}
+.bar.ihr>span{width:82%;background:linear-gradient(90deg,var(--teal),var(--teal-dark))}
+.callout{background:var(--wash);border-left:3px solid var(--teal);border-radius:8px;padding:16px 18px;margin-top:18px;font-size:14.5px}
+.callout b{color:var(--teal-dark)}
+/* LISTS */
+ul.svc{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:8px 26px}
+ul.svc li{padding:9px 0 9px 30px;position:relative;border-bottom:1px dashed var(--line);font-size:15px}
+ul.svc li::before{content:"";position:absolute;left:0;top:14px;width:16px;height:16px;border-radius:50%;
+  background:var(--teal);mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center/contain no-repeat;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center/contain no-repeat}
+.why{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.why div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px}
+.why b{color:var(--blue);display:block;margin-bottom:5px;font-size:15px}
+.why p{font-size:14px;color:var(--grey)}
+footer{padding:22px 0 36px;font-size:12px;color:var(--grey)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Islander Holiday Retreats — Projection de revenus</div>
+    <h1>Villa 4 chambres avec piscine, Grand Baie</h1>
+    <div class="hero-net">
+      <div class="num">€26 000 – €29 500</div>
+      <div class="lbl">de revenu net annuel pour vous, en régime de croisière — scénario réaliste, après toutes commissions</div>
+    </div>
+    <div class="hero-meta">Préparé pour M. Jérôme &nbsp;•&nbsp; Juillet 2026 &nbsp;•&nbsp; Document confidentiel</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section>
+  <div class="eyebrow">Vos chiffres, tels quels</div>
+  <h2>Votre villa aujourd'hui</h2>
+  <p style="margin-bottom:16px">Merci pour vos statistiques. Voici ce qu'elles montrent, sans arrondi optimiste — c'est le point de départ le plus honnête pour construire une projection.</p>
+  <div class="cur">
+    <div class="stat"><div class="num">≈ €13 400</div><div class="lbl">Revenu net total sur 12 mois (Airbnb + réservation directe déc.–janv.)</div></div>
+    <div class="stat"><div class="num">186 nuits</div><div class="lbl">Occupées sur la période (Airbnb 112 + direct 74)</div></div>
+    <div class="stat"><div class="num">≈ €72 / nuit</div><div class="lbl">Revenu net moyen, tous canaux confondus (ordre de grandeur)</div></div>
+    <div class="stat src">Calculé à partir de vos propres captures d'écran Airbnb (2025) et de votre réservation directe déc. 2025 – janv. 2026.</div>
+  </div>
+  <div class="callout">
+    Votre occupation est réelle — la villa se loue. La question n'est pas de trouver plus de voyageurs, mais de <b>mieux valoriser chaque séjour</b>, en particulier sur les périodes de forte demande.
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Trois scénarios</div>
+  <h2>Ce que votre villa peut générer</h2>
+  <p style="margin-bottom:18px">Projection fondée sur vos données réelles ci-dessus et sur les performances de notre portefeuille sur la côte nord (Grand Baie, Pereybère, Pointe aux Canonniers) pour des villas de profil comparable — quatre chambres, piscine, emplacement central à quelques minutes de la plage.</p>
+  <div class="cards">
+    <div class="card">
+      <div class="tag">Conservateur — année 1</div>
+      <div class="num">€22 000 – €24 500</div>
+      <div class="per">nets / an &nbsp;·&nbsp; €1 830 – 2 040 / mois</div>
+      <div class="sub">Année de transition&nbsp;: repositionnement tarifaire et montée en visibilité.</div>
+    </div>
+    <div class="card mid">
+      <div class="tag">Réaliste — régime de croisière</div>
+      <div class="num">€26 000 – €29 500</div>
+      <div class="per">nets / an &nbsp;·&nbsp; €2 170 – 2 460 / mois</div>
+      <div class="sub">Atteint dès la deuxième année d'exploitation.</div>
+    </div>
+    <div class="card">
+      <div class="tag">Optimiste — performance maximale</div>
+      <div class="num">€31 000 – €34 000</div>
+      <div class="per">nets / an &nbsp;·&nbsp; €2 580 – 2 830 / mois</div>
+      <div class="sub">Positionnement au sommet du segment pour ce type de villa à Grand Baie.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Transparence totale</div>
+  <h2>Du chiffre d'affaires à votre revenu net</h2>
+  <table>
+    <thead>
+      <tr><th></th><th>Conservateur</th><th>Réaliste</th><th>Optimiste</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Chiffre d'affaires brut</td><td>€37 000 – 41 000</td><td>€43 000 – 49 000</td><td>€52 000 – 57 000</td></tr>
+      <tr><td>Commissions plateformes (≈15%)</td><td>– €5 550 – 6 150</td><td>– €6 450 – 7 350</td><td>– €7 800 – 8 550</td></tr>
+      <tr><td>Gestion IHR (25%)</td><td>– €9 250 – 10 250</td><td>– €10 750 – 12 250</td><td>– €13 000 – 14 250</td></tr>
+      <tr class="net"><td>Votre revenu net annuel</td><td>€22 000 – 24 500</td><td>€26 000 – 29 500</td><td>€31 000 – 34 000</td></tr>
+      <tr><td>En roupies (€1 = Rs 54)</td><td>Rs 1,19 – 1,32 M</td><td>Rs 1,40 – 1,59 M</td><td>Rs 1,67 – 1,84 M</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Aucun frais caché&nbsp;: la commission IHR couvre l'intégralité de la gestion listée ci-dessous. Projections indicatives, non contractuelles, établies en juillet 2026 sur la base de vos données et des nôtres.</p>
+</section>
+
+<section>
+  <div class="eyebrow">La comparaison qui compte</div>
+  <h2>Trois chemins pour votre villa</h2>
+  <div class="bars">
+    <div class="bar-row">
+      <div class="lab"><span>Location longue durée (équivalent, Grand Baie)</span><b>€13 300 – 16 700 / an</b></div>
+      <div class="bar ltr"><span></span></div>
+    </div>
+    <div class="bar-row">
+      <div class="lab"><span>Votre résultat actuel (autogestion, 12 derniers mois)</span><b>≈ €13 400 / an</b></div>
+      <div class="bar cur"><span></span></div>
+    </div>
+    <div class="bar-row">
+      <div class="lab"><span>Courte/moyenne durée gérée par IHR — réaliste</span><b>€26 000 – 29 500 / an</b></div>
+      <div class="bar ihr"><span></span></div>
+    </div>
+  </div>
+  <div class="callout">
+    Votre villa se loue déjà bien — 186 nuits occupées le prouvent. Le levier n'est pas de trouver plus de voyageurs, c'est de <b>capter la valeur que la haute saison et le format court/moyen séjour permettent</b>, plutôt que de la céder via des tarifs longue durée.
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Ce que couvre la gestion IHR (25%)</div>
+  <h2>Vous n'avez rien à faire</h2>
+  <ul class="svc">
+    <li>Création et optimisation des annonces (Airbnb, Booking.com)</li>
+    <li>Tarification dynamique — saisonnalité et demande</li>
+    <li>Communication voyageurs 7j/7, avant, pendant et après séjour</li>
+    <li>Accueil, check-in / check-out</li>
+    <li>Coordination ménage et blanchisserie</li>
+    <li>Suivi technique et maintenance</li>
+    <li>Rapport mensuel&nbsp;: revenus par plateforme, occupation, versements</li>
+  </ul>
+  <p class="note">Reportage photographique&nbsp;: à la charge du propriétaire. Vos photographies professionnelles existantes peuvent être réutilisées après validation de leur compatibilité avec les standards des plateformes.</p>
+</section>
+
+<section>
+  <div class="eyebrow">Pourquoi IHR</div>
+  <h2>Des résultats vérifiables</h2>
+  <div class="why">
+    <div><b>Note globale 5,0</b><p>Propreté, précision, arrivée et communication — vérifiable directement sur nos annonces Airbnb.</p></div>
+    <div><b>Spécialistes de la côte nord</b><p>L'essentiel de notre portefeuille est à Grand Baie et ses environs&nbsp;: nous connaissons la demande et les prix qui fonctionnent dans votre secteur.</p></div>
+    <div><b>Multi-plateformes, à plein temps</b><p>Airbnb, Booking.com et réservations directes, gérés chaque jour — le travail qu'un propriétaire seul ne peut pas tenir dans la durée.</p></div>
+    <div><b>Transparence chiffrée</b><p>Rapport mensuel détaillé et versements traçables. Vous voyez tout, chaque mois.</p></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">Projections fournies à titre indicatif, non contractuelles · Islander Holiday Retreats, Grand Baie</div>
+</footer>
+
+</body>
+</html>
