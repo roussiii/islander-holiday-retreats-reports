@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bon Azur B1 — Inspection Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: #F5F2EC;
+    color: #1a1a1a;
+    padding: 1rem;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .wrap { max-width: 700px; margin: 0 auto; }
+
+  /* HEADER */
+  .header { margin-bottom: 1.25rem; }
+  .main-title { font-size: 20px; font-weight: 700; color: #0C447C; }
+  .sub { font-size: 13px; color: #888; margin-top: 3px; }
+  .badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .badge { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
+  .b-red  { background: #FCEBEB; color: #A32D2D; }
+  .b-amb  { background: #FAEEDA; color: #854F0B; }
+  .b-blu  { background: #E6F1FB; color: #0C447C; }
+  .b-grn  { background: #EAF3DE; color: #3B6D11; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-bottom: 1.25rem; }
+  .stat { background: #fff; border-radius: 10px; padding: .85rem .5rem; text-align: center; border: 1px solid #e4dfd7; }
+  .stat-num { font-size: 22px; font-weight: 700; display: block; }
+  .stat-lbl { font-size: 11px; color: #888; margin-top: 3px; line-height: 1.3; }
+
+  /* TABS */
+  .tabs { display: flex; gap: 5px; margin-bottom: 1rem; flex-wrap: wrap; }
+  .tab {
+    font-size: 12px; font-weight: 600; padding: 6px 13px; border-radius: 20px;
+    border: 1px solid #ccc; background: #fff; color: #666; cursor: pointer;
+    transition: all .12s;
+  }
+  .tab.active { background: #185FA5; color: #fff; border-color: #185FA5; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* SECTION LABELS */
+  .slabel {
+    font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase;
+    letter-spacing: .08em; margin: 1.1rem 0 .45rem; padding-left: 2px;
+  }
+  .slabel:first-child { margin-top: 0; }
+
+  /* CARDS */
+  .card { background: #fff; border-radius: 12px; padding: .9rem 1.1rem; margin-bottom: 8px; border: 1px solid #e4dfd7; }
+  .card-hdr { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+  .card-title { font-size: 14px; font-weight: 700; color: #0C447C; }
+  .card-meta { font-size: 12px; color: #bbb; margin-top: 2px; }
+
+  /* ROWS */
+  .row { display: flex; align-items: flex-start; gap: 9px; padding: 6px 0; border-bottom: 1px solid #f0ece6; }
+  .row:last-child { border-bottom: none; padding-bottom: 0; }
+  .row:first-child { padding-top: 0; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .ok   { background: #5A9918; }
+  .fix  { background: #D94040; }
+  .warn { background: #E09020; }
+  .nfo  { background: #185FA5; }
+  .row-text { font-size: 13px; line-height: 1.5; flex: 1; color: #333; }
+  .muted { color: #999; }
+
+  /* TAGS */
+  .tag {
+    font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 8px;
+    display: inline-block; margin-left: 5px; vertical-align: middle; white-space: nowrap;
+  }
+  .t-r  { background: #FCEBEB; color: #A32D2D; }
+  .t-s  { background: #FAEEDA; color: #854F0B; }
+  .t-ok { background: #EAF3DE; color: #3B6D11; }
+  .t-b  { background: #E6F1FB; color: #0C447C; }
+  .t-ac { background: #DDF0EE; color: #0A6B5E; }
+
+  /* ALERTS */
+  .alert { border-radius: 10px; padding: .9rem 1.1rem; margin-bottom: 8px; }
+  .al-red { background: #FCEBEB; border: 1px solid #F0BEBE; }
+  .al-amb { background: #FAEEDA; border: 1px solid #F0D09A; }
+  .al-blu { background: #E6F1FB; border: 1px solid #B0CCEE; }
+  .al-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+  .al-red .al-title { color: #A32D2D; }
+  .al-amb .al-title { color: #854F0B; }
+  .al-blu .al-title { color: #0C447C; }
+  .arow { display: flex; align-items: flex-start; gap: 8px; padding: 5px 0; border-bottom: 1px solid rgba(0,0,0,.07); font-size: 13px; }
+  .arow:last-child { border-bottom: none; padding-bottom: 0; }
+  .al-red .arow { color: #5A1010; }
+  .al-amb .arow { color: #5A3000; }
+  .al-blu .arow { color: #0C447C; }
+
+  /* FILTERS */
+  .filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .fb {
+    font-size: 11px; font-weight: 700; padding: 5px 12px; border-radius: 20px;
+    border: 1px solid #ccc; background: #fff; color: #555; cursor: pointer;
+  }
+  .fb.on { color: #fff; border-color: transparent; }
+  .fb[data-f="all"].on      { background: #444; }
+  .fb[data-f="carpenter"].on{ background: #7B4F1E; }
+  .fb[data-f="plumber"].on  { background: #185FA5; }
+  .fb[data-f="ac"].on       { background: #0A6B5E; }
+  .fb[data-f="buy"].on      { background: #854F0B; }
+  .fb[data-f="ask"].on      { background: #6B3A8A; }
+  .fb[data-f="pest"].on     { background: #3B6D11; }
+  .agroup.hide { display: none; }
+
+  /* INFO CARD */
+  .info-card { background: #E6F1FB; border: 1px solid #B0CCEE; border-radius: 10px; padding: .9rem 1.1rem; margin-bottom: 8px; }
+  .info-title { font-size: 11px; font-weight: 700; color: #0C447C; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+  .irow { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #B0CCEE; font-size: 13px; }
+  .irow:last-child { border-bottom: none; }
+  .ikey { color: #185FA5; }
+  .ival { font-weight: 700; color: #0C447C; }
+  .warn-card { background: #FAEEDA; border: 1px solid #F0D09A; border-radius: 10px; padding: .9rem 1.1rem; margin-bottom: 8px; }
+  .warn-title { font-size: 11px; font-weight: 700; color: #854F0B; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+
+  /* TABLE */
+  .tbl { width: 100%; font-size: 13px; border-collapse: collapse; }
+  .tbl th { font-size: 11px; font-weight: 700; color: #aaa; text-align: left; padding: 5px 8px; border-bottom: 1px solid #ddd; }
+  .tbl td { padding: 6px 8px; border-bottom: 1px solid #f0ece6; color: #333; vertical-align: top; }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tv { font-weight: 700; color: #185FA5; text-align: right; }
+  .tr { text-align: right; }
+
+  .ul-card { border-left: 3px solid #D94040; }
+
+  /* MOBILE */
+  @media (max-width: 520px) {
+    body { padding: .6rem; font-size: 14px; }
+    .stats { grid-template-columns: repeat(2,1fr); }
+    .stat-num { font-size: 18px; }
+    .tabs { gap: 4px; }
+    .tab { font-size: 11px; padding: 5px 10px; }
+    .main-title { font-size: 17px; }
+    .tbl { font-size: 12px; }
+    .tbl th { font-size: 10px; }
+    .card { padding: .75rem .85rem; }
+    .info-card, .warn-card { padding: .75rem .85rem; }
+    .badge { font-size: 10px; }
+  }
+  .fb[data-f="fittings"].on { background: #5B5B8A; }
+  .fb[data-f="electric"].on { background: #B8860B; }
+  .fb[data-f="clean"].on    { background: #3B6D11; }
+  .fb[data-f="tv"].on       { background: #A32D2D; }
+  .t-el { background: #FBF3D0; color: #7A5A00; }
+  .note { font-size: 12px; color: #888; margin: 2px 2px 10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+  <div class="main-title">Bon Azur B1 — Jim's Apartment</div>
+  <div class="sub">Inspection report · 13 Nov 2026 · 4 bed · 4 bath en suite · Living &amp; dining · Kitchen · 2 terraces · Sleeps 8</div>
+  <div class="badges">
+    <span class="badge b-red">32 repairs</span>
+    <span class="badge b-red">5 blockers</span>
+    <span class="badge b-amb">5 open questions</span>
+    <span class="badge b-blu">Islander Holiday Retreats</span>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><span class="stat-num" style="color:#A32D2D;">32</span><div class="stat-lbl">Repairs needed</div></div>
+  <div class="stat"><span class="stat-num" style="color:#0A6B5E;">5</span><div class="stat-lbl">AC units to service</div></div>
+  <div class="stat"><span class="stat-num" style="color:#185FA5;">9</span><div class="stat-lbl">Plumbing faults</div></div>
+  <div class="stat"><span class="stat-num" style="color:#854F0B;">5</span><div class="stat-lbl">Blockers to listing</div></div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('rooms',this)">Rooms</div>
+  <div class="tab" onclick="showTab('actions',this)">Actions</div>
+  <div class="tab" onclick="showTab('inventory',this)">Inventory</div>
+  <div class="tab" onclick="showTab('access',this)">Access &amp; Utilities</div>
+  <div class="tab" onclick="showTab('listing',this)">Before Listing</div>
+</div>
+
+<div id="tab-rooms" class="panel active">
+
+  <div class="slabel">Entrance</div>
+  <div class="card">
+    <div class="card-hdr"><div><div class="card-title">Main Entrance</div></div><span class="badge b-red">2 repairs</span></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Door handle not proper — replace<span class="tag t-r">Carpenter</span></div></div>
+    <div class="row"><div class="dot nfo"></div><div class="row-text">Old phone and alarm panel above the light switch — no longer used, remove<span class="tag t-el">Electrician</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">3 wall artworks (raspberries) — do not suit the apartment, replace<span class="tag t-s">Buy</span></div></div>
+  </div>
+
+  <div class="slabel">Living &amp; Dining</div>
+  <div class="card">
+    <div class="card-hdr"><div><div class="card-title">Living Room</div><div class="card-meta">Sofa · smart TV · dining table</div></div><span class="badge b-red">2 repairs</span></div>
+    <div class="row"><div class="dot ok"></div><div class="row-text muted">Sofa, lights, all drawers — OK</div></div>
+    <div class="row"><div class="dot ok"></div><div class="row-text muted">Smart TV — working, connected to the internet, Netflix opens</div></div>
+    <div class="row"><div class="dot ok"></div><div class="row-text muted">Sliding door to main terrace — OK</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Aircon not cooling — repair<span class="tag t-ac">AC</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Dining table — legs damaged<span class="tag t-r">Carpenter</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Dining chairs (plastic) — keep, add felt pads under the legs<span class="tag t-s">Buy</span></div></div>
+  </div>
+  <div class="card">
+    <div class="card-hdr"><div><div class="card-title">Storage Room</div><div class="card-meta">Off the living room · rug, cushions and pillows stored here</div></div><span class="badge b-red">1 repair</span></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Shelf broken, wood damaged<span class="tag t-r">Carpenter</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Rug dirty — professional cleaning<span class="tag t-s">Clean</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Sofa cushions / pillows — wash<span class="tag t-s">Clean</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Stored cushions smell — wash or replace<span class="tag t-s">Clean</span></div></div>
+  </div>
+
+  <div class="slabel">Bedrooms</div>
+  <div class="card">
+    <div class="card-hdr"><div><div class="card-title">Bedroom 1 — en suite</div><div class="card-meta">Queen bed · 4 pillows + 2 decorative</div></div><span class="badge b-red">4 repairs</span></div>
+    <div class="row"><div class="dot ok"></div><div class="row-text muted">Room in good order · aircon cooling</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Aircon — service before launch<span class="tag t-ac">AC</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">TV old, not smart — replace with a smart TV<span class="tag t-s">Buy</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bathroom — sink leaking underneath<span class="tag t-r">Plumber</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Bathroom — no hot water at the sink taps (boiler was found off — retest)<span class="tag t-s">Retest</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bathroom — shower soap holder broken off the wall<span class="tag t-r">Fittings</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bathroom — shower door rubber seal broken, replace<span class="tag t-r">Fittings</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Bathroom — bin broken, replace<span class="tag t-s">Buy</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Bathroom — no hair dryer<span class="tag t-s">Buy</span></div></div>
+    <div class="row"><div class="dot nfo"></div><div class="row-text">Bathtub — paint worn off. Usable, but visible to guests<span class="tag t-b">Owner decision</span></div></div>
+  </div>
+  <div class="card">
+    <div class="card-hdr"><div><div class="card-title">Bedroom 2 — en suite</div><div class="card-meta">2 single beds · opens onto small terrace</div></div><span class="badge b-red">7 repairs</span></div>
+    <div class="row"><div class="dot ok"></div><div class="row-text muted">Lights, bedside lamps, beds (made) — OK</div></div>
+    <div class="row"><div class="dot ok"></div><div class="row-text muted">Cupboard sliding doors and drawers — OK · terrace sliding door — perfect</div></div>
+    <div class="row"><div class="dot ok"></div><div class="row-text muted">Aircon cooling · bathroom toilet and bin — OK</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Aircon — service before launch<span class="tag t-ac">AC</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">TV not working — repair or replace<span class="tag t-s">Buy</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Door handle — works but not ideal<span class="tag t-r">Carpenter</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Curtains — may need washing<span class="tag t-s">Clean</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Wardrobe — paint pots and clutter to remove<span class="tag t-s">Clean</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bathroom — sink tap loose<span class="tag t-r">Plumber</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bathroom — sink leaking underneath<span class="tag t-r">Plumber</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bathroom — handheld shower hose leaking (fixed head is fine)<span class="tag t-r">Plumber</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bathroom — wall towel holder broken<span class="tag t-r">Fittings</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bathroom — shower soap holder broken<span class="tag t-r">Fittings</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bathroom — shower door rubber seal, replace<span class="tag t-r">Fittings</span></div></div>
+  </div>
+  <div class="card">
+    <div class="card-hdr"><div><div class="card-title">Bedroom 3 — en suite</div><div class="card-meta">Queen bed · 2 bedside lamps · 4 pillows + 2 decorative · opens onto small terrace</div></div><span class="badge b-red">6 repairs</span></div>
+    <div class="row"><div class="dot ok"></div><div class="row-text muted">Bed, cupboard, terrace sliding door — OK · aircon cooling</div></div>
+    <div class="row"><div class="dot ok"></div><div class="row-text muted">Bathroom bin, toilet flush, seat — OK · no leak under the sink</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Aircon — service before launch<span class="tag t-ac">AC</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">TV not working — repair or replace<span class="tag t-s">Buy</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bathroom — shower leaking<span class="tag t-r">Plumber</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Bathroom — no hot water at the sink (boiler was found off — retest)<span class="tag t-s">Retest</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bathroom — window handle<span class="tag t-r">Carpenter</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bathroom — door handle<span class="tag t-r">Carpenter</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bathroom — shower soap holder broken<span class="tag t-r">Fittings</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bathroom — shower door seal looks new but leaves a gap, will leak — adjust<span class="tag t-r">Fittings</span></div></div>
+  </div>
+  <div class="card">
+    <div class="card-hdr"><div><div class="card-title">Bedroom 4 — master en suite</div><div class="card-meta">King bed · sea view · 4 pillows + 2 decorative</div></div><span class="badge b-red">8 repairs</span></div>
+    <div class="row"><div class="dot ok"></div><div class="row-text muted">Door and handle, sliding doors — OK · aircon cooling</div></div>
+    <div class="row"><div class="dot ok"></div><div class="row-text muted">Bathroom toilet — OK · no leak under the sink</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Aircon — service before launch<span class="tag t-ac">AC</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Ceiling lights not working<span class="tag t-el">Electrician</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">TV does not turn on — check power and remote first, otherwise replace<span class="tag t-s">Buy</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Bedside lamps — working, but one is rusty. Replace it, ideally both for a matching pair<span class="tag t-s">Buy</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bedside table — one drawer broken<span class="tag t-r">Carpenter</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">TV unit drawers loose<span class="tag t-r">Carpenter</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Cupboard — one door to fix<span class="tag t-r">Carpenter</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bathroom — shower holder very loose and leaking<span class="tag t-r">Plumber</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bathroom — overhead shower unit in poor state, replace<span class="tag t-r">Plumber</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bathroom — sink tap leaking from the tap body, fix or replace<span class="tag t-r">Plumber</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Bathroom — drawers by the sink need cleaning<span class="tag t-s">Clean</span></div></div>
+    <div class="row"><div class="dot nfo"></div><div class="row-text">Bathtub — paint worn off, same as bedroom 1<span class="tag t-b">Owner decision</span></div></div>
+    <div class="row"><div class="dot nfo"></div><div class="row-text">Safe — no code, could not test<span class="tag t-b">Ask</span></div></div>
+  </div>
+
+  <div class="slabel">Kitchen</div>
+  <div class="card">
+    <div class="card-hdr"><div><div class="card-title">Kitchen</div><div class="card-meta">Well equipped</div></div><span class="badge b-amb">1 repair</span></div>
+    <div class="row"><div class="dot ok"></div><div class="row-text muted">Electric stove, extractor hood, grill, microwave, toaster, kettle — OK</div></div>
+    <div class="row"><div class="dot ok"></div><div class="row-text muted">Coffee machine · washing machine and dishwasher appear to work</div></div>
+    <div class="row"><div class="dot ok"></div><div class="row-text muted">Main fridge — working, good condition</div></div>
+    <div class="row"><div class="dot ok"></div><div class="row-text muted">Cutlery, knives, utensils, pots and pans, bowls, plates, glasses, mugs — present</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Leak under the kitchen sink<span class="tag t-r">Plumber</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Under-sink cupboard — clean and tidy<span class="tag t-s">Clean</span></div></div>
+    <div class="row"><div class="dot nfo"></div><div class="row-text">Second fridge — switched off, status unknown<span class="tag t-b">Ask</span></div></div>
+  </div>
+
+  <div class="slabel">Terraces</div>
+  <div class="card">
+    <div class="card-hdr"><div><div class="card-title">Main Terrace</div></div><span class="badge b-amb">1 repair</span></div>
+    <div class="row"><div class="dot ok"></div><div class="row-text muted">Large table + 8 chairs — OK</div></div>
+    <div class="row"><div class="dot ok"></div><div class="row-text muted">Barbecue + red gas canister · clothes drying rack — OK</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">One spotlight not working — replace<span class="tag t-el">Electrician</span></div></div>
+  </div>
+  <div class="card">
+    <div class="card-hdr"><div><div class="card-title">Small Terrace (bedrooms 2 &amp; 3)</div></div><span class="badge b-blu">Optional</span></div>
+    <div class="row"><div class="dot ok"></div><div class="row-text muted">Sliding doors from both bedrooms — OK</div></div>
+    <div class="row"><div class="dot nfo"></div><div class="row-text">No furniture — a small table and two chairs would add value<span class="tag t-s">Optional buy</span></div></div>
+  </div>
+
+  <div class="slabel">Whole Apartment</div>
+  <div class="card ul-card">
+    <div class="card-hdr"><div><div class="card-title">General</div></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Hot water — boiler was found switched off. Switch on and retest every tap and shower<span class="tag t-r">Plumber</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">All 5 aircon units — service before launch, unless serviced recently<span class="tag t-ac">AC</span></div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bed linen and towels — none to IHR standard, to buy<span class="tag t-s">Buy</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Fire extinguisher — present, needs servicing<span class="tag t-s">Service</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">All remotes (TV, aircon) — check and replace batteries<span class="tag t-s">Buy</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Hair dryer — none found, at least one needed<span class="tag t-s">Buy</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">First-aid kit — none, needed<span class="tag t-s">Buy</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Cleaning kit — dustpan does not hold, mop is poor quality<span class="tag t-s">Buy</span></div></div>
+  </div>
+  <div class="alert al-amb" style="margin-top:8px;">
+    <div class="al-title">Open questions</div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Aircon — when were the units last serviced?</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Bathtubs (bedroom 1 and master) — leave as is or resurface?</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Safe code — master bedroom.</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Second fridge — does it work, and should it stay? To check with the previous manager.</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Wi-Fi — details noted from the router card, to be tested on site.</div></div>
+  </div>
+</div>
+
+<div id="tab-actions" class="panel">
+  <div class="filters">
+    <button class="fb on" data-f="all" onclick="filterActions('all',this)">All</button>
+    <button class="fb" data-f="plumber" onclick="filterActions('plumber',this)">🔧 Plumber</button>
+    <button class="fb" data-f="carpenter" onclick="filterActions('carpenter',this)">🔨 Carpenter</button>
+    <button class="fb" data-f="fittings" onclick="filterActions('fittings',this)">🚿 Fittings</button>
+    <button class="fb" data-f="electric" onclick="filterActions('electric',this)">💡 Electrician</button>
+    <button class="fb" data-f="ac" onclick="filterActions('ac',this)">❄️ AC</button>
+    <button class="fb" data-f="tv" onclick="filterActions('tv',this)">📺 TV</button>
+    <button class="fb" data-f="clean" onclick="filterActions('clean',this)">🧽 Clean</button>
+    <button class="fb" data-f="buy" onclick="filterActions('buy',this)">🛒 Buy</button>
+    <button class="fb" data-f="ask" onclick="filterActions('ask',this)">❓ Ask</button>
+  </div>
+  <div class="card agroup" data-group="plumber">
+    <div class="card-title" style="margin-bottom:10px;">🔧 Plumber <span style="font-weight:400;color:#bbb;font-size:12px;">9 repairs + hot water check</span></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bedroom 1 bathroom — sink leaking underneath</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bedroom 2 bathroom — sink tap loose</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bedroom 2 bathroom — sink leaking underneath</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bedroom 2 bathroom — handheld shower hose leaking</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bedroom 3 bathroom — shower leaking</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Master bathroom — shower holder very loose and leaking</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Master bathroom — overhead shower unit to replace</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Master bathroom — sink tap leaking from the body</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Kitchen — leak under the sink</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Hot water — switch boiler on, retest all taps and showers</div></div>
+  </div>
+  <div class="card agroup" data-group="carpenter">
+    <div class="card-title" style="margin-bottom:10px;">🔨 Carpenter <span style="font-weight:400;color:#bbb;font-size:12px;">8 items + 1 optional</span></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Entrance — door handle (replace)</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Living room — dining table legs</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Storage room — broken shelf, damaged wood</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bedroom 3 bathroom — window handle</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bedroom 3 bathroom — door handle</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Master bedroom — bedside table drawer</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Master bedroom — TV unit drawers loose</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Master bedroom — cupboard door</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bedroom 2 — door handle (optional, works but not ideal)</div></div>
+  </div>
+  <div class="card agroup" data-group="fittings">
+    <div class="card-title" style="margin-bottom:10px;">🚿 Bathroom fittings <span style="font-weight:400;color:#bbb;font-size:12px;">7 items</span></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Shower soap holders — bedrooms 1, 2 and 3 (all broken)</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Towel holder — bedroom 2 bathroom</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Shower door seals — bedrooms 1 and 2 (replace)</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Shower door seal — bedroom 3 (adjust, leaves a gap)</div></div>
+  </div>
+  <div class="card agroup" data-group="electric">
+    <div class="card-title" style="margin-bottom:10px;">💡 Electrician <span style="font-weight:400;color:#bbb;font-size:12px;">3 items</span></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Master bedroom — ceiling lights not working</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Main terrace — spotlight to replace</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Entrance — remove old phone and alarm panel</div></div>
+  </div>
+  <div class="card agroup" data-group="ac">
+    <div class="card-title" style="margin-bottom:10px;">❄️ AC <span style="font-weight:400;color:#bbb;font-size:12px;">1 repair · 5 units to service</span></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Living room — not cooling, repair</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bedrooms 1, 2, 3 and master — cooling, service</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Confirm last service date before booking</div></div>
+  </div>
+  <div class="card agroup" data-group="tv">
+    <div class="card-title" style="margin-bottom:10px;">📺 TVs &amp; remotes <span style="font-weight:400;color:#bbb;font-size:12px;">4 items</span></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bedroom 1 — replace old TV with a smart TV</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Master bedroom — TV dead: test socket and remote, otherwise replace</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">Bedrooms 2 and 3 — TVs not working, repair or replace</div></div>
+    <div class="row"><div class="dot fix"></div><div class="row-text">All remotes — new batteries</div></div>
+  </div>
+  <div class="card agroup" data-group="clean">
+    <div class="card-title" style="margin-bottom:10px;">🧽 Cleaning <span style="font-weight:400;color:#bbb;font-size:12px;">7 items</span></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Storage room — rug, professional cleaning</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Storage room — sofa cushions and pillows, wash</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Storage room — stored cushions smell, wash or replace</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Bedroom 2 — curtains</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Bedroom 2 wardrobe — remove paint pots and clutter</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Master bathroom — sink drawers</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Kitchen — under-sink cupboard</div></div>
+  </div>
+  <div class="card agroup" data-group="buy">
+    <div class="card-title" style="margin-bottom:10px;">🛒 To buy <span style="font-weight:400;color:#bbb;font-size:12px;">14 lines</span></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Bed linen — 3 sets per bed (2 queen, 1 king, 2 single)</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Towels — 2 sets per room: bath, hand, bath mats</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Hair dryer — at least 1 (ideally 1 per bathroom)</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">First-aid kit</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Bedside lamps — master bedroom, 1 rusty (ideally replace both)</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Smart TVs — bedroom 1, plus bedrooms 2, 3 and master if not recoverable</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Bathroom bin — bedroom 1</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Shower soap holders × 3 · towel holder × 1</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Shower door seals × 2 · overhead shower unit × 1</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Terrace spotlight × 1 · remote batteries</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Felt pads — dining chairs</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Wall art × 3 — entrance</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Dustpan and brush · mop</div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Optional — small terrace table and 2 chairs</div></div>
+  </div>
+  <div class="card agroup" data-group="ask">
+    <div class="card-title" style="margin-bottom:10px;">❓ To clarify <span style="font-weight:400;color:#bbb;font-size:12px;">6 items</span></div>
+    <div class="row"><div class="dot nfo"></div><div class="row-text">Aircon — last service date<span class="tag t-b">Jim</span></div></div>
+    <div class="row"><div class="dot nfo"></div><div class="row-text">Bathtubs × 2 — leave or resurface<span class="tag t-b">Jim</span></div></div>
+    <div class="row"><div class="dot nfo"></div><div class="row-text">Safe code — master bedroom<span class="tag t-b">Jim / prev. manager</span></div></div>
+    <div class="row"><div class="dot nfo"></div><div class="row-text">TV replacements and wall art — approve budget<span class="tag t-b">Jim</span></div></div>
+    <div class="row"><div class="dot nfo"></div><div class="row-text">Second fridge — working? keep?<span class="tag t-b">Prev. manager</span></div></div>
+    <div class="row"><div class="dot nfo"></div><div class="row-text">Wi-Fi — test login and coverage<span class="tag t-b">Next visit</span></div></div>
+  </div>
+</div>
+
+<div id="tab-inventory" class="panel">
+
+  <div class="slabel">Beds &amp; pillows</div>
+  <div class="card">
+    <table class="tbl">
+      <tr><th>Room</th><th class="tr">Bed</th><th class="tr">Pillows</th></tr>
+      <tr><td>Bedroom 1</td><td class="tr">Queen</td><td class="tr">4 + 2 deco</td></tr>
+      <tr><td>Bedroom 2</td><td class="tr">2 singles</td><td class="tr">4 + 2 deco</td></tr>
+      <tr><td>Bedroom 3</td><td class="tr">Queen</td><td class="tr">4 + 2 deco</td></tr>
+      <tr><td>Master (4)</td><td class="tr">King</td><td class="tr">4 + 2 deco</td></tr>
+    </table>
+  </div>
+
+  <div class="slabel">Linen &amp; towels — to buy (IHR standard)</div>
+  <div class="card">
+    <table class="tbl">
+      <tr><th>Item</th><th class="tr">Standard</th><th class="tr">To buy</th></tr>
+      <tr><td>Queen bed sets</td><td class="tr">3 per bed</td><td class="tr">6</td></tr>
+      <tr><td>King bed sets</td><td class="tr">3 per bed</td><td class="tr">3</td></tr>
+      <tr><td>Single bed sets</td><td class="tr">3 per bed</td><td class="tr">6</td></tr>
+      <tr><td>Bath towels</td><td class="tr">4 per room</td><td class="tr">16</td></tr>
+      <tr><td>Hand towels</td><td class="tr">4 per room</td><td class="tr">16</td></tr>
+      <tr><td>Bath mats</td><td class="tr">2 per room</td><td class="tr">8</td></tr>
+    </table>
+  </div>
+  <div class="note">Existing linen on the beds was not counted. Quantities assume starting from zero.</div>
+
+  <div class="slabel">Kitchen — present, quantities to count</div>
+  <div class="card">
+    <table class="tbl">
+      <tr><th>Item</th><th class="tr">Status</th></tr>
+      <tr><td>Forks, knives, spoons</td><td class="tr"><span class="tag t-b">Present · count</span></td></tr>
+      <tr><td>Cutting knives + large knife</td><td class="tr"><span class="tag t-b">Present · count</span></td></tr>
+      <tr><td>Spatulas and serving spoons</td><td class="tr"><span class="tag t-b">Present · count</span></td></tr>
+      <tr><td>Pots and pans</td><td class="tr"><span class="tag t-b">Present · count</span></td></tr>
+      <tr><td>Graters and strainers</td><td class="tr"><span class="tag t-b">Present · count</span></td></tr>
+      <tr><td>Bowls</td><td class="tr"><span class="tag t-b">Present · count</span></td></tr>
+      <tr><td>Plates</td><td class="tr"><span class="tag t-b">Present · count</span></td></tr>
+      <tr><td>Glasses</td><td class="tr"><span class="tag t-b">Present · count</span></td></tr>
+      <tr><td>Mugs</td><td class="tr"><span class="tag t-b">Present · count</span></td></tr>
+    </table>
+  </div>
+  <div class="note">Counts and drawer photos to be taken at setup and stored in Drive, folder named by unit and date.</div>
+
+  <div class="slabel">Appliances &amp; equipment</div>
+  <div class="card">
+    <table class="tbl">
+      <tr><th>Item</th><th class="tr">Status</th></tr>
+      <tr><td>Smart TV (living room)</td><td class="tr"><span class="tag t-ok">OK</span></td></tr>
+      <tr><td>Coffee machine</td><td class="tr"><span class="tag t-ok">Present</span></td></tr>
+      <tr><td>Kettle</td><td class="tr"><span class="tag t-ok">OK</span></td></tr>
+      <tr><td>Electric stove</td><td class="tr"><span class="tag t-ok">OK</span></td></tr>
+      <tr><td>Extractor hood</td><td class="tr"><span class="tag t-ok">OK</span></td></tr>
+      <tr><td>Grill</td><td class="tr"><span class="tag t-ok">OK</span></td></tr>
+      <tr><td>Microwave</td><td class="tr"><span class="tag t-ok">OK</span></td></tr>
+      <tr><td>Toaster</td><td class="tr"><span class="tag t-ok">OK</span></td></tr>
+      <tr><td>Fridge 1</td><td class="tr"><span class="tag t-ok">OK</span></td></tr>
+      <tr><td>Washing machine</td><td class="tr"><span class="tag t-s">Run a cycle</span></td></tr>
+      <tr><td>Dishwasher</td><td class="tr"><span class="tag t-s">Run a cycle</span></td></tr>
+      <tr><td>Fridge 2</td><td class="tr"><span class="tag t-s">Off · unknown</span></td></tr>
+      <tr><td>TV bedroom 1</td><td class="tr"><span class="tag t-r">Replace</span></td></tr>
+      <tr><td>TV bedrooms 2 and 3</td><td class="tr"><span class="tag t-r">Not working</span></td></tr>
+      <tr><td>TV master bedroom</td><td class="tr"><span class="tag t-r">Not working</span></td></tr>
+      <tr><td>Aircon living room</td><td class="tr"><span class="tag t-r">Not cooling</span></td></tr>
+      <tr><td>Aircon bedrooms × 4</td><td class="tr"><span class="tag t-ac">Cooling · service</span></td></tr>
+      <tr><td>Safe (master)</td><td class="tr"><span class="tag t-b">No code</span></td></tr>
+      <tr><td>Hair dryer</td><td class="tr"><span class="tag t-r">Missing</span></td></tr>
+    </table>
+  </div>
+
+  <div class="slabel">Housekeeping</div>
+  <div class="card">
+    <table class="tbl">
+      <tr><th>Item</th><th class="tr">Status</th></tr>
+      <tr><td>Iron</td><td class="tr"><span class="tag t-ok">OK</span></td></tr>
+      <tr><td>Ironing table</td><td class="tr"><span class="tag t-ok">OK</span></td></tr>
+      <tr><td>Vacuum cleaner</td><td class="tr"><span class="tag t-ok">Present</span></td></tr>
+      <tr><td>Small ladder</td><td class="tr"><span class="tag t-ok">Present</span></td></tr>
+      <tr><td>Broom</td><td class="tr"><span class="tag t-ok">Present</span></td></tr>
+      <tr><td>Dustpan</td><td class="tr"><span class="tag t-s">Replace</span></td></tr>
+      <tr><td>Mop</td><td class="tr"><span class="tag t-s">Replace</span></td></tr>
+      <tr><td>Clothes drying rack</td><td class="tr"><span class="tag t-ok">OK</span></td></tr>
+      <tr><td>First-aid kit</td><td class="tr"><span class="tag t-r">Missing</span></td></tr>
+      <tr><td>Fire extinguisher</td><td class="tr"><span class="tag t-s">Service</span></td></tr>
+    </table>
+  </div>
+
+  <div class="slabel">Outdoor</div>
+  <div class="card">
+    <table class="tbl">
+      <tr><th>Item</th><th class="tr">Status</th></tr>
+      <tr><td>Terrace table + 8 chairs</td><td class="tr"><span class="tag t-ok">OK</span></td></tr>
+      <tr><td>Barbecue + red gas canister</td><td class="tr"><span class="tag t-ok">OK</span></td></tr>
+      <tr><td>Small terrace furniture</td><td class="tr"><span class="tag t-s">None</span></td></tr>
+    </table>
+  </div>
+</div>
+
+<div id="tab-access" class="panel">
+
+  <div class="slabel">Keys &amp; keybox</div>
+  <div class="info-card">
+    <div class="irow"><span class="ikey">Keybox code</span><span class="ival">Shared separately</span></div>
+    <div class="irow"><span class="ikey">Key sets</span><span class="ival" style="color:#A32D2D;">To count</span></div>
+    <div class="irow"><span class="ikey">Safe (master)</span><span class="ival" style="color:#A32D2D;">Code unknown</span></div>
+  </div>
+
+  <div class="slabel">WiFi</div>
+  <div class="info-card">
+    <div class="irow"><span class="ikey">Network name</span><span class="ival">Telecomcggg-5GHz</span></div>
+    <div class="irow"><span class="ikey">Password</span><span class="ival">Shared separately</span></div>
+    <div class="irow"><span class="ikey">Coverage</span><span class="ival" style="color:#A32D2D;">Not tested in bedrooms</span></div>
+  </div>
+
+  <div class="slabel">Utilities</div>
+  <div class="card">
+    <div class="row"><div class="dot fix"></div><div class="row-text">Boiler — found switched off. Switch on, retest hot water, label the switch<span class="tag t-r">Plumber</span></div></div>
+    <div class="row"><div class="dot warn"></div><div class="row-text">Fire extinguisher — present, servicing due<span class="tag t-s">Service</span></div></div>
+    <div class="row"><div class="dot nfo"></div><div class="row-text">Electric board, main water valve — not located during this visit<span class="tag t-b">Find &amp; label</span></div></div>
+    <div class="row"><div class="dot nfo"></div><div class="row-text">Water and electricity meter readings — not taken<span class="tag t-b">Next visit</span></div></div>
+    <div class="row"><div class="dot nfo"></div><div class="row-text">Barbecue gas canister — level not checked<span class="tag t-b">Check</span></div></div>
+  </div>
+
+  <div class="slabel">Contacts</div>
+  <div class="info-card">
+    <div class="irow"><span class="ikey">Owner</span><span class="ival">Jim</span></div>
+    <div class="irow"><span class="ikey">Previous manager</span><span class="ival">To ask: fridge 2, safe code</span></div>
+  </div>
+</div>
+
+<div id="tab-listing" class="panel">
+
+  <div class="slabel">Blockers — cannot go live until resolved</div>
+  <div class="alert al-red">
+    <div class="arow"><div class="dot fix" style="margin-top:4px;flex-shrink:0;"></div><div>Hot water confirmed at every tap and shower (boiler back on)</div></div>
+    <div class="arow"><div class="dot fix" style="margin-top:4px;flex-shrink:0;"></div><div>Plumbing leaks fixed — 4 bathrooms + kitchen sink</div></div>
+    <div class="arow"><div class="dot fix" style="margin-top:4px;flex-shrink:0;"></div><div>Living room aircon cooling</div></div>
+    <div class="arow"><div class="dot fix" style="margin-top:4px;flex-shrink:0;"></div><div>Master bedroom lights working</div></div>
+    <div class="arow"><div class="dot fix" style="margin-top:4px;flex-shrink:0;"></div><div>Bed linen and towels in stock</div></div>
+  </div>
+
+  <div class="slabel">Trades to book</div>
+  <div class="alert al-amb">
+    <div class="al-title">Book before listing</div>
+    <div class="arow"><div class="dot fix" style="margin-top:4px;flex-shrink:0;"></div><div>Plumber — 9 repairs across all 4 bathrooms and the kitchen, plus hot water check. One full sweep.</div></div>
+    <div class="arow"><div class="dot fix" style="margin-top:4px;flex-shrink:0;"></div><div>Carpenter — 8 items (entrance handle, dining table, storage room shelf, bathroom 3 handles, master drawers and cupboard door)</div></div>
+    <div class="arow"><div class="dot fix" style="margin-top:4px;flex-shrink:0;"></div><div>Bathroom fittings — 3 soap holders, 1 towel holder, 3 shower door seals</div></div>
+    <div class="arow"><div class="dot fix" style="margin-top:4px;flex-shrink:0;"></div><div>Electrician — master lights, terrace spotlight, remove old alarm panel</div></div>
+    <div class="arow"><div class="dot fix" style="margin-top:4px;flex-shrink:0;"></div><div>AC technician — repair living room unit, service all 5</div></div>
+    <div class="arow"><div class="dot fix" style="margin-top:4px;flex-shrink:0;"></div><div>Cleaning — storage room rug and cushions, curtains, then full deep clean after works</div></div>
+    <div class="arow"><div class="dot fix" style="margin-top:4px;flex-shrink:0;"></div><div>Fire extinguisher servicing</div></div>
+  </div>
+
+  <div class="slabel">Not checked on this visit</div>
+  <div class="alert al-blu">
+    <div class="al-title">To verify before first guest</div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Wi-Fi speed and coverage in each bedroom</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Smoke detector, fire blanket</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Oven — not seen or tested</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Mattresses — condition, plus mattress and pillow protectors</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Tableware count — enough for 8 guests</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Hangers in every wardrobe · toilet brush and bin in every bathroom</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Hot water in bathroom 2 and master · bedroom 3 bedside lamps</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Washing machine and dishwasher — one full cycle each</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Mosquito screens · window and sliding door locks · terrace railings</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Pest control — not assessed</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Number of key sets · residence gate, parking and night arrival procedure</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Meter readings for the handover baseline</div></div>
+  </div>
+
+  <div class="slabel">Listing setup</div>
+  <div class="alert al-amb">
+    <div class="al-title">Once works are done</div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Guest starter kit — toilet paper, soap, shampoo, dish soap, sponges, bin bags, coffee</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Drawer and cupboard photos with counts — inventory baseline</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>House manual — Wi-Fi, boiler, aircon, barbecue, bins, emergency numbers</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Professional photoshoot after deep clean and new wall art</div></div>
+    <div class="arow"><div class="dot nfo" style="margin-top:4px;flex-shrink:0;"></div><div>Confirm with Jim — tourist rental licence and insurance in place</div></div>
+  </div>
+
+  <div style="text-align:center;padding:1.2rem 0 .5rem;color:#888;font-size:12px;">
+    Prepared by Islander Holiday Retreats · +230 5761 3558<br>
+    <em>"Profitez, on s'occupe du reste!"</em>
+  </div>
+</div>
+
+</div>
+
+<script>
+function showTab(id,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  el.classList.add('active');
+}
+function filterActions(f,el){
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  document.querySelectorAll('.agroup').forEach(g=>{
+    g.classList.toggle('hide', f!=='all' && g.dataset.group!==f);
+  });
+}
+</script>
+</body>
+</html>
