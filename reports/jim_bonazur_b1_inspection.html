@@ -153,6 +153,39 @@
   .fb[data-f="tv"].on       { background: #A32D2D; }
   .t-el { background: #FBF3D0; color: #7A5A00; }
   .note { font-size: 12px; color: #888; margin: 2px 2px 10px; }
+
+  /* USABILITY */
+  .wrap { max-width: 980px; }
+  .tabs { position: sticky; top: 0; z-index: 10; background: #F5F2EC; padding: 8px 0; margin: 0 0 .75rem; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { white-space: nowrap; flex-shrink: 0; }
+  .card-hdr { cursor: pointer; }
+  .chev { font-size: 11px; color: #aaa; margin-left: 6px; transition: transform .15s; display: inline-block; }
+  .card.collapsed .row { display: none; }
+  .card.collapsed .card-hdr { margin-bottom: 0; }
+  .card.collapsed .chev { transform: rotate(-90deg); }
+  body:not(.show-ok) #tab-rooms .row.is-ok { display: none; }
+  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: .9rem; }
+  .tbtn { font-size: 12px; font-weight: 600; padding: 6px 13px; border-radius: 20px; border: 1px solid #ccc; background: #fff; color: #555; cursor: pointer; }
+  .tbtn.on { background: #5A9918; color: #fff; border-color: #5A9918; }
+  .ovr-h { font-size: 15px; font-weight: 700; color: #0C447C; margin: 0 0 8px; }
+  .ovr-p { font-size: 13.5px; color: #333; margin-bottom: 8px; }
+  .big-row { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #f0ece6; font-size: 13.5px; }
+  .big-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .num { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: #185FA5; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .trade-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .trade { background: #fff; border: 1px solid #e4dfd7; border-radius: 10px; padding: .7rem .8rem; }
+  .trade b { display: block; font-size: 18px; color: #0C447C; }
+  .trade span { font-size: 12px; color: #777; }
+  @media (min-width: 900px) {
+    body { padding: 1.5rem; font-size: 15px; }
+    #tab-rooms.active { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; align-items: start; }
+    #tab-rooms .slabel, #tab-rooms .alert, #tab-rooms .toolbar { grid-column: 1 / -1; }
+    #tab-actions.active, #tab-inventory.active { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; align-items: start; }
+    #tab-actions .filters, #tab-inventory .slabel { grid-column: 1 / -1; }
+    .trade-grid { grid-template-columns: repeat(4, 1fr); }
+    .stats { grid-template-columns: repeat(4, 1fr); }
+  }
 </style>
 </head>
 <body>
@@ -177,14 +210,47 @@
 </div>
 
 <div class="tabs">
-  <div class="tab active" onclick="showTab('rooms',this)">Rooms</div>
+  <div class="tab active" onclick="showTab('overview',this)">Overview</div>
+  <div class="tab" onclick="showTab('rooms',this)">Rooms</div>
   <div class="tab" onclick="showTab('actions',this)">Actions</div>
   <div class="tab" onclick="showTab('inventory',this)">Inventory</div>
   <div class="tab" onclick="showTab('access',this)">Access &amp; Utilities</div>
   <div class="tab" onclick="showTab('listing',this)">Before Listing</div>
 </div>
 
-<div id="tab-rooms" class="panel active">
+<div id="tab-overview" class="panel active">
+  <div class="card">
+    <div class="ovr-h">Where the apartment stands</div>
+    <div class="ovr-p">Bon Azur B1 is well furnished and well equipped: four bedrooms, a full kitchen, two terraces and a sea-view master. Most of the work is small repairs, with plumbing the main job, plus the basics every guest will expect (linen, towels, first-aid kit). Nothing structural was found.</div>
+    <div class="ovr-p">Five things must be fixed before the first guest: hot water, the leaks, the living room aircon, the master bedroom lights, and linen and towels.</div>
+  </div>
+  <div class="slabel">Decisions needed from you, Jim</div>
+  <div class="card">
+    <div class="big-row"><div class="num">1</div><div><b>Bathtubs</b> (bedroom 1 and master) have worn paint. Leave as is, or resurface?</div></div>
+    <div class="big-row"><div class="num">2</div><div><b>TVs.</b> Only the living room TV works. Approve replacing the four bedroom TVs with smart TVs?</div></div>
+    <div class="big-row"><div class="num">3</div><div><b>Wall art.</b> Approve replacing the three raspberry prints in the entrance?</div></div>
+    <div class="big-row"><div class="num">4</div><div><b>Aircon.</b> When were the five units last serviced? If recently, we can skip the service.</div></div>
+    <div class="big-row"><div class="num">5</div><div><b>Safe code</b> (master bedroom) and <b>second fridge</b>: do you have the code, and should the second fridge stay?</div></div>
+  </div>
+  <div class="slabel">Work to book</div>
+  <div class="trade-grid">
+    <div class="trade"><b>9</b><span>Plumbing repairs + hot water check</span></div>
+    <div class="trade"><b>8</b><span>Carpentry items</span></div>
+    <div class="trade"><b>7</b><span>Bathroom fittings (holders, seals)</span></div>
+    <div class="trade"><b>3</b><span>Electrical items</span></div>
+    <div class="trade"><b>5</b><span>Aircon units to service, 1 to repair</span></div>
+    <div class="trade"><b>7</b><span>Cleaning jobs</span></div>
+    <div class="trade"><b>14</b><span>Things to buy</span></div>
+    <div class="trade"><b>5</b><span>Questions for Jim</span></div>
+  </div>
+  <div class="slabel">How to use this report</div>
+  <div class="card">
+    <div class="ovr-p" style="margin:0;"><b>Rooms</b> shows each room, problems only (tap "Show what's working" to see everything). <b>Actions</b> groups the work by trade. <b>Inventory</b> lists what is in the apartment. <b>Before Listing</b> is the checklist to go live.</div>
+  </div>
+</div>
+
+<div id="tab-rooms" class="panel">
+  <div class="toolbar"><button class="tbtn" id="okbtn" onclick="toggleOk(this)">Show what's working</button><button class="tbtn" onclick="allCards(true)">Collapse all</button><button class="tbtn" onclick="allCards(false)">Expand all</button></div>
 
   <div class="slabel">Entrance</div>
   <div class="card">
@@ -626,6 +692,16 @@ function filterActions(f,el){
     g.classList.toggle('hide', f!=='all' && g.dataset.group!==f);
   });
 }
+
+function toggleOk(b){document.body.classList.toggle('show-ok');b.classList.toggle('on');b.textContent=document.body.classList.contains('show-ok')?"Hide what's working":"Show what's working";}
+function allCards(c){document.querySelectorAll('#tab-rooms .card').forEach(x=>x.classList.toggle('collapsed',c));}
+document.querySelectorAll('#tab-rooms .row').forEach(r=>{if(r.querySelector('.dot.ok'))r.classList.add('is-ok');});
+document.querySelectorAll('#tab-rooms .card-hdr').forEach(h=>{
+  const c=document.createElement('span');c.className='chev';c.textContent='▼';
+  h.querySelector('.badge')?h.querySelector('.badge').after(c):h.appendChild(c);
+  h.addEventListener('click',()=>h.parentElement.classList.toggle('collapsed'));
+});
+document.addEventListener('click',e=>{if(e.target.classList.contains('tab'))window.scrollTo({top:0});});
 </script>
 </body>
 </html>
